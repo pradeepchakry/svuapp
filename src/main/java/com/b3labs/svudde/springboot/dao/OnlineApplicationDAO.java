@@ -5,11 +5,11 @@ import com.b3labs.svudde.springboot.modal.OnlineApplication;
 import java.util.List;
 
 public interface OnlineApplicationDAO {
-    public List<OnlineApplication> get();
+    List<OnlineApplication> get();
 
-    public OnlineApplication get(int id);
+    OnlineApplication get(int id);
 
-    public void save(OnlineApplication onlineApplication);
+    void save(OnlineApplication onlineApplication);
 
-    public void delete(int id);
+    void delete(int id);
 }

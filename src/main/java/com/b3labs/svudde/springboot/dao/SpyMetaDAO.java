@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SpyMetaDAO {
 
-    public List<SpyMeta> get();
+    List<SpyMeta> get();
 
-    public SpyMeta get(int id);
+    SpyMeta get(int id);
 
-    public void save(SpyMeta spyMeta);
+    void save(SpyMeta spyMeta);
 
-    public void delete(int id);
+    void delete(int id);
 }

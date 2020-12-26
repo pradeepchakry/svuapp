@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ResidentialAreaDAO {
 
-    public List<ResidentialArea> get();
+    List<ResidentialArea> get();
 
-    public ResidentialArea get(int id);
+    ResidentialArea get(int id);
 
-    public void save(ResidentialArea residentialArea);
+    void save(ResidentialArea residentialArea);
 
-    public void delete(int id);
+    void delete(int id);
 }

@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface LocationsDAO {
 
-    public List<Locations> get();
+    List<Locations> get();
 
-    public Locations get(int locationId);
+    Locations get(int locationId);
 
-    public void save(Locations locations);
+    void save(Locations locations);
 
-    public void delete(int locationId);
+    void delete(int locationId);
 }

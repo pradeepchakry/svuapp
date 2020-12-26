@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface FeesDetailsDAO {
 
-    public List<FeesDetails> get();
+    List<FeesDetails> get();
 
-    public FeesDetails get(int feesId);
+    FeesDetails get(int feesId);
 
-    public void save(FeesDetails feesDetails);
+    void save(FeesDetails feesDetails);
 
-    public void delete(int feesId);
+    void delete(int feesId);
 }

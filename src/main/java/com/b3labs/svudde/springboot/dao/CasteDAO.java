@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface CasteDAO {
 
-    public List<Caste> get();
+    List<Caste> get();
 
-    public Caste get(int cId);
+    Caste get(int cId);
 
-    public void save(Caste caste);
+    void save(Caste caste);
 
-    public void delete(int cId);
+    void delete(int cId);
 }

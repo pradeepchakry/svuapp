@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ReligionDAO {
 
-    public List<Religion> get();
+    List<Religion> get();
 
-    public Religion get(int id);
+    Religion get(int id);
 
-    public void save(Religion religion);
+    void save(Religion religion);
 
-    public void delete(int id);
+    void delete(int id);
 }
