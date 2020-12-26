@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface MASCountryDAO {
 
-    public List<MASCountry> get();
+    List<MASCountry> get();
 
-    public MASCountry get(int id);
+    MASCountry get(int id);
 
-    public void save(MASCountry masCountry);
+    void save(MASCountry masCountry);
 
-    public void delete(int id);
+    void delete(int id);
 }

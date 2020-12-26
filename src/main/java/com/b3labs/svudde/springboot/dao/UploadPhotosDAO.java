@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface UploadPhotosDAO {
 
-    public List<UploadPhotos> get();
+    List<UploadPhotos> get();
 
-    public UploadPhotos get(int id);
+    UploadPhotos get(int id);
 
-    public void save(UploadPhotos uploadPhotos);
+    void save(UploadPhotos uploadPhotos);
 
-    public void delete(int id);
+    void delete(int id);
 }

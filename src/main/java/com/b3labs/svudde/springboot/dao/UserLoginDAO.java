@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface UserLoginDAO {
 
-    public List<UserLogin> get();
+    List<UserLogin> get();
 
-    public UserLogin get(int userId);
+    UserLogin get(int userId);
 
-    public void save(UserLogin userLogin);
+    void save(UserLogin userLogin);
 
-    public void delete(int userId);
+    void delete(int userId);
 }

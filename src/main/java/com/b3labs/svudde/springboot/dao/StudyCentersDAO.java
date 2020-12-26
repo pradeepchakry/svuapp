@@ -1,16 +1,16 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.StudyCentres;
+import com.b3labs.svudde.springboot.modal.StudyCenters;
 
 import java.util.List;
 
 public interface StudyCentersDAO {
 
-    public List<StudyCentres> get();
+    List<StudyCenters> get();
 
-    public StudyCentres get(int centreId);
+    StudyCenters get(int centreId);
 
-    public void save(StudyCentres studyCentres);
+    void save(StudyCenters studyCenters);
 
-    public void delete(int centreId);
+    void delete(int centreId);
 }

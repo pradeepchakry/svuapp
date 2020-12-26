@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface StudyCenterCourseChangeDAO {
 
-    public List<StudyCenterCourseChange> get();
+    List<StudyCenterCourseChange> get();
 
-    public StudyCenterCourseChange get(int feeId);
+    StudyCenterCourseChange get(int feeId);
 
-    public void save(StudyCenterCourseChange studyCenterCourseChange);
+    void save(StudyCenterCourseChange studyCenterCourseChange);
 
-    public void delete(int feeId);
+    void delete(int feeId);
 }
