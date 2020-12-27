@@ -46,7 +46,16 @@ public class UserProfileDAOImpl implements UserProfileDAO {
     @Override
     public UserProfile get(String phone) {
         Session currentSession = entityManager.unwrap(Session.class);
-        UserProfile userProfile = currentSession.get(UserProfile.class, phone);
-        return userProfile;
+        Query<UserProfile> query = currentSession.createQuery("from UserProfile", UserProfile.class);
+        List<UserProfile> list = query.getResultList();
+        for(UserProfile userProfile : list) {
+            if(userProfile.getPhoneNo() != null) {
+                String userPhone = userProfile.getPhoneNo();
+                if(userPhone.equals(phone)) {
+                    return userProfile;
+                }
+            }
+        }
+        return null;
     }
 }

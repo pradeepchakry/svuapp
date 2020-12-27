@@ -12,42 +12,6 @@ public class OnlineApplication {
     @Column(nullable = false, name = "student_id")
     private Integer id;
 
-    public void setCaste(Caste caste) {
-        this.caste = caste;
-    }
-
-    public Locations getLocation() {
-        return location;
-    }
-
-    public void setLocation(Locations location) {
-        this.location = location;
-    }
-
-    public Nationality getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(Nationality nationality) {
-        this.nationality = nationality;
-    }
-
-    public Religion getReligion() {
-        return religion;
-    }
-
-    public void setReligion(Religion religion) {
-        this.religion = religion;
-    }
-
-    public ResidentialArea getResidentialArea() {
-        return residentialArea;
-    }
-
-    public void setResidentialArea(ResidentialArea residentialArea) {
-        this.residentialArea = residentialArea;
-    }
-
     @Column(name = "app_serial_no")
     private int appSerialNo;
 
@@ -60,6 +24,7 @@ public class OnlineApplication {
     @Column(name = "cal_fees")
     private int calFees;
 
+    @OneToOne
     @JoinColumn(name = "c_id")
     private Caste caste;
 
@@ -114,7 +79,7 @@ public class OnlineApplication {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_approve")
     private boolean isApprove;
 
-
+    @OneToOne
     @JoinColumn(name = "location_id")
     private Locations location;
 
@@ -528,5 +493,41 @@ public class OnlineApplication {
 
     public void setYearMonth(String yearMonth) {
         this.yearMonth = yearMonth;
+    }
+
+    public void setCaste(Caste caste) {
+        this.caste = caste;
+    }
+
+    public Locations getLocation() {
+        return location;
+    }
+
+    public void setLocation(Locations location) {
+        this.location = location;
+    }
+
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
+    }
+
+    public Religion getReligion() {
+        return religion;
+    }
+
+    public void setReligion(Religion religion) {
+        this.religion = religion;
+    }
+
+    public ResidentialArea getResidentialArea() {
+        return residentialArea;
+    }
+
+    public void setResidentialArea(ResidentialArea residentialArea) {
+        this.residentialArea = residentialArea;
     }
 }

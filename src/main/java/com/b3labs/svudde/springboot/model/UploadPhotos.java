@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UploadPhotos {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "id")
     private Integer id;
 

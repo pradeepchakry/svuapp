@@ -8,7 +8,7 @@ import java.sql.Date;
 public class UserLogin {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "user_id")
     private Integer userId;
 
@@ -18,13 +18,21 @@ public class UserLogin {
     @Column(name = "phone")
     private String phone;
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Column(name = "authentication")
     private char authentication;
 
     @Column(nullable = false, name = "display_name")
     private String display_name;
 
-    @Column(nullable = false, name = "email")
+    @Column(nullable = false, name = "email_id")
     private String email;
 
     @Column(name = "group_id")
