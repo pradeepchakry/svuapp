@@ -10,6 +10,8 @@ public interface UserProfileDAO {
 
     UserProfile get(int id);
 
+    UserProfile get(String phone);
+
     void save(UserProfile userProfile);
 
     void delete(int id);

@@ -42,4 +42,11 @@ public class UserProfileDAOImpl implements UserProfileDAO {
         UserProfile userProfile = currentSession.get(UserProfile.class, id);
         currentSession.delete(userProfile);
     }
+
+    @Override
+    public UserProfile get(String phone) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        UserProfile userProfile = currentSession.get(UserProfile.class, phone);
+        return userProfile;
+    }
 }
