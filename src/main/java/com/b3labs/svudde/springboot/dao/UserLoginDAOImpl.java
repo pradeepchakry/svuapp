@@ -31,9 +31,10 @@ public class UserLoginDAOImpl implements UserLoginDAO {
     }
 
     @Override
-    public void save(UserLogin userLogin) {
+    public Integer save(UserLogin userLogin) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.saveOrUpdate(userLogin);
+        return userLogin.getUserId();
     }
 
     @Override

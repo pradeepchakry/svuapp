@@ -16,7 +16,7 @@ public class UserProfile {
     private int userId;
 
     @Column(name = "city")
-    private int city;
+    private String city;
 
     @Column(name = "country")
     private int country;
@@ -61,11 +61,11 @@ public class UserProfile {
         this.userId = userId;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

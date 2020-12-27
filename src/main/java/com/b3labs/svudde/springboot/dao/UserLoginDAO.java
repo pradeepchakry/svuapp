@@ -10,7 +10,7 @@ public interface UserLoginDAO {
 
     UserLogin get(int userId);
 
-    void save(UserLogin userLogin);
+    Integer save(UserLogin userLogin);
 
     void delete(int userId);
 }
