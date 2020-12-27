@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.ResidentialArea;
+import com.b3labs.svudde.springboot.model.ResidentialArea;
 
 import java.util.List;
 

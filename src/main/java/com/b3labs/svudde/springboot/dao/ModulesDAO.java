@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Modules;
+import com.b3labs.svudde.springboot.model.Modules;
 
 import java.util.List;
 

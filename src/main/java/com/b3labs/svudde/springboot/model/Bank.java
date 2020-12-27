@@ -1,19 +1,22 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "caste")
-public class Caste {
+@Table(name = "bank")
+public class Bank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "c_id")
-    private Integer cId;
+    @Column(nullable = false, name = "bank_id")
+    private Integer bankId;
 
-    @Column(name = "caste")
-    private String caste;
+    @Column(name = "name_of_bank")
+    private String nameOfBank;
+
+    @Column(name = "bank_code")
+    private String bankCode;
 
     @Column(name = "created_by")
     private Integer createdBy;
@@ -33,20 +36,28 @@ public class Caste {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_delete")
     private boolean is_delete;
 
-    public Integer getcId() {
-        return cId;
+    public Integer getBankId() {
+        return bankId;
     }
 
-    public void setcId(Integer cId) {
-        this.cId = cId;
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
-    public String getCaste() {
-        return caste;
+    public String getNameOfBank() {
+        return nameOfBank;
     }
 
-    public void setCaste(String caste) {
-        this.caste = caste;
+    public void setNameOfBank(String nameOfBank) {
+        this.nameOfBank = nameOfBank;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
     }
 
     public Integer getCreatedBy() {

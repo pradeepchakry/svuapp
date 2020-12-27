@@ -1,4 +1,4 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,6 +14,9 @@ public class UserLogin {
 
     @Column(nullable = false, name = "activation_code")
     private String activationCode;
+
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "authentication")
     private char authentication;

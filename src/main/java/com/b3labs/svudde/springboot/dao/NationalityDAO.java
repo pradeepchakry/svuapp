@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Nationality;
+import com.b3labs.svudde.springboot.model.Nationality;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Bank;
+import com.b3labs.svudde.springboot.model.Bank;
 
 import java.util.List;
 

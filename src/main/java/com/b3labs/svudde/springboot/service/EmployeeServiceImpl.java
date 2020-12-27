@@ -1,7 +1,7 @@
 package com.b3labs.svudde.springboot.service;
 
 import com.b3labs.svudde.springboot.dao.EmployeeDAO;
-import com.b3labs.svudde.springboot.modal.Employee;
+import com.b3labs.svudde.springboot.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

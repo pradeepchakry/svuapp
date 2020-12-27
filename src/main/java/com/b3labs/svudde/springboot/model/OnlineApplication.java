@@ -1,4 +1,4 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,6 +12,42 @@ public class OnlineApplication {
     @Column(nullable = false, name = "student_id")
     private Integer id;
 
+    public void setCaste(Caste caste) {
+        this.caste = caste;
+    }
+
+    public Locations getLocation() {
+        return location;
+    }
+
+    public void setLocation(Locations location) {
+        this.location = location;
+    }
+
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
+    }
+
+    public Religion getReligion() {
+        return religion;
+    }
+
+    public void setReligion(Religion religion) {
+        this.religion = religion;
+    }
+
+    public ResidentialArea getResidentialArea() {
+        return residentialArea;
+    }
+
+    public void setResidentialArea(ResidentialArea residentialArea) {
+        this.residentialArea = residentialArea;
+    }
+
     @Column(name = "app_serial_no")
     private int appSerialNo;
 
@@ -24,8 +60,8 @@ public class OnlineApplication {
     @Column(name = "cal_fees")
     private int calFees;
 
-    @Column(name = "caste")
-    private String caste;
+    @JoinColumn(name = "c_id")
+    private Caste caste;
 
     @Column(name = "code_no")
     private int codeNo;
@@ -78,8 +114,9 @@ public class OnlineApplication {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_approve")
     private boolean isApprove;
 
-    @Column(name = "location")
-    private String location;
+
+    @JoinColumn(name = "location_id")
+    private Locations location;
 
     @Column(name = "mandal")
     private String mandal;
@@ -99,8 +136,9 @@ public class OnlineApplication {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "nationality")
-    private String nationality;
+    @OneToOne
+    @JoinColumn(name = "n_id")
+    private Nationality nationality;
 
     @Column(name = "ous_education")
     private String ousEducation;
@@ -123,11 +161,13 @@ public class OnlineApplication {
     @Column(name = "registration_no")
     private String registrationNo;
 
-    @Column(name = "religion")
-    private String religion;
+    @OneToOne
+    @JoinColumn(name = "re_id")
+    private Religion religion;
 
-    @Column(name = "residential_area")
-    private String residentialArea;
+    @OneToOne
+    @JoinColumn(name = "r_id")
+    private ResidentialArea residentialArea;
 
     @Column(name = "second_language")
     private String secondLanguage;
@@ -190,14 +230,6 @@ public class OnlineApplication {
         this.calFees = calFees;
     }
 
-    public String getCaste() {
-        return caste;
-    }
-
-    public void setCaste(String caste) {
-        this.caste = caste;
-    }
-
     public int getCodeNo() {
         return codeNo;
     }
@@ -216,6 +248,10 @@ public class OnlineApplication {
 
     public String getCourseName() {
         return courseName;
+    }
+
+    public Caste getCaste() {
+        return caste;
     }
 
     public void setCourseName(String courseName) {
@@ -334,14 +370,6 @@ public class OnlineApplication {
         isApprove = approve;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getMandal() {
         return mandal;
     }
@@ -388,14 +416,6 @@ public class OnlineApplication {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
     }
 
     public String getOusEducation() {
@@ -452,22 +472,6 @@ public class OnlineApplication {
 
     public void setRegistrationNo(String registrationNo) {
         this.registrationNo = registrationNo;
-    }
-
-    public String getReligion() {
-        return religion;
-    }
-
-    public void setReligion(String religion) {
-        this.religion = religion;
-    }
-
-    public String getResidentialArea() {
-        return residentialArea;
-    }
-
-    public void setResidentialArea(String residentialArea) {
-        this.residentialArea = residentialArea;
     }
 
     public String getSecondLanguage() {

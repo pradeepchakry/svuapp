@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.controller;
 
-import com.b3labs.svudde.springboot.modal.Employee;
+import com.b3labs.svudde.springboot.model.Employee;
 import com.b3labs.svudde.springboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

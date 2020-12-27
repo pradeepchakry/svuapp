@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Permissions;
+import com.b3labs.svudde.springboot.model.Permissions;
 
 import java.util.List;
 

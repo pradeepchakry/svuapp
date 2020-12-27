@@ -1,4 +1,4 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -33,7 +33,7 @@ public class UserProfile {
     @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "phone_no")
+    @Column(unique = true, name = "phone_no")
     private String phoneNo;
 
     @Column(name = "pincode")

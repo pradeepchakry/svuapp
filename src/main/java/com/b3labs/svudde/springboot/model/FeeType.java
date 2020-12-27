@@ -1,25 +1,19 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "ba_group")
-public class BAGroup {
+@Table(name = "fee_type")
+public class FeeType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "gid")
-    private Integer gid;
+    @Column(nullable = false, name = "fee_id")
+    private Integer feeId;
 
-    @Column(name = "subject")
-    private int subject;
-
-    @Column(name = "group_name")
-    private String groupName;
-
-    @Column(name = "shortcode")
-    private String shortCode;
+    @Column(name = "fee_type")
+    private String feeType;
 
     @Column(name = "created_by")
     private Integer createdBy;
@@ -39,36 +33,20 @@ public class BAGroup {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_delete")
     private boolean is_delete;
 
-    public Integer getGid() {
-        return gid;
+    public Integer getFeeId() {
+        return feeId;
     }
 
-    public void setGid(Integer gid) {
-        this.gid = gid;
+    public void setFeeId(Integer feeId) {
+        this.feeId = feeId;
     }
 
-    public int getSubject() {
-        return subject;
+    public String getFeeType() {
+        return feeType;
     }
 
-    public void setSubject(int subject) {
-        this.subject = subject;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getShortCode() {
-        return shortCode;
-    }
-
-    public void setShortCode(String shortCode) {
-        this.shortCode = shortCode;
+    public void setFeeType(String feeType) {
+        this.feeType = feeType;
     }
 
     public Integer getCreatedBy() {

@@ -1,25 +1,25 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "fee_type")
-public class FeeType {
+@Table(name = "nationality")
+public class Nationality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "fee_id")
-    private Integer feeId;
+    @Column(nullable = false, name = "n_id")
+    private Integer id;
 
-    @Column(name = "fee_type")
-    private String feeType;
-
-    @Column(name = "created_by")
-    private Integer createdBy;
+    @Column(nullable = false, name = "nationality")
+    private String nationality;
 
     @Column(name = "created_on")
     private Date createdOn;
+
+    @Column(name = "created_by")
+    private Integer createdBy;
 
     @Column(name = "modified_on")
     private Date modifiedOn;
@@ -33,28 +33,20 @@ public class FeeType {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_delete")
     private boolean is_delete;
 
-    public Integer getFeeId() {
-        return feeId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFeeId(Integer feeId) {
-        this.feeId = feeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getFeeType() {
-        return feeType;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setFeeType(String feeType) {
-        this.feeType = feeType;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public Date getCreatedOn() {
@@ -63,6 +55,14 @@ public class FeeType {
 
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getModifiedOn() {

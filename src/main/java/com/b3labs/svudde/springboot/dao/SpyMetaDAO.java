@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.SpyMeta;
+import com.b3labs.svudde.springboot.model.SpyMeta;
 
 import java.util.List;
 

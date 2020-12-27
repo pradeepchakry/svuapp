@@ -1,19 +1,19 @@
-package com.b3labs.svudde.springboot.modal;
+package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "residential_area")
-public class ResidentialArea {
+@Table(name = "religion")
+public class Religion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "r_id")
+    @Column(nullable = false, name = "re_id")
     private Integer id;
 
-    @Column(nullable = false, name = "residential_area")
-    private String residentialArea;
+    @Column(nullable = false, name = "religion")
+    private String religion;
 
     @Column(name = "created_on")
     private Date createdOn;
@@ -41,12 +41,12 @@ public class ResidentialArea {
         this.id = id;
     }
 
-    public String getResidentialArea() {
-        return residentialArea;
+    public String getReligion() {
+        return religion;
     }
 
-    public void setResidentialArea(String residentialArea) {
-        this.residentialArea = residentialArea;
+    public void setReligion(String religion) {
+        this.religion = religion;
     }
 
     public Date getCreatedOn() {

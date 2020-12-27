@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.UserProfile;
+import com.b3labs.svudde.springboot.model.UserProfile;
 
 import java.util.List;
 

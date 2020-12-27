@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.ApplicationFineSchedule;
+import com.b3labs.svudde.springboot.model.ApplicationFineSchedule;
 
 import java.util.List;
 
