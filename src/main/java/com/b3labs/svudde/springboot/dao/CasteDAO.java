@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Caste;
+import com.b3labs.svudde.springboot.model.Caste;
 
 import java.util.List;
 

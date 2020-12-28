@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.UserLogin;
+import com.b3labs.svudde.springboot.model.UserLogin;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,10 @@ public class UserLoginDAOImpl implements UserLoginDAO {
     }
 
     @Override
-    public void save(UserLogin userLogin) {
+    public Integer save(UserLogin userLogin) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.saveOrUpdate(userLogin);
+        return userLogin.getUserId();
     }
 
     @Override

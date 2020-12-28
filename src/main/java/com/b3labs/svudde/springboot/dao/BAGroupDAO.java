@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.BAGroup;
+import com.b3labs.svudde.springboot.model.BAGroup;
 
 import java.util.List;
 

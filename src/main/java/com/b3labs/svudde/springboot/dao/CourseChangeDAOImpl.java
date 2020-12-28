@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.CourseChange;
+import com.b3labs.svudde.springboot.model.CourseChange;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;

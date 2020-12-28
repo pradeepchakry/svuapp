@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.MASCountry;
+import com.b3labs.svudde.springboot.model.MASCountry;
 
 import java.util.List;
 

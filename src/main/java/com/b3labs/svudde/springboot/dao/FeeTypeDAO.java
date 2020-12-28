@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.FeeType;
+import com.b3labs.svudde.springboot.model.FeeType;
 
 import java.util.List;
 

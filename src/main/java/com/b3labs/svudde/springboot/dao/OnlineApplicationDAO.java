@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.OnlineApplication;
+import com.b3labs.svudde.springboot.model.OnlineApplication;
 
 import java.util.List;
 

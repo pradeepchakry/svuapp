@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.UserProfile;
+import com.b3labs.svudde.springboot.model.UserProfile;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +41,21 @@ public class UserProfileDAOImpl implements UserProfileDAO {
         Session currentSession = entityManager.unwrap(Session.class);
         UserProfile userProfile = currentSession.get(UserProfile.class, id);
         currentSession.delete(userProfile);
+    }
+
+    @Override
+    public UserProfile get(String phone) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<UserProfile> query = currentSession.createQuery("from UserProfile", UserProfile.class);
+        List<UserProfile> list = query.getResultList();
+        for(UserProfile userProfile : list) {
+            if(userProfile.getPhoneNo() != null) {
+                String userPhone = userProfile.getPhoneNo();
+                if(userPhone.equals(phone)) {
+                    return userProfile;
+                }
+            }
+        }
+        return null;
     }
 }

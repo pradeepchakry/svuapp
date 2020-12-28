@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.StudyCenters;
+import com.b3labs.svudde.springboot.model.StudyCenters;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Locations;
+import com.b3labs.svudde.springboot.model.Locations;
 
 import java.util.List;
 

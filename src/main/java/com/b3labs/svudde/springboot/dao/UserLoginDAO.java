@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.UserLogin;
+import com.b3labs.svudde.springboot.model.UserLogin;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface UserLoginDAO {
 
     UserLogin get(int userId);
 
-    void save(UserLogin userLogin);
+    Integer save(UserLogin userLogin);
 
     void delete(int userId);
 }

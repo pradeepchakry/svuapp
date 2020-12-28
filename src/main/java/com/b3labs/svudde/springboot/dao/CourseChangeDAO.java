@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.CourseChange;
+import com.b3labs.svudde.springboot.model.CourseChange;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Religion;
+import com.b3labs.svudde.springboot.model.Religion;
 
 import java.util.List;
 

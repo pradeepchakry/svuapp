@@ -1,6 +1,6 @@
 package com.b3labs.svudde.springboot.dao;
 
-import com.b3labs.svudde.springboot.modal.Employee;
+import com.b3labs.svudde.springboot.model.Employee;
 
 import java.util.List;
 
