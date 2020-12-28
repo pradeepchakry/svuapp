@@ -8,7 +8,7 @@ import java.sql.Date;
 public class ResidentialArea {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "r_id")
     private Integer id;
 
