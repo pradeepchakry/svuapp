@@ -8,7 +8,7 @@ import java.sql.Date;
 public class Caste {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "c_id")
     private Integer cId;
 

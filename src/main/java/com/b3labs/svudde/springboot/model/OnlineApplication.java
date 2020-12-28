@@ -1,14 +1,15 @@
 package com.b3labs.svudde.springboot.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "online_application")
-public class OnlineApplication {
+public class OnlineApplication implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "student_id")
     private Integer id;
 
@@ -25,7 +26,7 @@ public class OnlineApplication {
     private int calFees;
 
     @OneToOne
-    @JoinColumn(name = "c_id")
+    @JoinColumn(name = "cId", insertable = false, updatable = false)
     private Caste caste;
 
     @Column(name = "code_no")
@@ -80,7 +81,7 @@ public class OnlineApplication {
     private boolean isApprove;
 
     @OneToOne
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "locationId", insertable = false, updatable = false)
     private Locations location;
 
     @Column(name = "mandal")
@@ -95,14 +96,20 @@ public class OnlineApplication {
     @Column(name = "max_marks")
     private int maxMarks;
 
-    @Column(name = "medium")
-    private String medium;
+    @Column(name = "lang_medium")
+    private String langMedium;
 
     @Column(name = "name")
     private String name;
 
+    @Override
+    public String toString() {
+        return "Online Application [id= " + id + ", name = " + name + ", yearMonth = " +
+                monthYear + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
+    }
+
     @OneToOne
-    @JoinColumn(name = "n_id")
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Nationality nationality;
 
     @Column(name = "ous_education")
@@ -127,11 +134,11 @@ public class OnlineApplication {
     private String registrationNo;
 
     @OneToOne
-    @JoinColumn(name = "re_id")
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private Religion religion;
 
     @OneToOne
-    @JoinColumn(name = "r_id")
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     private ResidentialArea residentialArea;
 
     @Column(name = "second_language")
@@ -152,8 +159,8 @@ public class OnlineApplication {
     @Column(name = "village")
     private String village;
 
-    @Column(name = "year_month")
-    private String yearMonth;
+    @Column(name = "month_of_year")
+    private String monthYear;
 
     public Integer getId() {
         return id;
@@ -367,14 +374,6 @@ public class OnlineApplication {
         this.maxMarks = maxMarks;
     }
 
-    public String getMedium() {
-        return medium;
-    }
-
-    public void setMedium(String medium) {
-        this.medium = medium;
-    }
-
     public String getName() {
         return name;
     }
@@ -487,14 +486,6 @@ public class OnlineApplication {
         this.village = village;
     }
 
-    public String getYearMonth() {
-        return yearMonth;
-    }
-
-    public void setYearMonth(String yearMonth) {
-        this.yearMonth = yearMonth;
-    }
-
     public void setCaste(Caste caste) {
         this.caste = caste;
     }
@@ -529,5 +520,21 @@ public class OnlineApplication {
 
     public void setResidentialArea(ResidentialArea residentialArea) {
         this.residentialArea = residentialArea;
+    }
+
+    public String getLangMedium() {
+        return langMedium;
+    }
+
+    public void setLangMedium(String langMedium) {
+        this.langMedium = langMedium;
+    }
+
+    public String getMonthYear() {
+        return monthYear;
+    }
+
+    public void setMonthYear(String monthYear) {
+        this.monthYear = monthYear;
     }
 }
