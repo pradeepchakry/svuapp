@@ -11,7 +11,7 @@ public interface OnlineApplicationDAO {
 
     OnlineApplication get(int id);
 
-    void save(OnlineApplication onlineApplication);
+    Integer save(OnlineApplication onlineApplication);
 
     void delete(int id);
 

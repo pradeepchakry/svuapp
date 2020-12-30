@@ -16,8 +16,8 @@ public class OnlineApplicationServiceImpl implements OnlineApplicationService {
 
     @Override
     @Transactional
-    public void save(OnlineApplication onlineApplication) {
-        onlineApplicationDAO.save(onlineApplication);
+    public Integer save(OnlineApplication onlineApplication) {
+        return onlineApplicationDAO.save(onlineApplication);
     }
 
     @Override

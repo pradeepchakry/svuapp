@@ -23,10 +23,10 @@ public class OnlineApplicationController {
     private UserService userService;
 
     @PostMapping("/saveForm")
-    public void saveForm(@RequestBody OnlineApplication application) {
+    public Integer saveForm(@RequestBody OnlineApplication application) {
         logger.info("[ << Saving Application >> ]");
         logger.info(application.toString());
-        applicationService.save(application);
+       return applicationService.save(application);
     }
 
     @PostMapping("/updateForm/{studentId}")

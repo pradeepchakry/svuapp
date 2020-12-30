@@ -38,9 +38,10 @@ public class OnlineApplicationDAOImpl implements OnlineApplicationDAO {
     }
 
     @Override
-    public void save(OnlineApplication onlineApplication) {
+    public Integer save(OnlineApplication onlineApplication) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.saveOrUpdate(onlineApplication);
+        Integer obj = (Integer) currentSession.save(onlineApplication);
+        return obj;
     }
 
     @Override
