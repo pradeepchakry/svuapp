@@ -4,7 +4,7 @@ import com.b3labs.svudde.springboot.model.OnlineApplication;
 
 public interface OnlineApplicationService {
 
-    void save(OnlineApplication onlineApplication);
+    Integer save(OnlineApplication onlineApplication);
 
     OnlineApplication findApplicationById(Integer id);
 
