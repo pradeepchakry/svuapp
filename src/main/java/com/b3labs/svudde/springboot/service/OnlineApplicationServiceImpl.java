@@ -16,12 +16,19 @@ public class OnlineApplicationServiceImpl implements OnlineApplicationService {
 
     @Override
     @Transactional
-    public Integer save(OnlineApplication onlineApplication) {
-        return onlineApplicationDAO.save(onlineApplication);
+    public void save(OnlineApplication onlineApplication) {
+        onlineApplicationDAO.save(onlineApplication);
     }
 
     @Override
     public OnlineApplication findApplicationById(Integer id) {
         return onlineApplicationDAO.get(id);
     }
+
+    @Override
+    public void delete(Integer id) {
+        onlineApplicationDAO.delete(id);
+    }
+
+
 }
