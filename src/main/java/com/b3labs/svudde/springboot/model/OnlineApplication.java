@@ -1,12 +1,183 @@
 package com.b3labs.svudde.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "online_application")
+@Table(name = "study_centre_application")
 public class OnlineApplication implements Serializable {
+
+    @Column(name = "centre_id")
+    private Integer centreId;
+
+
+    @Column(name = "centre_code_no")
+    private int centre_code_no;
+
+    @Column(nullable = true, name = "centre_name")
+    private String centreName;
+
+    @Column(name = "centre_district_state")
+    private String centre_district_state;
+
+    @Column(name = "centre_pin_code")
+    private int centre_pin_code;
+
+    @Column(name = "centre_phone")
+    private String centre_phone;
+
+    @Column(name = "centre_street")
+    private String centre_street;
+
+    @Column(name = "centre_doorNo")
+    private String centre_doorNo;
+
+    @Column(name = "centre_Mandal")
+    private String centre_Mandal;
+
+    @Column(name = "centre_village")
+    private String centre_village;
+
+    @Column(name = "created_on")
+    private Date createdOn;
+
+    @Column(name = "created_by")
+    private Integer createdBy;
+
+    @Column(name = "modified_on")
+    private Date modifiedOn;
+
+    @Column(name = "modified_by")
+    private Integer modifiedBy;
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_active")
+    private boolean isActive;
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_delete")
+    private boolean is_delete;
+
+
+
+    public Integer getCentreId() {
+        return centreId;
+    }
+
+    public void setCentreId(Integer centreId) {
+        this.centreId = centreId;
+    }
+
+
+
+    public String getCentreName() {
+        return centreName;
+    }
+
+    public void setCentreName(String centreName) {
+        this.centreName = centreName;
+    }
+
+
+
+
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getModifiedOn() {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(Date modifiedOn) {
+        this.modifiedOn = modifiedOn;
+    }
+
+    public Integer getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(Integer modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(boolean is_delete) {
+        this.is_delete = is_delete;
+    }
+
+    public String getCentre_district_state() {
+        return centre_district_state;
+    }
+
+    public void setCentre_district_state(String centre_district_state) {
+        this.centre_district_state = centre_district_state;
+    }
+
+    public int getCentre_pin_code() {
+        return centre_pin_code;
+    }
+
+    public void setCentre_pin_code(int centre_pin_code) {
+        this.centre_pin_code = centre_pin_code;
+    }
+
+    public String getCentre_phone() {
+        return centre_phone;
+    }
+
+    public void setCentre_phone(String centre_phone) {
+        this.centre_phone = centre_phone;
+    }
+
+    public String getCentre_street() {
+        return centre_street;
+    }
+
+    public void setCentre_street(String centre_street) {
+        this.centre_street = centre_street;
+    }
+
+    public String getCentre_doorNo() {
+        return centre_doorNo;
+    }
+
+    public void setCentre_doorNo(String centre_doorNo) {
+        this.centre_doorNo = centre_doorNo;
+    }
+
+    public String getCentre_Mandal() {
+        return centre_Mandal;
+    }
+
+    public void setCentre_Mandal(String centre_Mandal) {
+        this.centre_Mandal = centre_Mandal;
+    }
+
+    public String getCentre_village() {
+        return centre_village;
+    }
+
+    public void setCentre_village(String centre_village) {
+        this.centre_village = centre_village;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +196,8 @@ public class OnlineApplication implements Serializable {
     @Column(name = "cal_fees")
     private int calFees;
 
-    @OneToOne
-    @JoinColumn(name = "cId", insertable = false, updatable = false)
-    private Caste caste;
+    @Column(name="caste")
+    private String caste;
 
     @Column(name = "code_no")
     private int codeNo;
@@ -37,9 +207,6 @@ public class OnlineApplication implements Serializable {
 
     @Column(name = "course_name")
     private String courseName;
-
-    @Column(name = "created_on")
-    private Date createdOn;
 
     @Column(name = "degree")
     private String degree;
@@ -59,7 +226,7 @@ public class OnlineApplication implements Serializable {
     @Column(name = "email_id")
     private String email;
 
-    @Column(nullable = false, name = "enrollment_no")
+    @Column(name = "enrollment_no")
     private String enrolmentNo;
 
     @Column(name = "father_name")
@@ -80,10 +247,9 @@ public class OnlineApplication implements Serializable {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_approve")
     private boolean isApprove;
 
-    @OneToOne
-    @JoinColumn(name = "locationId", insertable = false, updatable = false)
-    private Locations location;
 
+    @Column(name="location")
+    private String location;
     @Column(name = "mandal")
     private String mandal;
 
@@ -108,9 +274,8 @@ public class OnlineApplication implements Serializable {
                 monthYear + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
     }
 
-    @OneToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
-    private Nationality nationality;
+    @Column(name="nationality")
+    private String nationality;
 
     @Column(name = "ous_education")
     private String ousEducation;
@@ -133,13 +298,11 @@ public class OnlineApplication implements Serializable {
     @Column(name = "registration_no")
     private String registrationNo;
 
-    @OneToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
-    private Religion religion;
+    @Column(name="religion")
+    private String religion;
 
-    @OneToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
-    private ResidentialArea residentialArea;
+    @Column(name="residentialArea")
+    private String residentialArea;
 
     @Column(name = "second_language")
     private String secondLanguage;
@@ -150,9 +313,6 @@ public class OnlineApplication implements Serializable {
     @Column(name = "street")
     private String street;
 
-    @Column(name = "study_centre")
-    private String studyCentre;
-
     @Column(name = "university")
     private String university;
 
@@ -161,6 +321,8 @@ public class OnlineApplication implements Serializable {
 
     @Column(name = "month_of_year")
     private String monthYear;
+
+
 
     public Integer getId() {
         return id;
@@ -222,7 +384,7 @@ public class OnlineApplication implements Serializable {
         return courseName;
     }
 
-    public Caste getCaste() {
+    public String  getCaste() {
         return caste;
     }
 
@@ -462,14 +624,6 @@ public class OnlineApplication implements Serializable {
         this.street = street;
     }
 
-    public String getStudyCentre() {
-        return studyCentre;
-    }
-
-    public void setStudyCentre(String studyCentre) {
-        this.studyCentre = studyCentre;
-    }
-
     public String getUniversity() {
         return university;
     }
@@ -486,39 +640,39 @@ public class OnlineApplication implements Serializable {
         this.village = village;
     }
 
-    public void setCaste(Caste caste) {
+    public void setCaste(String caste) {
         this.caste = caste;
     }
 
-    public Locations getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Locations location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public Nationality getNationality() {
+    public String getNationality() {
         return nationality;
     }
 
-    public void setNationality(Nationality nationality) {
+    public void setNationality(String nationality) {
         this.nationality = nationality;
     }
 
-    public Religion getReligion() {
+    public String getReligion() {
         return religion;
     }
 
-    public void setReligion(Religion religion) {
+    public void setReligion(String religion) {
         this.religion = religion;
     }
 
-    public ResidentialArea getResidentialArea() {
+    public String getResidentialArea() {
         return residentialArea;
     }
 
-    public void setResidentialArea(ResidentialArea residentialArea) {
+    public void setResidentialArea(String residentialArea) {
         this.residentialArea = residentialArea;
     }
 
@@ -536,5 +690,13 @@ public class OnlineApplication implements Serializable {
 
     public void setMonthYear(String monthYear) {
         this.monthYear = monthYear;
+    }
+
+    public int getCentre_code_no() {
+        return centre_code_no;
+    }
+
+    public void setCentre_code_no(int centre_code_no) {
+        this.centre_code_no = centre_code_no;
     }
 }

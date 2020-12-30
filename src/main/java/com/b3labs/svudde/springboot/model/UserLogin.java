@@ -1,7 +1,11 @@
 package com.b3labs.svudde.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_login")
@@ -11,6 +15,13 @@ public class UserLogin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "user_id")
     private Integer userId;
+
+  /*  @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="student_id", referencedColumnName = "student_id", insertable = false, updatable = false)
+    private OnlineApplication onlineApplication;*/
+
+    /*@OneToMany(targetEntity=OnlineApplication.class, mappedBy="userLogin",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OnlineApplication> user = new ArrayList<>();*/
 
     @Column(nullable = false, name = "activation_code")
     private String activationCode;

@@ -1,12 +1,9 @@
 package com.b3labs.svudde.springboot.controller;
 
-import com.b3labs.svudde.springboot.model.OnlineApplication;
 import com.b3labs.svudde.springboot.model.UserLogin;
-import com.b3labs.svudde.springboot.model.UserProfile;
-import com.b3labs.svudde.springboot.service.CreateUserService;
+import com.b3labs.svudde.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ManageUserController {
 
     @Autowired
-    CreateUserService createUserService;
+    UserService userService;
 
     @PostMapping("/createUser")
     public UserLogin createUserLogin() {
-        return createUserService.createUser();
+        return userService.createUser();
     }
 }

@@ -2,6 +2,8 @@ package com.b3labs.svudde.springboot.dao;
 
 import com.b3labs.svudde.springboot.model.OnlineApplication;
 import org.hibernate.Session;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,17 +38,25 @@ public class OnlineApplicationDAOImpl implements OnlineApplicationDAO {
     }
 
     @Override
-    public Integer save(OnlineApplication onlineApplication) {
+    public void save(OnlineApplication onlineApplication) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Integer obj = (Integer) currentSession.save(onlineApplication);
-        logger.info(obj.toString());
-        return obj;
+        currentSession.saveOrUpdate(onlineApplication);
     }
 
     @Override
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         OnlineApplication onlineApplication = currentSession.get(OnlineApplication.class, id);
+        System.out.println(onlineApplication.getId());
         currentSession.delete(onlineApplication);
+    }
+
+    @Override
+    public List<OnlineApplication> getAllApplications(int id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<OnlineApplication> query = currentSession.createQuery("from OnlineApplication a where a.centreId = :id ", OnlineApplication.class);
+        query.setParameter("id",id);
+        List<OnlineApplication> list=(List<OnlineApplication>)query.getResultList();
+        return list;
     }
 }
