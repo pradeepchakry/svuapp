@@ -4,14 +4,16 @@ import './App.css';
 import { render } from '@testing-library/react';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Table from "./components/Table"
-import AddEmployee from "./components/AddEmployee"
+import Home from "./components/Home"
+import Page from "./components/Page"
 
 class App extends React.Component {
+  
   render() {
     return (
       <Router>
-        <Route exact path="/" component={AddEmployee} />
-        <Route exact path="/view" component={Table} />
+        <Route exact name="Login" path="/" component={Page} />
+        <Route exact name="Home" path="/home" component={Home} />
       </Router>
     );
   }
