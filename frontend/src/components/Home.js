@@ -53,19 +53,41 @@ export default function Home() {
 
   const history = useHistory();
 
-  
   const classes = useStyles();
   const [firstLoad, setLoad] = React.useState(true);
   const [name, setName] = React.useState(true);
   const [gender, setGender] = React.useState(true);
-  const [enrolNo, setEnrolNo] = React.useState(true);
+  const [courseName, setCourseName] = React.useState(true);
+  const [degree, setDegree] = React.useState(true);
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("1998-04-02T21:11:54")
+);
+  const [doorNo, setDoorNo] = React.useState(true);
+  const [street, setStreet] = React.useState(true);
+  const [village, setVillage] = React.useState(true);
+  const [pincode, setPincode] = React.useState(true);
+  const [email, setEmail] = React.useState(true);
+  const [fatherName, setFatherName] = React.useState(true);
+  const [religion, setReligion] = React.useState(true);
+  const [caste, setCaste] = React.useState(true);
+  
+  const [saveResponse, setSaveResponse] = React.useState(true);
 
 
   const[message, setMessage] = React.useState("Nothing saved in the session");
 
   const handleNameChange = event => setName(event.target.value);
   const handleGenderChange = event => setGender(event.target.value);
-  const handleEnrolNo = event => setEnrolNo(event.target.value);
+  const handleCourseName = event => setCourseName(event.target.value);
+  const handleDegree = event => setDegree(event.target.value);
+  const handleDateChange = date => setSelectedDate(date);
+  const handleDoorNo = event => setDoorNo(event.target.value);
+  const handleStreet = event => setStreet(event.target.value);
+  const handleVillage = event => setVillage(event.target.value);
+  const handlePincode = event => setPincode(event.target.value);
+  const handleFatherName = event => setFatherName(event.target.value);
+  const handleReligion = event => setReligion(event.target.value);
+  const handleCaste = event => setCaste(event.target.value);
 
 //   const routeChange = () =>{ 
 //     let path = `/view`; 
@@ -89,10 +111,10 @@ export default function Home() {
       if(!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       } else {
-        console.log("Status: OK in Home");
-        let responseText = document.createElement(response);
-        console.log("Response " + JSON.stringify(response))
-        document.body.appendChild(responseText);
+        console.log("SUCCESS")
+        // console.log("Status: OK in Home -> Response: " + JSON.stringify(response.json()));
+        // let responseText = document.createElement(response.json());
+        // document.body.appendChild(responseText);
       }
     })
     .catch(e => {
@@ -144,6 +166,129 @@ export default function Home() {
             onChange={handleGenderChange}
             autoFocus
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="courseName"
+            label="courseName"
+            name="CourseName"
+            autoComplete="courseName"
+            onChange={handleCourseName}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="degree"
+            required
+            fullWidth
+            id="degree"
+            label="degree"
+            name="Degree"
+            autoComplete="degree"
+            onChange={handleDegree}
+            autoFocus
+          />
+          <Grid item xs={12}>
+                        <p>Date of birth</p>
+                        <TextField
+                            id="date"
+                            lablel="Date of birth"
+                            name="Date of Birth"
+                            type="date"
+                            defaultValue="1998-04-02"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true
+                            }}
+                            onChange={handleDateChange}
+                        />
+                    </Grid>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="doorNo"
+            label="doorNo"
+            name="Door No."
+            autoComplete="doorNo"
+            onChange={handleDoorNo}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="street"
+            label="street"
+            name="Street"
+            autoComplete="street"
+            onChange={handleStreet}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="village"
+            label="village"
+            name="City/Town/Village"
+            autoComplete="village"
+            onChange={handleVillage}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="pincode"
+            label="pincode"
+            name="Pincode"
+            autoComplete="pincode"
+            onChange={handlePincode}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="fatherName"
+            label="fatherName"
+            name="Father's Name"
+            autoComplete="fatherName"
+            onChange={handleFatherName}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="religiion"
+            label="religiion"
+            name="Religiion"
+            autoComplete="religion"
+            onChange={handleReligion}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="caste"
+            label="caste"
+            name="Caste"
+            autoComplete="caste"
+            onChange={handleCaste}
+            autoFocus
+          />
           <Button
             type="submit"
             fullWidth
@@ -155,6 +300,12 @@ export default function Home() {
             Save
           </Button>
         </form>
+
+        
+      </div>
+      <div className="responseData">
+        {setSaveResponse}
+      
       </div>
       <Box mt={8}>
         <Copyright />

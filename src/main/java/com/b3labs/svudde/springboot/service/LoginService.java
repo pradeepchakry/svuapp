@@ -6,5 +6,7 @@ public interface LoginService {
 
     boolean login(Integer userId, String password);
 
-    UserProfile login(String phone);
+    // UserProfile login(String phone);
+
+    boolean login(String phone);
 }

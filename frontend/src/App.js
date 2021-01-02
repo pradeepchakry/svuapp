@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import logo from './logo.svg';
 import './App.css';
 import { render } from '@testing-library/react';
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Router, Route, Link } from 'react-router-dom';
+import history from './components/history';
 import Table from "./components/Table"
 import Home from "./components/Home"
-import Page from "./components/Page"
+import Login from "./components/Login"
+import {withRouter} from 'react-router';
 
 class App extends React.Component {
   
   render() {
     return (
-      <Router>
-        <Route exact name="Login" path="/" component={Page} />
-        <Route exact name="Home" path="/home" component={Home} />
+      <Router history={history}>
+        <Route name="Login" path="/" exact component={Login} />
+        <Route name="Home" path="/home" exact component={Home} />
       </Router>
     );
   }

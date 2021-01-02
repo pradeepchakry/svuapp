@@ -28,15 +28,22 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private CreateStudentProfileService createStudentProfileService;
 
+    // @Override
+    // public UserProfile login(String phone) {
+
+    //     validate mobile otp authentication (pending)
+
+    //     if(userProfileDAO.get(phone) == null) {
+    //         createStudentProfileService.createStudentProfile(phone);
+    //     }
+    //     return userProfileDAO.get(phone);
+    // }
+
     @Override
-    public UserProfile login(String phone) {
+    public boolean login(String phone) {
+        // call opt verification api
 
-        // validate mobile otp authentication (pending)
-
-        if(userProfileDAO.get(phone) == null) {
-            createStudentProfileService.createStudentProfile(phone);
-        }
-        return userProfileDAO.get(phone);
+        return true;
     }
 
     @Override

@@ -23,12 +23,15 @@ com/b3labs/svudde/springboot/dao/CourseChangeDAO.class
 com/b3labs/svudde/springboot/dao/LocationsDAO.class
 com/b3labs/svudde/springboot/model/ResidentialArea.class
 com/b3labs/svudde/springboot/model/StudyCenterCourseChange.class
+com/b3labs/svudde/springboot/service/UserService.class
 com/b3labs/svudde/springboot/dao/ApplicationFineScheduleDAOImpl.class
 com/b3labs/svudde/springboot/model/Modules.class
 com/b3labs/svudde/springboot/model/Academics.class
+com/b3labs/svudde/springboot/service/UserServiceImpl.class
 com/b3labs/svudde/springboot/dao/ApplicationFineScheduleDAO.class
 com/b3labs/svudde/springboot/dao/BAGroupDAO.class
 com/b3labs/svudde/springboot/model/CourseSubject.class
+com/b3labs/svudde/springboot/service/OnlineApplicationService.class
 com/b3labs/svudde/springboot/dao/UserProfileDAOImpl.class
 com/b3labs/svudde/springboot/dao/SpyMetaDAOImpl.class
 com/b3labs/svudde/springboot/dao/StudyCenterCourseChangeDAOImpl.class
@@ -48,6 +51,7 @@ com/b3labs/svudde/springboot/dao/ModulesDAO.class
 com/b3labs/svudde/springboot/model/Permissions.class
 com/b3labs/svudde/springboot/dao/OnlineApplicationDAO.class
 com/b3labs/svudde/springboot/model/Locations.class
+com/b3labs/svudde/springboot/service/OnlineApplicationServiceImpl.class
 com/b3labs/svudde/springboot/service/ApplyOnlineService.class
 com/b3labs/svudde/springboot/model/StudyCenters.class
 com/b3labs/svudde/springboot/model/OnlineApplication.class
@@ -60,6 +64,7 @@ com/b3labs/svudde/springboot/model/ApplicationFineSchedule.class
 com/b3labs/svudde/springboot/dao/CourseSubjectDAO.class
 com/b3labs/svudde/springboot/dao/PermissionsDAOImpl.class
 com/b3labs/svudde/springboot/dao/UserProfileDAO.class
+com/b3labs/svudde/springboot/controller/OnlineApplicationController.class
 com/b3labs/svudde/springboot/model/MASCountry.class
 com/b3labs/svudde/springboot/model/CourseChange.class
 com/b3labs/svudde/springboot/dao/ReligionDAOImpl.class

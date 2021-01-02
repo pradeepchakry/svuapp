@@ -20,13 +20,13 @@ public class LoginController {
     private LoginService loginService;
 
     @GetMapping("/loginPhone/{phone}")
-    public UserProfile loginWithPhone(@PathVariable String phone) {
+    public boolean loginWithPhone(@PathVariable String phone) {
         logger.info("[ << LOGGING IN WITH PHONE " + phone + " >> ]");
         return loginService.login(phone);
     }
 
     @GetMapping("/loginUser/{userId}")
-    public UserProfile loginWithUserId(@PathVariable String userId) {
+    public boolean loginWithUserId(@PathVariable String userId) {
         return loginService.login(userId);
     }
 }
