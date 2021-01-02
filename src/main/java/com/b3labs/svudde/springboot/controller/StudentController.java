@@ -4,18 +4,25 @@ import com.b3labs.svudde.springboot.dao.StudentDAO;
 import com.b3labs.svudde.springboot.dao.StudyCentreDAO;
 import com.b3labs.svudde.springboot.model.Student;
 import com.b3labs.svudde.springboot.model.StudyCentre;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/api/v1/")
-public class StudentController {
+@Slf4j
+public class StudentController extends ResponseEntityExceptionHandler {
     private final StudyCentreDAO studyCentreDAO;
     private final StudentDAO studentDAO;
     @Autowired
@@ -119,9 +126,22 @@ public class StudentController {
         List<Student> students= studentDAO.getAllStudentsByStudyCentreID(StudyCentreId);
         return ResponseEntity.status(HttpStatus.OK).body(students);
     }
-    @GetMapping("/mobileNo/{mobileNo}")
-    public ResponseEntity getByMobileNo(@PathVariable String mobileNo) {
-        boolean result = studentDAO.validateStudent(mobileNo);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    @GetMapping("/Student/{mobileNo}")
+    public ResponseEntity<Student> getStudentDetailsByMobileNo(@PathVariable String mobileNo) {
+        Student student = studentDAO.getStudentDetailsByMobileNo(mobileNo);
+        return ResponseEntity.status(HttpStatus.OK).body(student);
+    }
+
+    @ExceptionHandler(value
+            = { IllegalArgumentException.class, IllegalStateException.class,Exception.class })
+    protected ResponseEntity<Object> handleConflict(
+            RuntimeException ex, WebRequest request) {
+        String bodyOfResponse = "unable to process request";
+        HttpHeaders httpHeaders=new HttpHeaders();
+        String CR_ID=UUID.randomUUID().toString();
+        httpHeaders.set("CorrelationID",CR_ID);
+        log.error("CR_ID:{} AND exception is: {}",CR_ID,ex.fillInStackTrace());
+        return handleExceptionInternal(ex, bodyOfResponse,httpHeaders
+                , HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

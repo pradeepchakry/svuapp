@@ -19,6 +19,6 @@ public interface StudentDAO {
 
     List<Student> getAllStudentsByStudyCentreID(Integer id);
 
-    boolean validateStudent(String mobileNo);
+    Student getStudentDetailsByMobileNo(String mobileNo);
 
 }

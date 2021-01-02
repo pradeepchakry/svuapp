@@ -75,12 +75,12 @@ public class StudentDAOImpl implements com.b3labs.svudde.springboot.dao.StudentD
     }
 
     @Override
-    public boolean validateStudent(String mobileNo) {
+    public Student getStudentDetailsByMobileNo(String mobileNo) {
         Session currentSession = entityManager.unwrap(Session.class);
-        NativeQuery<Student> query = currentSession.createNativeQuery("select * from student a where a.mobile_No = :mobileNo ",Student.class);
+        Query<Student> query = currentSession.createQuery("from Student a where a.mobileNo = :mobileNo ",Student.class);
         query.setParameter("mobileNo",mobileNo);
         List<Student> list= query.getResultList();
-        return !list.isEmpty();
+        return list.get(0);
     }
 
 
