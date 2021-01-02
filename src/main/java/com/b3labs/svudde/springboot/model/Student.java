@@ -1,212 +1,106 @@
 package com.b3labs.svudde.springboot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "study_centre_application")
-public class OnlineApplication implements Serializable {
-
-    @Column(name = "centre_id")
-    private Integer centreId;
+@Table(name="student")
+public class Student {
 
 
-    @Column(name = "centre_code_no")
-    private int centre_code_no;
-
-    @Column(nullable = true, name = "centre_name")
-    private String centreName;
-
-    @Column(name = "centre_district_state")
-    private String centre_district_state;
-
-    @Column(name = "centre_pin_code")
-    private int centre_pin_code;
-
-    @Column(name = "centre_phone")
-    private String centre_phone;
-
-    @Column(name = "centre_street")
-    private String centre_street;
-
-    @Column(name = "centre_doorNo")
-    private String centre_doorNo;
-
-    @Column(name = "centre_Mandal")
-    private String centre_Mandal;
-
-    @Column(name = "centre_village")
-    private String centre_village;
-
-    @Column(name = "created_on")
-    private Date createdOn;
-
-    @Column(name = "created_by")
-    private Integer createdBy;
-
-    @Column(name = "modified_on")
-    private Date modifiedOn;
-
-    @Column(name = "modified_by")
-    private Integer modifiedBy;
-
-    @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_active")
-    private boolean isActive;
-
-    @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_delete")
-    private boolean is_delete;
-
-
-
-    public Integer getCentreId() {
-        return centreId;
+    public int getStudent_id() {
+        return student_id;
     }
 
-    public void setCentreId(Integer centreId) {
-        this.centreId = centreId;
-    }
-
-
-
-    public String getCentreName() {
-        return centreName;
-    }
-
-    public void setCentreName(String centreName) {
-        this.centreName = centreName;
-    }
-
-
-
-
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getModifiedOn() {
-        return modifiedOn;
-    }
-
-    public void setModifiedOn(Date modifiedOn) {
-        this.modifiedOn = modifiedOn;
-    }
-
-    public Integer getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(Integer modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public boolean isIs_delete() {
-        return is_delete;
-    }
-
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
-    }
-
-    public String getCentre_district_state() {
-        return centre_district_state;
-    }
-
-    public void setCentre_district_state(String centre_district_state) {
-        this.centre_district_state = centre_district_state;
-    }
-
-    public int getCentre_pin_code() {
-        return centre_pin_code;
-    }
-
-    public void setCentre_pin_code(int centre_pin_code) {
-        this.centre_pin_code = centre_pin_code;
-    }
-
-    public String getCentre_phone() {
-        return centre_phone;
-    }
-
-    public void setCentre_phone(String centre_phone) {
-        this.centre_phone = centre_phone;
-    }
-
-    public String getCentre_street() {
-        return centre_street;
-    }
-
-    public void setCentre_street(String centre_street) {
-        this.centre_street = centre_street;
-    }
-
-    public String getCentre_doorNo() {
-        return centre_doorNo;
-    }
-
-    public void setCentre_doorNo(String centre_doorNo) {
-        this.centre_doorNo = centre_doorNo;
-    }
-
-    public String getCentre_Mandal() {
-        return centre_Mandal;
-    }
-
-    public void setCentre_Mandal(String centre_Mandal) {
-        this.centre_Mandal = centre_Mandal;
-    }
-
-    public String getCentre_village() {
-        return centre_village;
-    }
-
-    public void setCentre_village(String centre_village) {
-        this.centre_village = centre_village;
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "student_id")
-    private Integer id;
+    private int student_id;
+
+    @Column(name = "name")
+    private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private StudyCentre studyCentre;
 
     @Column(name = "app_serial_no")
-    private int appSerialNo;
+    private Integer appSerialNo;
+
+    public String getCentre() {
+        return centre;
+    }
+
+    public void setCentre(String centre) {
+        this.centre = centre;
+    }
+
+    @Column(name = "study_centre")
+    private String centre;
+
+    public String getMedium() {
+        return medium;
+    }
+
+    public void setMedium(String medium) {
+        this.medium = medium;
+    }
+
+    @Column(name = "medium")
+    private String medium;
 
     @Column(nullable = false, name = "application_no")
     private int applicationNo;
+
+    public String getMonthYear() {
+        return monthYear;
+    }
+
+    public void setMonthYear(String monthYear) {
+        this.monthYear = monthYear;
+    }
+
+    @Column(name = "month_Year")
+    private String monthYear;
 
     @Column(name = "ba_groupid")
     private Integer baGroupId;
 
     @Column(name = "cal_fees")
-    private int calFees;
+    private Integer calFees;
 
     @Column(name="caste")
     private String caste;
 
     @Column(name = "code_no")
-    private int codeNo;
+    private Integer codeNo;
 
     @Column(name = "course_id")
     private Integer courseId;
 
     @Column(name = "course_name")
     private String courseName;
+
+    @Column(name = "updated_on")
+    private Timestamp updatedOn;
+
+    public Timestamp getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Timestamp updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    @Column(name = "created_on")
+    private Timestamp createdOn;
 
     @Column(name = "degree")
     private String degree;
@@ -221,12 +115,12 @@ public class OnlineApplication implements Serializable {
     private String doorNo;
 
     @Column(name = "eligibility_marks")
-    private int eligibilityMarks;
+    private Integer eligibilityMarks;
 
     @Column(name = "email_id")
     private String email;
 
-    @Column(name = "enrollment_no")
+    @Column(nullable = false, name = "enrollment_no")
     private String enrolmentNo;
 
     @Column(name = "father_name")
@@ -254,24 +148,17 @@ public class OnlineApplication implements Serializable {
     private String mandal;
 
     @Column(name = "marks_obtained")
-    private int marksObtained;
+    private Integer marksObtained;
 
     @Column(name = "martial_status")
     private String maritalStatus;
 
     @Column(name = "max_marks")
-    private int maxMarks;
+    private Integer maxMarks;
 
-    @Column(name = "lang_medium")
-    private String langMedium;
-
-    @Column(name = "name")
-    private String name;
-
-    @Override
+   @Override
     public String toString() {
-        return "Online Application [id= " + id + ", name = " + name + ", yearMonth = " +
-                monthYear + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
+        return "Online Application [id= " + student_id + ", name = " + name + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
     }
 
     @Column(name="nationality")
@@ -281,16 +168,16 @@ public class OnlineApplication implements Serializable {
     private String ousEducation;
 
     @Column(columnDefinition = "FLOAT", name = "percentage_marks")
-    private float percentageMarks;
+    private Double percentageMarks;
 
     @Column(name = "phone")
     private String phone;
 
     @Column(name = "pincode")
-    private int pincode;
+    private Integer pincode;
 
     @Column(name = "print_count")
-    private int printCount;
+    private Integer printCount;
 
     @Column(name = "qualifying_exam")
     private String qualifyingExam;
@@ -301,7 +188,7 @@ public class OnlineApplication implements Serializable {
     @Column(name="religion")
     private String religion;
 
-    @Column(name="residentialArea")
+    @Column(name="residential_area")
     private String residentialArea;
 
     @Column(name = "second_language")
@@ -319,32 +206,22 @@ public class OnlineApplication implements Serializable {
     @Column(name = "village")
     private String village;
 
-    @Column(name = "month_of_year")
-    private String monthYear;
+    @Column(name = "mobile_No")
+    private String mobileNo;
 
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public int getAppSerialNo() {
+    public Integer getAppSerialNo() {
         return appSerialNo;
     }
 
-    public void setAppSerialNo(int appSerialNo) {
+    public void setAppSerialNo(Integer appSerialNo) {
         this.appSerialNo = appSerialNo;
     }
 
-    public int getApplicationNo() {
+    public Integer getApplicationNo() {
         return applicationNo;
     }
 
-    public void setApplicationNo(int applicationNo) {
+    public void setApplicationNo(Integer applicationNo) {
         this.applicationNo = applicationNo;
     }
 
@@ -356,19 +233,19 @@ public class OnlineApplication implements Serializable {
         this.baGroupId = baGroupId;
     }
 
-    public int getCalFees() {
+    public Integer getCalFees() {
         return calFees;
     }
 
-    public void setCalFees(int calFees) {
+    public void setCalFees(Integer calFees) {
         this.calFees = calFees;
     }
 
-    public int getCodeNo() {
+    public Integer getCodeNo() {
         return codeNo;
     }
 
-    public void setCodeNo(int codeNo) {
+    public void setCodeNo(Integer codeNo) {
         this.codeNo = codeNo;
     }
 
@@ -392,11 +269,11 @@ public class OnlineApplication implements Serializable {
         this.courseName = courseName;
     }
 
-    public Date getCreatedOn() {
+    public Timestamp getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
     }
 
@@ -432,11 +309,11 @@ public class OnlineApplication implements Serializable {
         this.doorNo = doorNo;
     }
 
-    public int getEligibilityMarks() {
+    public Integer getEligibilityMarks() {
         return eligibilityMarks;
     }
 
-    public void setEligibilityMarks(int eligibilityMarks) {
+    public void setEligibilityMarks(Integer eligibilityMarks) {
         this.eligibilityMarks = eligibilityMarks;
     }
 
@@ -512,11 +389,11 @@ public class OnlineApplication implements Serializable {
         this.mandal = mandal;
     }
 
-    public int getMarksObtained() {
+    public Integer getMarksObtained() {
         return marksObtained;
     }
 
-    public void setMarksObtained(int marksObtained) {
+    public void setMarksObtained(Integer marksObtained) {
         this.marksObtained = marksObtained;
     }
 
@@ -528,11 +405,11 @@ public class OnlineApplication implements Serializable {
         this.maritalStatus = maritalStatus;
     }
 
-    public int getMaxMarks() {
+    public Integer getMaxMarks() {
         return maxMarks;
     }
 
-    public void setMaxMarks(int maxMarks) {
+    public void setMaxMarks(Integer maxMarks) {
         this.maxMarks = maxMarks;
     }
 
@@ -552,11 +429,11 @@ public class OnlineApplication implements Serializable {
         this.ousEducation = ousEducation;
     }
 
-    public float getPercentageMarks() {
+    public Double getPercentageMarks() {
         return percentageMarks;
     }
 
-    public void setPercentageMarks(float percentageMarks) {
+    public void setPercentageMarks(Double percentageMarks) {
         this.percentageMarks = percentageMarks;
     }
 
@@ -568,19 +445,19 @@ public class OnlineApplication implements Serializable {
         this.phone = phone;
     }
 
-    public int getPincode() {
+    public Integer getPincode() {
         return pincode;
     }
 
-    public void setPincode(int pincode) {
+    public void setPincode(Integer pincode) {
         this.pincode = pincode;
     }
 
-    public int getPrintCount() {
+    public Integer getPrintCount() {
         return printCount;
     }
 
-    public void setPrintCount(int printCount) {
+    public void setPrintCount(Integer printCount) {
         this.printCount = printCount;
     }
 
@@ -676,27 +553,19 @@ public class OnlineApplication implements Serializable {
         this.residentialArea = residentialArea;
     }
 
-    public String getLangMedium() {
-        return langMedium;
+    public String getMobileNo() {
+        return mobileNo;
     }
 
-    public void setLangMedium(String langMedium) {
-        this.langMedium = langMedium;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
-    public String getMonthYear() {
-        return monthYear;
+    public com.b3labs.svudde.springboot.model.StudyCentre getStudyCentre() {
+        return studyCentre;
     }
 
-    public void setMonthYear(String monthYear) {
-        this.monthYear = monthYear;
-    }
-
-    public int getCentre_code_no() {
-        return centre_code_no;
-    }
-
-    public void setCentre_code_no(int centre_code_no) {
-        this.centre_code_no = centre_code_no;
+    public void setStudyCentre(com.b3labs.svudde.springboot.model.StudyCentre studyCentre) {
+        this.studyCentre = studyCentre;
     }
 }
