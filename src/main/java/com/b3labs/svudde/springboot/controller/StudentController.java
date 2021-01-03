@@ -115,7 +115,7 @@ public class StudentController extends ResponseEntityExceptionHandler {
     public ResponseEntity getById(@PathVariable Integer id) {
         Student student = studentDAO.get(id);
         if (student==null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Student not present");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Student not present");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(student);
@@ -140,7 +140,7 @@ public class StudentController extends ResponseEntityExceptionHandler {
         HttpHeaders httpHeaders=new HttpHeaders();
         String CR_ID=UUID.randomUUID().toString();
         httpHeaders.set("CorrelationID",CR_ID);
-        log.error("CR_ID:{} AND exception is: {}",CR_ID,ex.fillInStackTrace());
+        //log.error("CR_ID:{} AND exception is: {}",CR_ID,ex.fillInStackTrace());
         return handleExceptionInternal(ex, bodyOfResponse,httpHeaders
                 , HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
