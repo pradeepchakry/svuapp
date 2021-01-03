@@ -85,7 +85,7 @@ class Login extends React.Component {
    checkExistingStudent(input) {
     console.log("In checkExistingStudent...")
     let result = null;
-    let endPoint = "http://localhost:8080/api/v1/Student/" + input;
+    let endPoint = "http://159.203.148.240:8080/api/v1/Student/" + input;
      fetch(endPoint)
         .then(res => {
           if(!res.ok) {
@@ -96,7 +96,7 @@ class Login extends React.Component {
             console.log("Found an existing record with the number " + input
                 + " enrolled, fethcing record!");
 
-            fetch("http://localhost:8080/api/v1/Student/" + this.state.phone)
+            fetch("http://159.203.148.240:8080/api/v1/Student/" + this.state.phone)
                 .then(resp => resp.json())
                 .then((data) => {
                   console.log("Existing student details --> " + JSON.stringify(data));
