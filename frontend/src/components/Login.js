@@ -22,6 +22,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput2 from 'react-phone-number-input';
 import { withStyles } from "@material-ui/core/styles";
 import PhoneInput from 'react-phone-number-input/input';
+import PropTypes from 'prop-types';
 // import Prompt from './Prompt';
 
 const useStyles = makeStyles((theme) => ({
@@ -183,7 +184,7 @@ class Login extends React.Component {
   const { classes } = this.props;
   return (
 
-    <Container component="main" maxWidth="xs">
+    <Container class={useStyles.paper} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -193,7 +194,7 @@ class Login extends React.Component {
           Sign in
         </Typography>
         
-        {/* <form className={classes.form} noValidate> */}
+         
 
         <PhoneInput
           defaultCountry="IN"
@@ -257,13 +258,18 @@ close => (
             }
           </Popup>
           </div>
+         
         </div>
        <Box mt={8}>
          <Copyright />
        </Box>
      </Container>
   );
- }
+  }
+}
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
 }
 
 // export default Login;
