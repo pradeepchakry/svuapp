@@ -14,8 +14,8 @@ class App extends React.Component {
   render() {
     return (
       <Router history={history}>
-        <Route name="Home" path="/" exact component={Home} />
-        {/* <Route name="Home" path="/home" exact component={Home} /> */}
+        <Route name="Login" path="/" exact component={Login} />
+        <Route name="Home" path="/home" exact component={Home} />
       </Router>
     );
   }
