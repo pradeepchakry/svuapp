@@ -23,6 +23,13 @@ import PhoneInput2 from 'react-phone-number-input';
 import { withStyles } from "@material-ui/core/styles";
 import PhoneInput from 'react-phone-number-input/input';
 import PropTypes from 'prop-types';
+import PasswordMask from 'react-password-mask';
+import OtpInput from 'react-otp-input';
+import ReactFormInputValidation from "react-form-input-validation";
+import { useAppContext } from "../libs/contextLib";
+
+
+
 // import Prompt from './Prompt';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +56,7 @@ const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         SVUDDE
       </Link>{' '}
       {new Date().getFullYear()}
@@ -64,88 +71,85 @@ const routeChange = () => {
 }
 
 class Login extends React.Component {
+
+  
+  isValidNumber = false;
+
   constructor(props) {
     super(props);
     // this.state = { phone: "", seen: false };
-  }
-
-  async handleSendOTP() {
-    this.modifyPhone();
-    // console.log("sending otp to " + this.state.phone);
-    // let endPoint = "https://2factor.in/API/V1/f3e5e9af-4bfb-11eb-8153-0200cd936042/SMS/" + this.state.phone + "/AUTOGEN";
-    // await fetch(endPoint)
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //       this.setState({ otpSentSessionId: data.Details })
-    //     })
-    //     .catch(console.log)
-    // console.log("otp sent sessionID >> " + this.state.otpSentSessionId);
     
+    this.state = {
+      input: {}, 
+      errors: {},
+      phone: "",
+      seen: false,
+      otpEntered: "",
+      otpSentSessionId: "",
+      studentId: 0,
+      studentExists: false,
+      username: "",
+      password: "",
+      mobilevalidate: false,
+      otp: "",
+      loadDialog: false,
+      phoneTrimmed: ""
+     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.form = new ReactFormInputValidation(this);
+    this.form.useRules({
+        phone: "required|numeric|digits_between:10,12",
+    });
+    this.onformsubmit = (fields) => {
+      // Do you ajax calls here.
+    }
+
   }
 
-   checkExistingStudent(input) {
-    console.log("In checkExistingStudent...")
-    let result = null;
-    let endPoint = "http://159.203.148.240:8080/api/v1/Student/" + input;
-     fetch(endPoint)
-        .then(res => {
-          if(!res.ok) {
-            console.log("No Student found with the number " + input 
-                + " redirecting to new application!");
-            routeChange();
-          } else {
-            console.log("Found an existing record with the number " + input
-                + " enrolled, fethcing record!");
-
-            fetch("http://159.203.148.240:8080/api/v1/Student/" + this.state.phone)
-                .then(resp => resp.json())
-                .then((data) => {
-                  console.log("Existing student details --> " + JSON.stringify(data));
-                  this.setState({studentId: data.student_id});
-                })
-          }
-        }
-        ).catch(console.log);
+  toggle = () => {
+    //this.modifyPhone();
+    let phoneEntered = this.state.phone;
+    let phoneArr = phoneEntered.split("+91");
+  
+    let phoneTrimmed = phoneArr[1];
+    console.log("phone after modifying -> " + phoneTrimmed)
+    this.mobileValidate(phoneTrimmed)
   }
 
-   async verifyOTP(otpReceived) {
-    console.log(otpReceived);
-    let validMobile = false;
-    let endPoint = "https://2factor.in/API/V1/f3e5e9af-4bfb-11eb-8153-0200cd936042/SMS/VERIFY/" + this.state.otpSentSessionId + "/" + otpReceived;
-    await fetch(endPoint)
-        .then(res => {
-          console.log("otp verification >> " + res.staus);
-          if(!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            } else {
-                console.log("Status: OK");
-                validMobile = true;
-            }           
-        })
-        .catch(console.log);
-    return validMobile;
+  updateState = () => {
+    
+    // let phone = Object.assign({}, this.state.phone);
+    // phone = phoneTrimmed;
+    // this.setState({phone});
+    // console.log("phone updated to " + this.state.phone)
   }
 
-  state = {
-    phone: "",
-    seen: false,
-    otpEntered: "",
-    otpSentSessionId: "",
-    studentId: 0,
-    studentExists: false
-   };
+   
+
+  
 
   handlePhone = (phone) => {
-    this.setState({phone: phone});  
+    this.setState({phone: phone});
+  }
+
+  handleChange(event) {
+    let input = this.state.input;
+    input[event.target.name] = event.target.value;
+    this.setState({     
+      input
+    });
   }
 
   modifyPhone = () => {
     console.log("modifying Phone " + this.state.phone);
     let phoneEntered = this.state.phone;
     let phoneArr = phoneEntered.split("+91");
-    console.log("phone trimemd to " + phoneArr[1]);
+  
     let phoneTrimmed = phoneArr[1];
-    this.setState({phone: phoneTrimmed});
+    console.log("phone trimemd to " + phoneTrimmed);
+    this.setState({ phoneTrimmed: phoneTrimmed});
+    console.log("phone in state to " + this.state.phoneTrimmed);
   }
 
   // handleOTPEntered = (otpEntered) => {
@@ -153,7 +157,57 @@ class Login extends React.Component {
   //   this.setState({otpEntered: otpEntered})
   // }
 
-  
+  loginUser(input) {
+    //fetch user authentication and redirect based on result
+    console.log("Authentication success " + input);
+    
+    routeChange();
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if(this.validate()){
+        console.log(this.state);
+        let input = {};
+        input["username"] = "";
+        input["password"] = "";
+        input["confirm_password"] = "";
+        this.setState({input:input});
+
+        // fetch to Authenticate and redirect
+        routeChange();
+    }
+
+  }
+
+  validate() {
+    let input = this.state.input;
+    let errors = {};
+    let isValid = true;
+    if (!input["username"]) {
+        isValid = false;
+        errors["username"] = "Please enter your username.";
+    }
+    
+    if (typeof input["username"] !== "undefined") {
+        const re = /^\S*$/;
+        if(input["username"].length < 6 || !re.test(input["username"])) {
+          isValid = false;
+          errors["username"] = "Please enter valid username.";
+        }
+    }
+    
+    if (!input["password"]) {
+      isValid = false;
+      errors["password"] = "Please enter your password.";
+    }
+
+    this.setState({
+      errors: errors
+    });
+    return isValid;
+  }
 
   handleOTPSubmit = () => {
     let studentExists = false;
@@ -164,6 +218,10 @@ class Login extends React.Component {
       console.log("verifying if the mobile number is already registered! " + this.state.phone);
       this.checkExistingStudent(this.state.phone);
   // }
+  }
+
+  handleOTPInput = (otp) => {
+    this.setState({ otp:  otp})
   }
 
   
@@ -179,93 +237,96 @@ class Login extends React.Component {
   getPhone = () => {
     return this.state.phone
   }
+
+  mobileValidate(text) {
+    console.log("In mobileValidate " + text)
+    const reg = /^[0]?[789]\d{9}$/;
+    if (reg.test(text) === false) {
+      this.setState({
+        mobilevalidate: false
+      });
+    } else {
+      console.log("valid mobile number, setting true");
+      this.isValidNumber = true;
+    }
+    //this.setState()
+  }
+
+  handleStudentSubmit = (e) => {
+    this.toggle();
+    console.log("valid mobile number " + this.isValidNumber);
+    if(!this.isValidNumber) {
+      alert("Enter a vaild mobile number");
+    } else {
+      return (<OtpInput
+        onChange={this.handleOTPInput}
+        numInputs={6}
+        separator={<span>-</span>}
+      />)
+    }
+  
+  }
+
+  renderOtpInput = () => {
+    return (<OtpInput
+        onChange={this.handleOTPInput}
+        numInputs={6}
+        separator={<span>-</span>}
+      />)
+  }
   
   render() {
   const { classes } = this.props;
+
   return (
 
-    <Container class={useStyles.paper} component="main" maxWidth="xs">
+    <Container className={useStyles.paper} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Study Center Sign in
         </Typography>
-        
-         
 
-        <PhoneInput
-          defaultCountry="IN"
-          value={this.state.phone}
-          placeholder="Enter phone number"
-          onChange={this.handlePhone} />
-          
-        <div className="btn">
-        <Popup
-          trigger={<button className="button" onFocus={() => {this.handleSendOTP()}} > Sign In </button>} modal nested >
-            {
-
-              
-
-close => (
-  <div className="modal">
-    <button className="close" onClick={close}>
-      &times;
-    </button>
-    <div className="header"> Enter the OTP sent to your Mobile Number </div>
-    <div className="content">
-      {' '}
-      <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            id="otpEntered"
-            label="One Time Password"
-            name="otpEntered"
-            autoComplete=""
-            defaultValue={this.state.otpEntered}
-            onChange={event => {
-              const { value } = event.target;
-              this.setState({ otpEntered: value });
-            }}
-            autoFocus
-          />
-    </div>
-    <div className="actions">
-      <button
-        className="button"
-        onClick={() => {
-          console.log('clicked submit');
-          this.handleOTPSubmit();
-        }}
-      >
-        Submit
-      </button>
-      <button
-        className="button"
-        onClick={() => {
-          console.log('modal closed ');
-          close();
-        }}
-      >
-        Change Mobile Number
-      </button>
-    </div>
-  </div>
-)
-            }
-          </Popup>
-          </div>
-         
+        <form onSubmit={this.handleSubmit}>
+          <div class="form-group">
+            <label for="username">Username </label>
+            <input 
+              type="text" 
+              name="username" 
+              value={this.state.input.username}
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="Enter username" 
+              id="username" />
+          <div className="text-danger">{this.state.errors.username}</div>
         </div>
-       <Box mt={8}>
-         <Copyright />
-       </Box>
-     </Container>
-  );
-  }
+        <div class="form-group">
+            <label for="password">Password </label>
+            <input 
+              type="password" 
+              name="password" 
+              value={this.state.input.password}
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="Enter password" 
+              id="password" />
+          <div className="text-danger">{this.state.errors.username}</div>
+        </div>
+        <div className="text-danger">{this.state.errors.password}</div>
+        <input type="submit" value="Submit" class="btn btn-success" />
+
+      </form>   
+  </div>
+  <Box mt={8}>
+    <Copyright />
+  </Box>
+</Container>
+);
+}
+
 }
 
 Login.propTypes = {
@@ -274,4 +335,6 @@ Login.propTypes = {
 
 // export default Login;
 
-export default withStyles(useStyles, { withTheme: true })(Login);
+export default withStyles(useStyles, { withTheme: true })(Login)
+  
+

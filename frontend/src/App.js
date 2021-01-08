@@ -7,16 +7,29 @@ import history from './components/history';
 import Table from "./components/Table"
 import Home from "./components/Home"
 import Login from "./components/Login"
+import PhoneLogin from "./components/PhoneLogin"
+import Root from "./components/Root"
 import {withRouter} from 'react-router';
+import { AppContext } from "./libs/contextLib";
+
 
 class App extends React.Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuthenticated: false
+    }
+  }
   render() {
+    
     return (
-      <Router history={history}>
-        <Route name="Login" path="/" exact component={Login} />
-        <Route name="Home" path="/home" exact component={Home} />
-      </Router>
+        <Router history={history}>
+          <Route name="Root" path="/" exact component={Root} />
+          <Route name="Login" path="/login" exact component={Login} />
+          <Route name="PhoneLogin" path="/phonelogin" exact component={PhoneLogin} />
+          <Route name="Home" path="/home" exact component={Home} />
+        </Router>
+      
     );
   }
 }
