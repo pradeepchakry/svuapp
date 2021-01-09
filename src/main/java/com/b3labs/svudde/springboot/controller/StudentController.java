@@ -1,5 +1,6 @@
 package com.b3labs.svudde.springboot.controller;
 
+import com.b3labs.svudde.springboot.dao.CourseDetailsDAO;
 import com.b3labs.svudde.springboot.dao.StudentDAO;
 import com.b3labs.svudde.springboot.dao.StudyCentreDAO;
 import com.b3labs.svudde.springboot.model.Student;
@@ -25,20 +26,19 @@ import java.util.UUID;
 public class StudentController extends ResponseEntityExceptionHandler {
     private final StudyCentreDAO studyCentreDAO;
     private final StudentDAO studentDAO;
+    private final CourseDetailsDAO courseDetailsDAO;
     @Autowired
-    public StudentController(StudyCentreDAO studyCentreDAO,StudentDAO studentDAO) {
+    public StudentController(StudyCentreDAO studyCentreDAO,StudentDAO studentDAO,CourseDetailsDAO courseDetailsDAO) {
         this.studyCentreDAO = studyCentreDAO;
         this.studentDAO =studentDAO;
+        this.courseDetailsDAO=courseDetailsDAO;
     }
 
     @PostMapping("/createStudent")
     public ResponseEntity<Student> create(@RequestBody Student student) {
-        //student.setStudyCentre(null);
+        student.setStudyCentre(null);
         student.setCentre(null);
         student.setCodeNo(null);
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        student.setCreatedOn(timestamp);
-        student.setUpdatedOn(timestamp);
         boolean result=studentDAO.save(student);
         if(result) {
             return ResponseEntity.status(HttpStatus.CREATED).body(student);
@@ -56,9 +56,7 @@ public class StudentController extends ResponseEntityExceptionHandler {
         student.setCentre(studyCentre.getName());
         student.setCodeNo(studyCentre.getcode_no());
         student.setStudyCentre(studyCentre);
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        student.setCreatedOn(timestamp);
-        student.setUpdatedOn(timestamp);
+
         boolean result=studentDAO.save(student);
         if(result) {
             return ResponseEntity.status(HttpStatus.CREATED).body(student);
@@ -78,9 +76,6 @@ public class StudentController extends ResponseEntityExceptionHandler {
             student.setCodeNo(optionalStudent.getCodeNo());
             student.setStudyCentre(optionalStudent.getStudyCentre());
         }
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        student.setCreatedOn(optionalStudent.getCreatedOn());
-        student.setUpdatedOn(timestamp);
         student.setStudent_id(optionalStudent.getStudent_id());
         boolean result=studentDAO.update(student);
         if(result) {
@@ -129,7 +124,11 @@ public class StudentController extends ResponseEntityExceptionHandler {
     @GetMapping("/Student/{mobileNo}")
     public ResponseEntity<Student> getStudentDetailsByMobileNo(@PathVariable String mobileNo) {
         Student student = studentDAO.getStudentDetailsByMobileNo(mobileNo);
-        return ResponseEntity.status(HttpStatus.OK).body(student);
+        if(student ==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(student);
+        }
     }
 
     @ExceptionHandler(value
