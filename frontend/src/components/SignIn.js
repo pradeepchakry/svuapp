@@ -1,30 +1,22 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import GroupIcon from "@material-ui/icons/Group";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Checkbox from 'react-simple-checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useHistory } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import { withStyles } from "@material-ui/core/styles";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        SVUDDE
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,80 +38,331 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-  const classes = useStyles();
-  const [userId, setUserId] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+const Copyright = () => {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        SVUDDE
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-  const [firstLoad, setLoad] = React.useState(true);
+const routeChange = () => { 
+  // let path = `/home`; 
+  //eslint-disable-next-line no-restricted-globals
+  history.push("/home");
+}
 
-  const[message, setMessage] = React.useState("Nothing saved in the session");
+class Home extends React.Component {
 
-  const handleUserIdChange = event => setUserId(event.target.value);
-  const handlePasswordChange = event => setPassword(event.target.value);
-  const handlePhone = event => setPhone(event.target.value);
+  constructor(props) {
+    super(props);
 
-  const handleUserSubmit = variables => {
-    console.log(userId);
-    const toInput = {userId, password};
-    userFunc(toInput);
-  };
+    
 
-  const handleStudentSubmit = variables => {
-    console.log(phone);
-    const toInput = {phone};
-    studentFunc(toInput);
-    setPhone("");
-  };
-
-  async function studentFunc(toInput) {
-    console.log("[ << Input " + JSON.stringify(toInput) + " >> ]")
-    const response = await fetch("/svudde/loginPhone/" + toInput);
-    let json = await response.json();
-    console.log(json.id);
-    setMessage(json.id ? "Login success" : "Login Failed");
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+  state = {
+    courseApplied: "",
+    name: "",
+    fatherName: "",
+    aadharNo: "",
+    doorNo: "",
+    street: "",
+    village: "",
+    mandal: "",
+    district: "",
+    pincode: "",
+    email: "",
+    gender: "",
+    medium: "",
+    secondLanguageOpted: "",
+    dob: new Date(),
+    maritalStatus: "",
+    nationality: "",
+    religion: "",
+    caste: "",
+    residential: "",
+    phCategory: "",
+    university: "",
+    yearAndMonthPasssing: new Date(),
+    groupSubject: "",
+    maxMarks: "",
+    marksObtained: "",
+    percentageOfMarks: "",
+    feeAmount: "",
+    challanId: "",
+    challanDate: new Date(),
+    bankName: "",
+    declarationChecked: ""
   }
 
-  async function userFunc(toInput) {
-    const response = await fetch("/svudde/loginUser/" + toInput, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(toInput)
-    });
-    let body = await response.json();
-    console.log(body.id);
-    setMessage(body.id ? "Login success" : "Login Failed");
+  handleCouseApplied = (courseApplied) => {
+    this.setState({
+      courseApplied: courseApplied
+    })
   }
 
+  handleNameChange = (name) => {
+    this.setState({
+      name: name
+    })
+  }
+
+  handleFatherName = (fatherName) => {
+    this.setState({
+      fatherName: fatherName
+    })
+  }
+
+  handleAadharNo = (aadharNo) => {
+    this.setState({
+      aadharNo: aadharNo
+    })
+  }
+
+  handleDoorNo = (doorNo) => {
+    this.setState({
+      doorNo: doorNo
+    })
+  }
+
+  handleStreet = (street) => {
+    this.setState({
+      street: street
+    })
+  }
+
+  handleVillage = (village) => {
+    this.setState({
+      village: village
+    })
+  }
+
+  handleMandal = (mandal) => {
+    this.setState({
+      mandal: mandal
+    })
+  }
+
+  handleDistrict = (district) => {
+    this.setState({
+      district: district
+    })
+  }
+
+  handlePincode = (pincode) => {
+    this.setState({
+      pincode: pincode
+    })
+  }
+
+  handleEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
+
+  handleGenderChange = (gender) => {
+    this.setState({
+      gender: gender
+    })
+  }
+
+  handleMedium = (medium) => {
+    this.setState({
+      medium: medium
+    })
+  }
+
+  handleSecondLanguageOpted = (secondLanguageOpted) => {
+    this.setState({
+      secondLanguageOpted: secondLanguageOpted
+    })
+  }
+
+  handleDOB = (dob) => {
+    this.setState({
+      dob: dob
+    })
+  }
+
+  handleMaritalStatus = (maritalStatus) => {
+    this.setState({
+      maritalStatus: maritalStatus
+    })
+  }
+
+  handleNationality = (nationality) => {
+    this.setState({
+      nationality: nationality
+    })
+  }
+
+  handleReligion = (religion) => {
+    this.setState({
+      religion: religion
+    })
+  }
+
+  handleCaste = (caste) => {
+    this.setState({
+      caste: caste
+    })
+  }
+
+  handleResidential = (residential) => {
+    this.setState({
+      residential: residential
+    })
+  }
+
+  handlePhCategory = (phCategory) => {
+    this.setState({
+      phCategory: phCategory
+    })
+  }
+
+  handleUniversity = (university) => {
+    this.setState({
+      university: university
+    })
+  }
+
+  handleYearAndMonth= (yearAndMonthPassing) => {
+    this.setState({
+      yearAndMonthPassing: yearAndMonthPassing
+    })
+  }
+
+  handleGroupSubject = (groupSubject) => {
+    this.setState({
+      groupSubject: groupSubject
+    })
+  }
+
+  handleMaxMarks = (maxMarks) => {
+    this.setState({
+      maxMarks: maxMarks
+    })
+  }
+
+  handleMarksObtained = (marksObtained) => {
+    this.setState({
+      marksObtained: marksObtained
+    })
+  }
+
+  handlePercentageOfMarks = (percentageOfMarks) => {
+    this.setState({
+      percentageOfMarks: percentageOfMarks
+    })
+  }
+
+  handleFeeAmount = (feeAmount) => {
+    this.setState({
+      feeAmount: feeAmount
+    })
+  }
+
+  handleChallanId = (chllanId) => {
+    this.setState({
+      chllanId: chllanId
+    })
+  }
+
+  handleChallanDate = (challanDate) => {
+    this.setState({
+      challanDate: challanDate
+    })
+  }
+
+  handleBankName = (bankName) => {
+    this.setState({
+      bankName: bankName
+    })
+  }
+
+  handleDeclarationChecked = (event) => {
+    this.setState({
+      checked: event.target.checked
+    })
+  }
+
+
+  saveApplication = (toInput) => {
+    const response = fetch("/svudde/saveForm", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json"
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *client
+      body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+    }).then(response => {
+      if(!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        console.log("SUCCESS")
+        // console.log("Status: OK in Home -> Response: " + JSON.stringify(response.json()));
+        // let responseText = document.createElement(response.json());
+        // document.body.appendChild(responseText);
+      }
+    })
+    .catch(e => {
+      console.log('There has been a problem with the fetch operation: ' + e.message)
+    })
+  }
+
+  handleFormSubmit = (variables) => {
+    variables.preventDefault();
+    console.log("Declaration checked" + this.state.declarationChecked)
+    const toInput = this.state.gender;
+    this.saveApplication(toInput);
+  };
+
+  // if (firstLoad) {
+  //   // sampleFunc();
+  //   setLoad(false);
+  // }
+
+  render() {
+    const { classes } = this.props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Admission Application Form
         </Typography>
-        <form className={classes.form} noValidate>
+        {/* <form className={classes.form} noValidate>
+
+        <select defaultValue={""} 
+            onChange={this.handleCouseApplied} 
+        >
+          <option value="Couse1">Course1</option>
+          <option value="Course2">Course2</option>
+          <option value="Course3">Course3</option>
+        </select>
+        
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="userId"
-            label="User Id"
-            name="userId"
-            autoComplete="userId"
-            onChange={handleUserIdChange}
+            id="name"
+            label="Name of the Applicant (as per lower degree )"
+            name="name"
+            autoComplete="name"
+            onChange={this.handleNameChange}
             autoFocus
           />
           <TextField
@@ -127,68 +370,361 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onChange={handlePasswordChange}
-            autoComplete="current-password"
+            id="fatherName"
+            label="Father's Name"
+            name="fatherName"
+            autoComplete="fatherName"
+            onChange={this.handleFatherName}
+            autoFocus
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleUserSubmit}
-            onSubmit={handleUserSubmit}
+            id="aadharNo"
+            label="AADHAR No."
+            name="aadharNo"
+            autoComplete=""
+            onChange={this.handleAadharNo}
+            autoFocus
+          />
+          <p>Address for Communication:</p>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="doorNo"
+            label="Door No."
+            name="Door No."
+            autoComplete="doorNo"
+            onChange={this.handleDoorNo}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="street"
+            label="Street"
+            name="Street"
+            autoComplete="street"
+            onChange={this.handleStreet}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="village"
+            label="Village/Post"
+            name="village"
+            autoComplete="village"
+            onChange={this.handleVillage}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="mandal"
+            label="Mandal/Town"
+            name="mandal"
+            autoComplete="mandal"
+            onChange={this.handleMandal}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="district"
+            label="District"
+            name="district"
+            autoComplete="mandal"
+            onChange={this.handleDistrict}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="pincode"
+            label="Pincode"
+            name="pincode"
+            autoComplete="pincode"
+            onChange={this.handlePincode}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            onChange={this.handleEmail}
+            autoFocus
+          />
+          <p>Gender</p>
+          <select defaultValue={""} 
+              onChange={this.handleGenderChange} 
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password? Reach Admin for help
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Reach Admin to generate one"}
-              </Link>
-            </Grid>
-          </Grid>
+            <option value="M">English</option>
+            <option value="F">Telugu</option>
+          </select> 
+
+          <p>Medium</p>
+          <select defaultValue={""} 
+              onChange={this.handleMedium} 
+          >
+            <option value="English">English</option>
+            <option value="Telugu">Telugu</option>
+          </select>       
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="secondLanguage"
+            label="(a) Second Language Opted under Part-I B:"
+            name="secondLanguage"
+            autoComplete="secondLanguage"
+            onChange={this.handleSecondLanguageOpted}
+            autoFocus
+          />
+          <p>(B.Sc- English Medium only)</p>
+          <p>(Only for B.A/B.Com/B.Sc)</p>
+          <br></br>
+          
+          <DatePicker
+              selected={ this.state.dob }
+              onChange={ this.handleDOB }
+              name="startDate"
+              dateFormat="MM/dd/yyyy"
+          />
+          <br></br>
+          <p>Marital Status</p>
+          <select defaultValue={""} 
+              onChange={this.handleMaritalStatus} 
+          >
+            <option value="Single">Unmarried</option>
+            <option value="Married">Married</option>
+          </select>  
+          <br></br>
+          <p>Nationality</p>
+          <select defaultValue={""} 
+              onChange={this.handleNationality} 
+          >
+            <option value="Indian">Indian</option>
+            <option value="Other">Other (Specify Country Below)</option>
+          </select>
+          <br></br>
+          <p>Religion</p>
+          <select defaultValue={""} 
+              onChange={this.handleReligion} 
+          >
+            <option value="Hindu">Hindu</option>
+            <option value="Muslim">Muslim</option>
+            <option value="Christian">Christian</option>
+            <option value="Sikh">Sikh</option>
+            <option value="Others">Others</option>
+          </select>
+          <br></br>
+          <p>Caste</p>
+          <select defaultValue={""} 
+              onChange={this.handleCaste} 
+          >
+            <option value="OC">OC</option>
+            <option value="BC">BC</option>
+            <option value="SC">SC</option>
+            <option value="ST">ST</option>
+            <option value="Others">Others</option>
+          </select>
+
+          <br></br>
+          <p>Residential Status</p>
+          <select defaultValue={""} 
+              onChange={this.handleResidential} 
+          >
+            <option value="Urban">Urban</option>
+            <option value="Rural">Rural</option>
+            <option value="Tribal">Tribal</option>
+          </select>
 
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="phone"
-            label="Phone"
-            name="phone"
-            autoComplete="phone"
-            onChange={handlePhone}
+            id="phCategory"
+            label="Physically Handicapped Category"
+            name="phCategory"
+            autoComplete="phCategory"
+            onChange={this.handlePhCategory}
             autoFocus
           />
+
+          <p>University/Board</p>
+          <select defaultValue={""} 
+              onChange={this.handleUniversity} 
+          >
+            <option value="SVUTirupati">Sri Venkateswara University</option>
+            <option value="JNTUHyderabad">JNTU (Hyderabad)</option>
+            <option value="JNTUAnantapur">JNTU (Anantapur)</option>
+            <option value="Others">Others (Please specify below)</option>
+          </select>
+
+          <DatePicker
+              selected={ this.state.yearAndMonthPassing }
+              onChange={ this.handleYearAndMonth }
+              name="startDate"
+              dateFormat="MM/dd/yyyy"
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="groupSubject"
+            label="Group or Subject"
+            name="groupSubject"
+            autoComplete="groupSubject"
+            onChange={this.handleGroupSubject}
+            autoFocus
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="maxMarks"
+            label="Maximum Marks"
+            name="maxMarks"
+            autoComplete="maxMarks"
+            onChange={this.handleMaxMarks}
+            autoFocus
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="marksObtained"
+            label="Marks Obtained"
+            name="marksObtained"
+            autoComplete="marksObtained"
+            onChange={this.handleMarksObtained}
+            autoFocus
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="percentageOfMarks"
+            label="Percentage of Marks"
+            name="percentageOfMarks"
+            autoComplete="percentageOfMarks"
+            onChange={this.handlePercentageOfMarks}
+            autoFocus
+          />
+
+          <p>Fee Particulars</p>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="feeAmount"
+            label="Fee Amount"
+            name="feeAmount"
+            autoComplete="feeAmount"
+            onChange={this.handleFeeAmount}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="challanId"
+            label="Paid Challan Id"
+            name="challanId"
+            autoComplete="challanId"
+            onChange={this.handleChallanId}
+            autoFocus
+          />
+          <DatePicker
+              selected={ this.state.challanDate }
+              onChange={ this.handleChallanDate }
+              name="startDate"
+              dateFormat="MM/dd/yyyy"
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="bankName"
+            label="Bank Name"
+            name="bankName"
+            autoComplete="bankName"
+            onChange={this.handleBankName}
+            autoFocus
+          />
+
+          {/* <Checkbox
+            name="declaration"
+            label="I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
+            at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
+            action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
+            conditions, rules and regulations stipulated by the Directorate of distance Education and the Laws of the
+            university applicable from time to time."
+            
+            checked={this.state.declarationChecked}
+            onChange={this.handleDeclarationChecked}
+          /> */}
+        <form>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleStudentSubmit}
+            onClick={this.handleFormSubmit}
           >
-            Verify Mobile using OTP to Access your application
+            Save
           </Button>
-        </form>
+        </form> 
+
+        
       </div>
+      {/* <div className="responseData">
+        {this.setSaveResponse}
+      
+      </div> */}
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
-  );  
+  );
+                          }
 }
+
+export default withStyles(useStyles, { withTheme: true })(Home);
+
