@@ -1,6 +1,8 @@
 package com.b3labs.svudde.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -11,15 +13,6 @@ import java.sql.Timestamp;
 @Table(name="student")
 public class Student {
 
-
-    public int getStudent_id() {
-        return student_id;
-    }
-
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int student_id;
@@ -27,113 +20,112 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private StudyCentre studyCentre;
+    @Column(name = "father_name")
+    private String fatherName;
 
-    @Column(name = "app_serial_no")
-    private Integer appSerialNo;
-
-    public String getCentre() {
-        return centre;
-    }
-
-    public void setCentre(String centre) {
-        this.centre = centre;
-    }
-
-    @Column(name = "study_centre")
-    private String centre;
-
-    public String getMedium() {
-        return medium;
-    }
-
-    public void setMedium(String medium) {
-        this.medium = medium;
-    }
-
-    @Column(name = "medium")
-    private String medium;
-
-    @Column(nullable = false, name = "application_no")
-    private int applicationNo;
-
-    public String getMonthYear() {
-        return monthYear;
-    }
-
-    public void setMonthYear(String monthYear) {
-        this.monthYear = monthYear;
-    }
-
-    @Column(name = "month_Year")
-    private String monthYear;
-
-    @Column(name = "ba_groupid")
-    private Integer baGroupId;
-
-    @Column(name = "cal_fees")
-    private Integer calFees;
-
-    @Column(name="caste")
-    private String caste;
-
-    @Column(name = "code_no")
-    private Integer codeNo;
-
-    @Column(name = "course_id")
-    private Integer courseId;
-
-    @Column(name = "course_name")
-    private String courseName;
-
-    @Column(name = "updated_on")
-    private Timestamp updatedOn;
-
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    @Column(name = "created_on")
-    private Timestamp createdOn;
-
-    @Column(name = "degree")
-    private String degree;
-
-    @Column(name = "district_state")
-    private String districtState;
-
-    @Column(name = "dob")
-    private Date dob;
+    @Column(name = "aadhar_no")
+    private String aadhar_no;
 
     @Column(name = "door_no")
     private String doorNo;
 
-    @Column(name = "eligibility_marks")
-    private Integer eligibilityMarks;
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "village")
+    private String village;
+
+    @Column(name = "mandal")
+    private String mandal;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "pincode")
+    private Integer pincode;
 
     @Column(name = "email_id")
-    private String email;
+    private String emailID;
 
-    @Column(nullable = false, name = "enrollment_no")
-    private String enrolmentNo;
+    @Column(name = "mobile_No")
+    private String mobileNo;
 
-    @Column(name = "father_name")
-    private String fatherName;
+    @Column(name = "alternate_mobile_no")
+    private String alternateMobileNno;
+
+    @Column(name = "medium")
+    private String medium;
+
+    @Column(name = "second_language")
+    private String secondLanguage;
+
+    @Column(name = "dob")
+    private Date dob;
 
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "martial_status")
+    private String maritalStatus;
+
+    @Column(name="nationality")
+    private String nationality;
+
+    @Column(name="religion")
+    private String religion;
+
+    @Column(name="caste")
+    private String caste;
+
+    @Column(name="residential_area")
+    private String residentialArea;
+
+    @Column(name="ph_category")
+    private String phCategory;
+
+    @Column(name = "qualifying_exam")
+    private String qualifyingExam;
+
+    @Column(name = "university")
+    private String university;
+
+    @Column(name = "month_Year")
+    private String monthYear;
+
+    @Column(name = "registration_no")
+    private String registrationNo;
+
     @Column(name = "group_subjects")
     private String groupSubjects;
 
-    @Column(name = "hallticket_no")
-    private String hallTicketNo;
+    @Column(name = "marks_obtained")
+    private Integer marksObtained;
+
+    @Column(name = "max_marks")
+    private Integer maxMarks;
+
+    @Column(columnDefinition = "FLOAT", name = "percentage_marks")
+    private Double percentageMarks;
+
+    @Column(name = "fees")
+    private Integer fees;
+
+    @Column(name = "study_centre")
+    private String centre;
+
+    @Column(name = "code_no")
+    private Integer codeNo;
+
+    @Column(name = "course_name")
+    private String courseName;
+
+    @CreationTimestamp
+    @Column(name = "created_on")
+    private Date createdOn;
+
+    @UpdateTimestamp
+    @Column(name = "updated_on")
+    private Date updatedOn;
 
     @Column(name = "image")
     private String image;
@@ -141,104 +133,27 @@ public class Student {
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_approve")
     private boolean isApprove;
 
-
-    @Column(name="location")
-    private String location;
-    @Column(name = "mandal")
-    private String mandal;
-
-    @Column(name = "marks_obtained")
-    private Integer marksObtained;
-
-    @Column(name = "martial_status")
-    private String maritalStatus;
-
-    @Column(name = "max_marks")
-    private Integer maxMarks;
-
-   @Override
-    public String toString() {
-        return "Online Application [id= " + student_id + ", name = " + name + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
-    }
-
-    @Column(name="nationality")
-    private String nationality;
-
-    @Column(name = "ous_education")
-    private String ousEducation;
-
-    @Column(columnDefinition = "FLOAT", name = "percentage_marks")
-    private Double percentageMarks;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "pincode")
-    private Integer pincode;
-
     @Column(name = "print_count")
     private Integer printCount;
-
-    @Column(name = "qualifying_exam")
-    private String qualifyingExam;
-
-    @Column(name = "registration_no")
-    private String registrationNo;
-
-    @Column(name="religion")
-    private String religion;
-
-    @Column(name="residential_area")
-    private String residentialArea;
-
-    @Column(name = "second_language")
-    private String secondLanguage;
 
     @Column(name = "signature")
     private String signature;
 
-    @Column(name = "street")
-    private String street;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private StudyCentre studyCentre;
 
-    @Column(name = "university")
-    private String university;
-
-    @Column(name = "village")
-    private String village;
-
-    @Column(name = "mobile_No")
-    private String mobileNo;
-
-    public Integer getAppSerialNo() {
-        return appSerialNo;
+    @Override
+    public String toString() {
+        return "Online Application [id= " + student_id + ", name = " + name + ", dob = " + dob + ", gender = " + gender + ", Nationality" + nationality + "]";
     }
 
-    public void setAppSerialNo(Integer appSerialNo) {
-        this.appSerialNo = appSerialNo;
+    public Date getUpdatedOn() {
+        return updatedOn;
     }
 
-    public Integer getApplicationNo() {
-        return applicationNo;
-    }
-
-    public void setApplicationNo(Integer applicationNo) {
-        this.applicationNo = applicationNo;
-    }
-
-    public Integer getBaGroupId() {
-        return baGroupId;
-    }
-
-    public void setBaGroupId(Integer baGroupId) {
-        this.baGroupId = baGroupId;
-    }
-
-    public Integer getCalFees() {
-        return calFees;
-    }
-
-    public void setCalFees(Integer calFees) {
-        this.calFees = calFees;
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Integer getCodeNo() {
@@ -247,14 +162,6 @@ public class Student {
 
     public void setCodeNo(Integer codeNo) {
         this.codeNo = codeNo;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
     }
 
     public String getCourseName() {
@@ -269,28 +176,12 @@ public class Student {
         this.courseName = courseName;
     }
 
-    public Timestamp getCreatedOn() {
+    public Date getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
+    public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getDistrictState() {
-        return districtState;
-    }
-
-    public void setDistrictState(String districtState) {
-        this.districtState = districtState;
     }
 
     public Date getDob() {
@@ -307,30 +198,6 @@ public class Student {
 
     public void setDoorNo(String doorNo) {
         this.doorNo = doorNo;
-    }
-
-    public Integer getEligibilityMarks() {
-        return eligibilityMarks;
-    }
-
-    public void setEligibilityMarks(Integer eligibilityMarks) {
-        this.eligibilityMarks = eligibilityMarks;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEnrolmentNo() {
-        return enrolmentNo;
-    }
-
-    public void setEnrolmentNo(String enrolmentNo) {
-        this.enrolmentNo = enrolmentNo;
     }
 
     public String getFatherName() {
@@ -355,14 +222,6 @@ public class Student {
 
     public void setGroupSubjects(String groupSubjects) {
         this.groupSubjects = groupSubjects;
-    }
-
-    public String getHallTicketNo() {
-        return hallTicketNo;
-    }
-
-    public void setHallTicketNo(String hallTicketNo) {
-        this.hallTicketNo = hallTicketNo;
     }
 
     public String getImage() {
@@ -421,28 +280,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getOusEducation() {
-        return ousEducation;
-    }
-
-    public void setOusEducation(String ousEducation) {
-        this.ousEducation = ousEducation;
-    }
-
     public Double getPercentageMarks() {
         return percentageMarks;
     }
 
     public void setPercentageMarks(Double percentageMarks) {
         this.percentageMarks = percentageMarks;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Integer getPincode() {
@@ -521,14 +364,6 @@ public class Student {
         this.caste = caste;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getNationality() {
         return nationality;
     }
@@ -567,5 +402,88 @@ public class Student {
 
     public void setStudyCentre(com.b3labs.svudde.springboot.model.StudyCentre studyCentre) {
         this.studyCentre = studyCentre;
+    }
+
+    public String getAadhar_no() {
+        return aadhar_no;
+    }
+
+    public void setAadhar_no(String aadhar_no) {
+        this.aadhar_no = aadhar_no;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+
+    public String getEmailID() {
+        return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
+    }
+
+    public String getAlternateMobileNno() {
+        return alternateMobileNno;
+    }
+
+    public void setAlternateMobileNno(String alternateMobileNno) {
+        this.alternateMobileNno = alternateMobileNno;
+    }
+
+    public String getPhCategory() {
+        return phCategory;
+    }
+
+    public void setPhCategory(String phCategory) {
+        this.phCategory = phCategory;
+    }
+    public int getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
+    }
+
+
+    public Integer getFees() {
+        return fees;
+    }
+
+    public void setFees(Integer fees) {
+        this.fees = fees;
+    }
+
+
+    public String getCentre() {
+        return centre;
+    }
+
+    public void setCentre(String centre) {
+        this.centre = centre;
+    }
+
+
+    public String getMedium() {
+        return medium;
+    }
+
+    public void setMedium(String medium) {
+        this.medium = medium;
+    }
+
+    public String getMonthYear() {
+        return monthYear;
+    }
+
+    public void setMonthYear(String monthYear) {
+        this.monthYear = monthYear;
     }
 }

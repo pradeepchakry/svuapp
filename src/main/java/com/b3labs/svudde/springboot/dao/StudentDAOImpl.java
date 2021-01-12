@@ -80,7 +80,11 @@ public class StudentDAOImpl implements com.b3labs.svudde.springboot.dao.StudentD
         Query<Student> query = currentSession.createQuery("from Student a where a.mobileNo = :mobileNo ",Student.class);
         query.setParameter("mobileNo",mobileNo);
         List<Student> list= query.getResultList();
-        return list.get(0);
+        if(list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
     }
 
 
