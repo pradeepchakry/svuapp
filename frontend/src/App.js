@@ -11,6 +11,7 @@ import PhoneLogin from "./components/PhoneLogin"
 import Root from "./components/Root"
 import {withRouter} from 'react-router';
 import { AppContext } from "./libs/contextLib";
+import HomeComponent from './components/HomeComponent'
 
 
 class App extends React.Component {
@@ -27,7 +28,7 @@ class App extends React.Component {
           <Route name="Root" path="/" exact component={Root} />
           <Route name="Login" path="/login" exact component={Login} />
           <Route name="PhoneLogin" path="/phonelogin" exact component={PhoneLogin} />
-          <Route name="Home" path="/home" exact component={Home} />
+          <Route name="HomeComponent" path="/home" exact component={HomeComponent} />
         </Router>
       
     );

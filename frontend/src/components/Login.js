@@ -27,7 +27,8 @@ import PasswordMask from 'react-password-mask';
 import OtpInput from 'react-otp-input';
 import ReactFormInputValidation from "react-form-input-validation";
 import { useAppContext } from "../libs/contextLib";
-
+import {BrowserRouter, Route} from 'react-router-dom';
+import HomeComponent from './HomeComponent';
 
 
 // import Prompt from './Prompt';
@@ -65,8 +66,11 @@ const Copyright = () => {
   );
 }
 
-const routeChange = () => { 
-  // let path = `/home`; 
+const routeChange = (userId) => { 
+  // let path = `/home`;
+  console.log("userId in routechange " + userId);
+  window.user = true;
+  window.userId = userId;
   history.push("/home");
 }
 
@@ -93,7 +97,8 @@ class Login extends React.Component {
       mobilevalidate: false,
       otp: "",
       loadDialog: false,
-      phoneTrimmed: ""
+      phoneTrimmed: "",
+      isUser: true
      };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -105,7 +110,11 @@ class Login extends React.Component {
       // Do you ajax calls here.
     }
 
+    
+
   }
+
+  
 
   toggle = () => {
     //this.modifyPhone();
@@ -170,13 +179,15 @@ class Login extends React.Component {
     if(this.validate()){
         console.log(this.state);
         let input = {};
+        
+
+        // fetch to Authenticate and redirect
+        routeChange(this.state.input.username);
+
         input["username"] = "";
         input["password"] = "";
         input["confirm_password"] = "";
         this.setState({input:input});
-
-        // fetch to Authenticate and redirect
-        routeChange();
     }
 
   }
@@ -207,21 +218,6 @@ class Login extends React.Component {
       errors: errors
     });
     return isValid;
-  }
-
-  handleOTPSubmit = () => {
-    let studentExists = false;
-    let input = this.state.otpEntered;
-    // if(!this.verifyOTP(input)) {
-    //   console.log("OTP verification failed, Ask user to resend or use a different mobile number!");
-    // } else {
-      console.log("verifying if the mobile number is already registered! " + this.state.phone);
-      this.checkExistingStudent(this.state.phone);
-  // }
-  }
-
-  handleOTPInput = (otp) => {
-    this.setState({ otp:  otp})
   }
 
   
@@ -278,8 +274,7 @@ class Login extends React.Component {
   render() {
   const { classes } = this.props;
 
-  return (
-
+  return (  
     <Container className={useStyles.paper} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -289,6 +284,8 @@ class Login extends React.Component {
         <Typography component="h1" variant="h5">
           Study Center Sign in
         </Typography>
+
+        {this.props.isStudent && <h1>Study Center Login</h1>}
 
         <form onSubmit={this.handleSubmit}>
           <div class="form-group">
@@ -317,7 +314,6 @@ class Login extends React.Component {
         </div>
         <div className="text-danger">{this.state.errors.password}</div>
         <input type="submit" value="Submit" class="btn btn-success" />
-
       </form>   
   </div>
   <Box mt={8}>

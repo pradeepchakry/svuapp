@@ -28,6 +28,7 @@ import PasswordMask from 'react-password-mask';
 import OtpInput from 'react-otp-input';
 import ReactFormInputValidation from "react-form-input-validation";
 import ReactModalLogin from 'react-modal-login';
+import HomeComponent from './HomeComponent'
 
 
 // import Prompt from './Prompt';
@@ -378,7 +379,7 @@ closeModal = val => {
                         otpSentSessionId={this.state.otpSentSessionId}
                     />
                 ): null}
-                {otpVerified ? this.checkExistingStudent(this.state.fields.phone) : null}
+                {otpVerified ? <HomeComponent student="true" /> : null}
           </div>
         </form>
 
@@ -399,65 +400,6 @@ closeModal = val => {
           startLoading={this.startLoading.bind(this)}
           finishLoading={this.finishLoading.bind(this)}
         />
-          
-          {/*  */} 
-          {/* <Popup
-          trigger={<button className="button" onFocus={() => {this.toggle();
-            if(!this.state.mobilevalidate) {
-              alert("Enter a vaild mobile number");
-            }}}> Sign In </button>} modal nested >
-            {
-               close => (
-                  <div className="modal">
-                  <button className="close" onClick={close}>
-                    &times;
-                  </button>
-                  <div className="header"> Enter the OTP sent to your Mobile Number </div>
-                  <div className="content">
-                  {' '}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    id="otpEntered"
-                    label="One Time Password"
-                    name="otpEntered"
-                    autoComplete=""
-                    defaultValue={this.state.otpEntered}
-                    onChange={event => {
-                      const { value } = event.target;
-                      this.setState({ otpEntered: value });
-                    }}
-                    autoFocus
-                  />
-            </div>
-            <div className="actions">
-                <button
-                className="button"
-                onClick={() => {
-                  console.log('clicked submit');
-                  this.handleOTPSubmit();
-                }}
-              >
-                Submit
-              </button>
-              <button
-                className="button"
-                onClick={() => {
-                  console.log('modal closed ');
-                  close();
-                }}
-              >
-                Change Mobile Number
-              </button>
-            </div>
-          </div>
-          )
-        }
-      </Popup> */}
-  
-    
-         
   </div>
   <Box mt={8}>
     <Copyright />

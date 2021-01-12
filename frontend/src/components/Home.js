@@ -16,6 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import { withStyles } from "@material-ui/core/styles";
+import {BrowserRouter, Route} from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -101,6 +102,10 @@ class Home extends React.Component {
     challanDate: new Date("2021-01-01T21:11:54"),
     bankName: "",
     declarationChecked: ""
+  }
+
+  logoutHandler =(e) => {
+    this.props.history.push('/login')
   }
 
   handleCouseApplied = (courseApplied) => {
@@ -351,8 +356,20 @@ class Home extends React.Component {
   render() {
     const { classes } = this.props;
   return (
+    
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <BrowserRouter>
+                <div>
+                    {/* <header>
+                        <Link to='/contact'>Contact</Link>
+                    </header>
+                    <div>
+                        <Route path='/contact' Component={Contact}></Route>
+                    </div> */}
+                    {/* <a href="#" onClick={e=>this.logoutHandler(e)}>Logout</a> */}
+                </div>
+    </BrowserRouter>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Admission Application Form
@@ -786,4 +803,3 @@ class Home extends React.Component {
 }
 
 export default withStyles(useStyles, { withTheme: true })(Home);
-
