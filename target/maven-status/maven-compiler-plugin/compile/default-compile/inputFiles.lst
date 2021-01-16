@@ -1,6 +1,7 @@
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/BAGroupDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/Academics.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/LocationsDAOImpl.java
+/home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/CourseDetails.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/NationalityDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/StudyCenterCourseChangeDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/BAGroup.java
@@ -37,6 +38,7 @@
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/ApplicationFineScheduleDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/LocationsDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/Student.java
+/home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/CourseDetailsDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/StudentDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/FeeType.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/ModulesDAOImpl.java
@@ -45,6 +47,7 @@
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/UploadPhotosDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/ResidentialAreaDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/ReligionDAOImpl.java
+/home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/CourseDetailsDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/SvuddeApplication.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/MASCountryDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/controller/StudyCentreController.java
@@ -62,6 +65,7 @@
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/ReligionDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/BankDAO.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/CasteDAOImpl.java
+/home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/controller/CourseDetailsController.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/ApplicationFineSchedule.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/dao/StudyCenterCourseChangeDAOImpl.java
 /home/discovery/Documents/onlineapp/svuapp/src/main/java/com/b3labs/svudde/springboot/model/Nationality.java

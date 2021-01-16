@@ -77,3 +77,17 @@ CREATE TABLE `study_centres` (`id` int NOT NULL AUTO_INCREMENT,
                                  PRIMARY KEY (`id`),
                                  UNIQUE KEY `uniqueUserID` (`user_Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `courses` (
+  `course_id` int NOT NULL AUTO_INCREMENT,
+  `course_medium` varchar(255) DEFAULT NULL,
+  `course_subject` varchar(255) DEFAULT NULL,
+  `created_on` date DEFAULT NULL,
+  `duration` varchar(255) DEFAULT NULL,
+  `first_year_fees` varchar(255) DEFAULT NULL,
+  `modified_on` date DEFAULT NULL,
+  `second_year_fees` varchar(255) DEFAULT NULL,
+  `third_year_fees` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`course_id`)
+  UNIQUE KEY `unique_couse` (`course_subject`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
