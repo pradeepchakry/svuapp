@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -84,6 +85,25 @@ public class CourseDetailsController extends ResponseEntityExceptionHandler {
     public ResponseEntity<List<CourseDetails>> getAll() {
 
         return ResponseEntity.status(HttpStatus.OK).body(courseDetailsDAO.getAll());
+    }
+    @GetMapping("/getAllcoursesForStudyCentre")
+    public ResponseEntity<List<CourseDetails>> getAllcoursesForStudyCentre() {
+        List<CourseDetails> courseDetails=courseDetailsDAO.getAll();
+            for (CourseDetails c : courseDetails) {
+                String fee = c.getFirstYearFee();
+                if (fee != null) {
+                    c.setFirstYearFee(String.valueOf(Integer.parseInt(fee) - ((Integer.parseInt(fee) * 30) / 100)));
+                }
+                fee = c.getSecondYearFee();
+                if (fee != null) {
+                    c.setSecondYearFee(String.valueOf(Integer.parseInt(fee) - ((Integer.parseInt(fee) * 30) / 100)));
+                }
+                fee = c.getThirdYearFee();
+                if (fee != null) {
+                    c.setThirdYearFee(String.valueOf(Integer.parseInt(fee) - ((Integer.parseInt(fee) * 30) / 100)));
+                }
+            }
+        return ResponseEntity.status(HttpStatus.OK).body(courseDetails);
     }
 
     @GetMapping("/course/{id}")
