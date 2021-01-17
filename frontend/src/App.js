@@ -93,7 +93,7 @@ const NodalLogin = () => {
    function checkExistingStudent(input) {
     console.log("In checkExistingStudent...")
     let result = false;
-    let endPoint = "http://159.203.148.240:8080/api/v1/Student/" + input;
+    let endPoint = "http://localhost:8080/api/v1/Student/" + input;
      fetch(endPoint)
         .then(res => {
           if(!res.ok) {
@@ -108,7 +108,7 @@ const NodalLogin = () => {
             console.log("Found an existing record with the number " + input
                 + " enrolled, fethcing record!");
   
-            fetch("http://159.203.148.240:8080/api/v1/Student/" + phone)
+            fetch("http://localhost:8080/api/v1/Student/" + phone)
                 .then(resp => resp.json())
                 .then((data) => {
                   console.log("Existing student details --> " + JSON.stringify(data));
@@ -151,7 +151,6 @@ const NodalLogin = () => {
     //handleSendOTP();
     console.log("Otp sent successfully");
     setShow(true);
-    
   }
 
   
@@ -240,16 +239,47 @@ const StudyCntrLogin = () => {
   const [input, setInput] = React.useState({});
   const [errors, setErrors] = React.useState({});
 
+  async function authenticateUser(input) {
+    let userID = input["username"];
+    let password = input["password"];
+    let inputNew = {"userID": userID, "password": password};
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userID: userID, password: password })
+    };
+
+    console.log("Authenticating User " + inputNew["userID"] 
+        + " with password " + inputNew["password"]);
+    let result = "";
+    let endPoint = "http://localhost:8080/api/v1/studyCentres/validateUser";
+    const response = await fetch(endPoint, requestOptions)
+      .then(response => response.text())
+      .then(data => {
+        console.log(data);
+        result = data;
+      })    
+      .catch(error => console.log("Error detected: " + error));
+    console.log("got response --> " + result);
+    return result;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if(validate()){
-
-        Cookies.set("username", input["username"]);
-
-        Cookies.set("user", "loginTrue");
-        Cookies.set("studyCntrUser", "loginTrue");
-        Auth.setAuth(true);
+      authenticateUser(input).then(result => {
+        console.log("got result in validate block --> " + result);
+        if(result === "true") {
+          Cookies.set("username", input["username"]);
+          Cookies.set("user", "loginTrue");
+          Cookies.set("studyCntrUser", "loginTrue");
+          Auth.setAuth(true);
+        } else {
+          alert("Username or Password is incorrect.");
+          resetForm();
+        }
+      });
     } else {
       resetForm();
     }
@@ -390,14 +420,10 @@ const StudyCntrDashboard = () => {
   const [formData, setFormData] = React.useState({});
   const [show, setShow] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [dataExists, setDataExists] = React.useState(false);
   
 
   const onCloseModal = () => setOpen(false);
-
-  const studentDataExists = (username) => {
-    // api call to get user data
-    return true;
-  }
 
   const handleClose = () => {
     setShow(false);
@@ -416,34 +442,23 @@ const StudyCntrDashboard = () => {
     console.log("Form Data --> " + formData)
   }
 
-  const fetchExistingRecords = (username) => {
-    // Dummy data 
-    let data = [{studentId: "101",
-      name: "Parameshwar Reddy",
-      email: "parama@jayasyamtheatre.com",
-      status: "Payment pending"
-      },{
-      studentId: "102",
-      name: "Venkatesh Malimelu",
-      email: "venky@gangammatemple.com",
-      status: "Payment pending"
-      },{
-      studentId: "103",
-      name: "Babaji Shaik",
-      email: "babaji@icici.com",
-      status: "Payment pending"
-      },{
-      studentId: "104",
-      name: "Narasimha Medi",
-      email: "narasimha@goldloans.com",
-      status: "Payment pending"
-      },{
-      studentId: "105",
-      name: "Sunny Leone",
-      email: "sunny@ph.com",
-      status: "Payment pending"
-    }];
-    return data;
+  async function fetchExistingRecords() {
+    let userID = Cookies.get("username");
+    let len = userID.length;
+    let lastChar = userID.charAt(len - 1);
+    let result = null;
+    console.log("lastChar -> " + lastChar);
+    console.log("userID while fetching studing data--> " + lastChar)
+    let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
+    await fetch(endPoint)
+        .then(res => res.json())
+        .then((data) => {
+          setDataExists(true);
+          console.log("got student records --> " + JSON.stringify(data));
+          setStudentData(data);
+        })
+        .catch(console.log);
+    return studentData;
   }
 
   const toggle = () => {
@@ -460,17 +475,17 @@ const StudyCntrDashboard = () => {
     userName = Cookies.get("username");
     console.log("fetching user history for " + userName);
 
-    if(studentDataExists(userName)) {
-        console.log(fetchExistingRecords(userName));
-        userFetched = true;
-        userData = fetchExistingRecords(userName);
+    fetchExistingRecords();
+    if(dataExists) {
+      console.log("Student data exists! Rendering records.");
+      userFetched = true;
 
-        var key, count = 0;
-        for( key in userData) {
-            if(userData.hasOwnProperty(key)) {
-                count++;
-            }
-        }
+      var key, count = 0;
+      for( key in studentData) {
+          if(studentData.hasOwnProperty(key)) {
+              count++;
+          }
+      }
 
         console.log(count)
         tableSize = count;
@@ -492,10 +507,10 @@ const StudyCntrDashboard = () => {
         <button onClick={handleOnClick}>Logout</button>
       </div>
       <div>
-        {userFetched ? <div>
+        {dataExists ? <div>
           <h1>Welcome {userName}</h1>
             <h3>Student Records</h3>
-            <StudentRecords data={userData} />
+            <StudentRecords data={studentData} />
             </div>
             : <h1>No Student records for this Study Center</h1>}
             </div>

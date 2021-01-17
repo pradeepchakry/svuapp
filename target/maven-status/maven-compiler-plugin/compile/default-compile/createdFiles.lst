@@ -72,5 +72,6 @@ com/b3labs/svudde/springboot/model/LoginDetails.class
 com/b3labs/svudde/springboot/dao/CasteDAOImpl.class
 com/b3labs/svudde/springboot/dao/CourseSubjectDAOImpl.class
 com/b3labs/svudde/springboot/dao/NationalityDAOImpl.class
+com/b3labs/svudde/SvuddeApplication$1.class
 com/b3labs/svudde/springboot/model/StudyCenterChange.class
 com/b3labs/svudde/springboot/model/CourseDetails.class
