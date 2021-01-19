@@ -8,17 +8,21 @@ import {
 } from 'react-router-dom';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import AuthApi from "./AuthApi";
-import Cookies from 'js-cookie';
+import Cookies, { set } from 'js-cookie';
 import OtpInput from 'react-otp-input';
 import {Button, Modal} from 'react-bootstrap'
 import RespModal from 'react-responsive-modal';
+import { useState, useEffect } from 'react';
 
 
 import BetterUser from './BetterUser'
 import ApplicationForm from './ApplicationForm';
-import StudentRecords from './StudenRecords'
+import StudentRecords from './StudenRecords';
+import usePromise from "react-promise";
 
 import './custom-modal.css';
+import { getDefaultLocale } from 'react-datepicker';
+import StudyCntrDashboard from './StudyCntrDashboard';
 
 // The gray background
 const backdropStyle = {
@@ -30,6 +34,7 @@ const backdropStyle = {
   backgroundColor: 'rgba(0,0,0,0.3)',
   padding: 50
 };
+
 
 
 function App() {
@@ -46,6 +51,7 @@ function App() {
   }
   
   React.useEffect(() => {
+    console.log("Hi! from userEffect()")
     readCookie();
   }, [])
 
@@ -412,124 +418,163 @@ const NodalDashboard = () => {
   )
 }
 
-const StudyCntrDashboard = () => {
-  const Auth = React.useContext(AuthApi);
-  const [studentData, setStudentData] = React.useState([]);
-  const [value, setValue] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
-  const [formData, setFormData] = React.useState({});
-  const [show, setShow] = React.useState(false);
-  const [modal, setModal] = React.useState(false);
-  const [dataExists, setDataExists] = React.useState(false);
+
+// const StudyCntrDashboard = async () => {
+//   const Auth = React.useContext(AuthApi);
+//   const [studentData, setStudentData] = React.useState([]);
+//   const [value, setValue] = React.useState(0);
+//   const [open, setOpen] = React.useState(false);
+//   const [formData, setFormData] = React.useState({});
+//   const [show, setShow] = React.useState(false);
+//   const [modal, setModal] = React.useState(false);
+//   const [dataExists, setDataExists] = React.useState(false);
+//   const [fetchFinished, setFetchFinished] = React.useState(false);
+
+//   // useEffect(() => {
+//   //   loadData();
+//   //   //getData()
+//   // }, [])
+
+//   // const loadData = async () => {
+//   //   let userID = Cookies.get("username");
+//   //   let len = userID.length;
+//   //   let lastChar = userID.charAt(len - 1);
+//   //   console.log("lastChar -> " + lastChar);
+//   //   console.log("userID while fetching studing data--> " + lastChar)
+//   //   let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
+//   //   let result = false;
+//   //   await fetch(endPoint).then(resp => resp.json())
+//   //       .then(receivedData => {
+//   //         console.log("received data --> " + receivedData)
+//   //         setStudentData(receivedData)
+//   //         setDataExists(true)
+//   //       });
+//   // }
   
 
-  const onCloseModal = () => setOpen(false);
+//   const onCloseModal = () => setOpen(false);
 
-  const handleClose = () => {
-    setShow(false);
-  }
-  const handleShow = () => {
-    console.log("Rendering Form modal")
-    setShow(true);
-  }
+//   const handleClose = () => {
+//     setShow(false);
+//   }
+//   const handleShow = () => {
+//     console.log("Rendering Form modal")
+//     setShow(true);
+//   }
 
-  const handleChange = formData => {
-    setFormData(formData);
-    console.log("Form Data --> " + formData)
-  }
+//   const handleChange = formData => {
+//     setFormData(formData);
+//     console.log("Form Data --> " + formData)
+//   }
   
-  const handleFormSubmit = () => {
-    console.log("Form Data --> " + formData)
-  }
+//   const handleFormSubmit = () => {
+//     console.log("Form Data --> " + formData)
+//   }
 
-  async function fetchExistingRecords() {
-    let userID = Cookies.get("username");
-    let len = userID.length;
-    let lastChar = userID.charAt(len - 1);
-    let result = null;
-    console.log("lastChar -> " + lastChar);
-    console.log("userID while fetching studing data--> " + lastChar)
-    let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
-    await fetch(endPoint)
-        .then(res => res.json())
-        .then((data) => {
-          setDataExists(true);
-          console.log("got student records --> " + JSON.stringify(data));
-          setStudentData(data);
-        })
-        .catch(console.log);
-    return studentData;
-  }
+//   const toggle = () => {
+//     setModal(!modal);
+//   }
+//   let userData = [];
+//   let userName = "";
+//   let userFetched = false;
 
-  const toggle = () => {
-    setModal(!modal);
-  }
+//   const handleOnClick = () => {
+//     Auth.setAuth(false);
+//     Cookies.remove("user");
+//     Cookies.remove("studyCntrUser");
+//     Cookies.remove("username");
+//     // window.nodalLoggedIn = false;
+//     // window.studyCntrLoggedIn = false;
+//     // window.homePage = true;
+//   } 
+   
+//   var promise = new Promise( async (resolve, reject) => {
+//     let userID = Cookies.get("username");
+//     let len = userID.length;
+//     let lastChar = userID.charAt(len - 1);
+//     console.log("lastChar -> " + lastChar);
+//     console.log("userID while fetching studing data--> " + lastChar)
+//     let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
+//     let result = false;
+//     let response = await fetch(endPoint).then(resp => resp.json());
+//     result = await response.then(data => {
+//       setDataExists(true);
+        
+//       console.log("data fetched --> " + data);
+      
+//     }).catch(error => console.log("Error detected: " + error));
+//     if (dataExists) {
+//        resolve("Promise resolved successfully");
+//     }
+//     else {
+//        reject(Error("Promise rejected"));
+//     }
+//  });
 
 
-  let userData = [];
-  let userName = "";
-  let userFetched = false;
-  let tableSize = 0;
+//     promise.then( result => {
+//       console.log("Promise resolved, setting student data!");
+//       setStudentData(result);
+//       setFetchFinished(true);
+//       userFetched = true;
+//     }, function(error) {
+//       console.log(error);
+//     });
+
+//       console.log("student data --> " + studentData);
+//       return(
+//         <div>
+//           <div style={{float: 'right'}}>
+//             <button onClick={handleOnClick}>Logout</button>
+//           </div>
+//           <div>
+//             { dataExists ? <div>
+//               <h1>Welcome {userName}</h1>
+//                 <h3>Student Records</h3>
+//                 {/* <StudentRecords data={studentData} /> */}
+//                 {studentData.map(record => (
+//                   <div key={record.id}> </div>
+//                 ))}
+//                 </div>
+//                 : <h1>No Student records for this Study Center</h1>}
+//                 </div>
+//           <>
+//           <button onClick={handleShow}>New Application</button>
+    
+//           <Modal show={show} onHide={handleClose} 
+//             dialogClassName="modal-full"
+//             >
+//             <Modal.Header closeButton style={{float: 'left'}}>
+//             </Modal.Header>
+//             <Modal.Body style={{'max-height': '50vh', 'overflow-y': 'auto'}}>
+//               <ApplicationForm />
+//             </Modal.Body>
+//             </Modal>
+//         </>
+//         </div>
+//       )
+  // if(isFetching) {
+  //   return <div> Loading.. </div>
+  // } else {
   
-  if(Cookies.get("studyCntrUser") === "loginTrue") {
-    userName = Cookies.get("username");
-    console.log("fetching user history for " + userName);
 
-    fetchExistingRecords();
-    if(dataExists) {
-      console.log("Student data exists! Rendering records.");
-      userFetched = true;
+  // fetchExistingRecords().then(data => {
+    // let tableSize = 0;
+    // console.log("result after fetch function --> " + dataExists);
+    // console.log("Student data exists! Rendering records --> " + JSON.stringify(studentData));
+    // userFetched = true;
 
-      var key, count = 0;
-      for( key in studentData) {
-          if(studentData.hasOwnProperty(key)) {
-              count++;
-          }
-      }
+    // var key, count = 0;
+    // for( key in studentData) {
+    //     if(studentData.hasOwnProperty(key)) {
+    //         count++;
+    //     }
+    // }
 
-        console.log(count)
-        tableSize = count;
-    }
-}
-  
-  const handleOnClick = () => {
-    Auth.setAuth(false);
-    Cookies.remove("user");
-    Cookies.remove("studyCntrUser");
-    Cookies.remove("username");
-    // window.nodalLoggedIn = false;
-    // window.studyCntrLoggedIn = false;
-    // window.homePage = true;
-  }
-  return(
-    <div>
-      <div style={{float: 'right'}}>
-        <button onClick={handleOnClick}>Logout</button>
-      </div>
-      <div>
-        {dataExists ? <div>
-          <h1>Welcome {userName}</h1>
-            <h3>Student Records</h3>
-            <StudentRecords data={studentData} />
-            </div>
-            : <h1>No Student records for this Study Center</h1>}
-            </div>
-      <>
-      <button onClick={handleShow}>New Application</button>
-
-      <Modal show={show} onHide={handleClose} 
-        dialogClassName="modal-full"
-        >
-        <Modal.Header closeButton style={{float: 'left'}}>
-        </Modal.Header>
-        <Modal.Body style={{'max-height': '50vh', 'overflow-y': 'auto'}}>
-          <ApplicationForm />
-        </Modal.Body>
-        </Modal>
-    </>
-    </div>
-  )
-}
+    //   console.log(count)
+    //   tableSize = count;  
+// }
+// }
 
 const HomeComponent= () => {
       return(
