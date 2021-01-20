@@ -11,8 +11,10 @@
     "bootstrap": "^3.4.1",
     "fixed-data-table-2": "^1.1.2",
     "http-proxy-middleware": "^1.0.6",
+    "jquery": "^3.5.1",
     "material-ui-icons": "^1.0.0-beta.36",
     "node-sass": "^4.14.1",
+    "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-table": "^4.3.1",
@@ -60,5 +62,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://localhost:8080/",
+  "devDependencies": {
+    "expose-loader": "^1.0.3"
+  }
 }

@@ -1,8 +1,20 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery/dist/jquery.min'
+import $ from 'jquery';
+import Popper from 'popper.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
+
+// import registerServiceWorker from './registerServiceWorker';
 import reportWebVitals from './reportWebVitals';
+window.$ = $;
+window.jQuery = $;
+require('bootstrap/dist/js/bootstrap.min');
+
+
 
 ReactDOM.render(
   <React.StrictMode>

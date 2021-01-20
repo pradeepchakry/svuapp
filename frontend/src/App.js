@@ -23,6 +23,7 @@ import usePromise from "react-promise";
 import './custom-modal.css';
 import { getDefaultLocale } from 'react-datepicker';
 import StudyCntrDashboard from './StudyCntrDashboard';
+import "bootstrap/dist/css/bootstrap-theme.css";
 
 // The gray background
 const backdropStyle = {
@@ -57,7 +58,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div>
       <AuthApi.Provider value={{auth,setAuth}}>
       <Router>
         <Routes />

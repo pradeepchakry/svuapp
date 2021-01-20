@@ -27,8 +27,15 @@ import * as ReactBootStrap from 'react-bootstrap';
 import ReactDOM from "react-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap-theme.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "./styles.css";
+import {Col, Row} from 'react-bootstrap';
+import Container from "@material-ui/core/Container";
+import classes from './styles.css';
+import FormModal from './FormModal';   
+import ModalComponent from './ModalComponent'
+import {Table, Form} from 'react-bootstrap';
 
 
 
@@ -58,6 +65,8 @@ function StudyCntrDashboard() {
   const [modal, setModal] = React.useState(false);
   const [dataExists, setDataExists] = React.useState(false);
   const [fetchFinished, setFetchFinished] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [modalShowToggle, setModalShowToggle] = React.useState(false);
   const columns = [{
     dataField: 'student_id',
     text: 'Student ID'
@@ -100,7 +109,9 @@ function StudyCntrDashboard() {
 //     readCookie();
 //   }, [])
 
-  
+const ModalPopUpHandler=()=>{
+  setModalShowToggle(!modalShowToggle);
+}
 
   useEffect(() => {
     console.log("Hi! from StudyCntrDashboard useEffect()")
@@ -134,6 +145,169 @@ function StudyCntrDashboard() {
         });
         
   }
+  const ModalWithGrid = () => {
+    // return (<Modal show={show} animation={false}>Form</Modal>)
+
+    return (<Modal show={show} animation={false} onHide={handleClose} 
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            className="custom-modal"
+            dialogClassName="custom-modal"
+            bsClass="my-modal"
+            centered
+            >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Using Grid in Modal
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="show-grid">
+            <Container fluid="md">
+            <Form>
+  <Form.Row>
+    <Col xs={10} md={2} >
+    <Form.Group controlId="Form.SelectCourse">
+      <Form.Label>Course Applied </Form.Label>
+      <Form.Control as="select" custom>
+        <option>BA</option>
+        <option>MA</option>
+        <option>MTech</option>
+        <option>BSC</option>
+        <option>MSC</option>
+      </Form.Control>
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridStdyCntrID">
+      <Form.Label>Study Center Id</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridName">
+      <Form.Label>Name</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridFatherName">
+      <Form.Label>Father's Name</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridAAdharNo">
+      <Form.Label>Aadhar No.</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+    </Form.Row>
+    <p>Address For Communication</p>
+    <Form.Row>
+    
+
+    {/* <Col xs={12} md={3} >
+    <Form.Group as={Col} controlId="formGridEmail">
+      <Form.Label>Email</Form.Label>
+      <Form.Control size="sm" type="email" placeholder="Enter email" />
+    </Form.Group>
+    </Col> */}
+    
+    
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridDoorNo">
+      <Form.Label>Door No.</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridStreet">
+      <Form.Label>Street</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridPost">
+      <Form.Label>Village/Post</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridMandal">
+      <Form.Label>Mandal/Town</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridDistrict">
+      <Form.Label>District</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+
+    <Col xs={10} md={2}>
+    <Form.Group as={Col} controlId="formGridPincode">
+      <Form.Label>PinCode</Form.Label>
+      <Form.Control />
+    </Form.Group>
+    </Col>
+  </Form.Row>
+  
+
+  {/* <Form.Group controlId="formGridAddress1">
+    <Form.Label>Address</Form.Label>
+    <Form.Control size="sm" placeholder="1234 Main St" />
+  </Form.Group>
+
+  <Form.Group controlId="formGridAddress2">
+    <Form.Label>Address 2</Form.Label>
+    <Form.Control size="sm" placeholder="Apartment, studio, or floor" />
+  </Form.Group>
+
+  <Form.Row>
+    <Form.Group as={Col} controlId="formGridCity">
+      <Form.Label>City</Form.Label>
+      <Form.Control />
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>State</Form.Label>
+      <Form.Control as="select" defaultValue="Choose...">
+        <option>Choose...</option>
+        <option>...</option>
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridZip">
+      <Form.Label>Zip</Form.Label>
+      <Form.Control />
+    </Form.Group>
+  </Form.Row>
+
+  <Form.Group id="formGridCheckbox">
+    <Form.Check type="checkbox" label="Check me out" />
+  </Form.Group> */}
+  <Form.Row>
+  <Button variant="primary" type="submit">
+    Submit
+  </Button>
+  </Form.Row>
+</Form>
+            </Container>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={handleClose}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+      
+  )
+}
 
   const renderStudents = (student, index) => {
       return(
@@ -219,6 +393,14 @@ function StudyCntrDashboard() {
 //       console.log(error);
 //     });
 
+    const showModalHandler = (event) =>{
+      setShowModal(true);
+    }
+
+    const hideModalHandler = (event) =>{
+      setShowModal(false);
+    }
+
 
     if( !dataExists ) {
         return(
@@ -243,11 +425,11 @@ function StudyCntrDashboard() {
           <div style={{float: 'right'}}>
             <button onClick={handleOnClick}>Logout</button>
           </div>
-          <div style={{ padding: "20px" }}>
+          <div>
             { dataExists ? <div>
               <h1>Welcome {userName}</h1>
                 <h3>Student Records</h3>
-                  {/* <ReactBootStrap.Table striped bordered hover>
+                  {/* <Table className="mt-4" striped bordered hover>
                     <thead>
                       <tr>
                         <th>Id</th>
@@ -260,29 +442,35 @@ function StudyCntrDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {studentData.map(renderStudents)}
-                    </tbody>
-                  </ReactBootStrap.Table> */}
+                      {/* {studentData.map(renderStudents)}
+                       */}
+                       {/* {studentData.map((student, index) =>
+                        <tr key={index} >
+                        <td>{studentData.student_id}</td>
+                        <td>{studentData.gender}</td>
+                        <td>{studentData.aadhar_no}</td>
+                        <td>{studentData.mobileNo}</td>
+                        <td>{studentData.registrationNo}</td>
+                        <td>{studentData.courseName}</td>
+                        </tr>)}
+                    </tbody> */}
+                  {/* // </Table> */} 
                   <BootstrapTable keyField="name" data={studentData} columns={columns} />
                 </div>
                 : <h1>No Student records for this Study Center</h1>}
                 </div>
           <>
-          <button onClick={handleShow}>New Application</button>
-    
-          <Modal show={show} onHide={handleClose} 
-            aria-labelledby="contained-modal-title-vcenter"
-            >
-            <Modal.Header closeButton>
-            </Modal.Header>
-            <Modal.Body style={{'max-height': '50vh', 'overflow-y': 'auto'}}>
-              <ApplicationForm />
-            </Modal.Body>
-            </Modal>
-        </>
+          <button onClick={() =>{setShow(true)}}>New Application</button>
+          {/* <ModalComponent show={modalShowToggle}></ModalComponent> */}
+          {/* <FormModal showModal={showModal} hideModalHandler={hideModalHandler}></FormModal> */}
+          <ModalWithGrid show={show} onHide={() => {setShow(false)}}/>
+          
+    </>
         </div>
       )
   }
+
+  
 
 }
 

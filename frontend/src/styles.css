@@ -8,7 +8,7 @@
     left: 40px;
     right: 40px;
     bottom: 40px;
-    background-color: papayawhip;
+    background-color: rgb(233, 173, 76);
 }
 
 .Overlay {
@@ -20,16 +20,26 @@
     background-color: rebeccapurple;
 }
 
+.modal-backdrop {
+    background-color: rgb(224, 228, 230);
+}
+
 
 @media (min-width: 992px){
     .modal-full {
-        min-width: 20%;
-        margin-left: 80;
+        width: 897px;
+        height: 802px;
+        background-color: rgb(233, 173, 76);
     }
     
     .custom-modal {
-        width: 897px;
-        height: 802px;
-
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 40px;
+        bottom: 40px;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(233, 173, 76);
     }
 } 
