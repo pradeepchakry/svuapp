@@ -13,6 +13,7 @@ import OtpInput from 'react-otp-input';
 import {Button, Modal} from 'react-bootstrap'
 import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
+import TextField from "@material-ui/core/TextField";
 
 
 import BetterUser from './BetterUser'
@@ -156,151 +157,254 @@ const ModalPopUpHandler=()=>{
             bsClass="my-modal"
             centered
             >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Using Grid in Modal
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="show-grid">
-            <Container fluid="md">
-            <Form>
-  <Form.Row>
-    <Col xs={10} md={2} >
-    <Form.Group controlId="Form.SelectCourse">
-      <Form.Label>Course Applied </Form.Label>
-      <Form.Control as="select" custom>
-        <option>BA</option>
-        <option>MA</option>
-        <option>MTech</option>
-        <option>BSC</option>
-        <option>MSC</option>
-      </Form.Control>
-    </Form.Group>
-    </Col>
+      <Modal.Header closeButton>
+      <Modal.Title id="contained-modal-title-vcenter">
+        Using Grid in Modal
+      </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="show-grid">
+      <Container fluid="md">
+      <Form>
+        <Form.Row>
+        <Col xs={10} md={3} >
+        <Form.Group controlId="Form.SelectCourse">
+          <Form.Label>Course Applied </Form.Label>
+          <Form.Control as="select" custom>
+            <option>BA</option>
+            <option>MA</option>
+            <option>MTech</option>
+            <option>BSC</option>
+            <option>MSC</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridStdyCntrID">
-      <Form.Label>Study Center Id</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={3}>
+        <Form.Group as={Col} controlId="formGridStdyCntrID">
+          <Form.Label>Study Center Id</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridName">
-      <Form.Label>Name</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridFatherName">
-      <Form.Label>Father's Name</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridAAdharNo">
-      <Form.Label>Aadhar No.</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={3}>
+        <Form.Group as={Col} controlId="formGridName">
+          <Form.Label>Name</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
+
+        <Col xs={10} md={3}>
+        <Form.Group as={Col} controlId="formGridFatherName">
+          <Form.Label>Father's Name</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
+
+        <Col xs={10} md={3}>
+        <Form.Group as={Col} controlId="formGridAAdharNo">
+          <Form.Label>Aadhar No.</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
     </Form.Row>
-    <p>Address For Communication</p>
     <Form.Row>
-    
+        <Col xs={10} md={3}>
+        <Form.Group as={Col} controlId="formGridDoorNo">
+          <Form.Label>Door No.</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    {/* <Col xs={12} md={3} >
-    <Form.Group as={Col} controlId="formGridEmail">
-      <Form.Label>Email</Form.Label>
-      <Form.Control size="sm" type="email" placeholder="Enter email" />
-    </Form.Group>
-    </Col> */}
-    
-    
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridDoorNo">
-      <Form.Label>Door No.</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={2}>
+        <Form.Group as={Col} controlId="formGridStreet">
+          <Form.Label>Street</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridStreet">
-      <Form.Label>Street</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={2}>
+        <Form.Group as={Col} controlId="formGridPost">
+          <Form.Label>Village/Post</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridPost">
-      <Form.Label>Village/Post</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={2}>
+        <Form.Group as={Col} controlId="formGridMandal">
+          <Form.Label>Mandal/Town</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridMandal">
-      <Form.Label>Mandal/Town</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={2}>
+        <Form.Group as={Col} controlId="formGridDistrict">
+          <Form.Label>District</Form.Label>
+          <Form.Control />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridDistrict">
-      <Form.Label>District</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
+        <Col xs={10} md={2}>
+        <Form.Group as={Col} controlId="formGridPincode">
+          <Form.Label>PinCode</Form.Label>
+          <Form.Control size="sm" type="text" required />
+        </Form.Group>
+        </Col>
+    </Form.Row>
+    <Form.Row>
+        <Col xs={10} md={2} >
+        <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control size="sm" type="email" placeholder="Enter email" />
+        </Form.Group>
+        </Col>
 
-    <Col xs={10} md={2}>
-    <Form.Group as={Col} controlId="formGridPincode">
-      <Form.Label>PinCode</Form.Label>
-      <Form.Control />
-    </Form.Group>
-    </Col>
-  </Form.Row>
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectGender">
+          <Form.Label>Gender </Form.Label>
+          <Form.Control as="select" custom>
+            <option>M</option>
+            <option>F</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+        </Form.Row>
+        <Form.Row>
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectMedium">
+          <Form.Label>Medium </Form.Label>
+          <Form.Control as="select" custom>
+            <option>English</option>
+            <option>Telugu</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+        
+    </Form.Row>
+    <Form.Row>
+        <Col xs={10} md={2} >
+        <Form.Group as={Col} controlId="formGridSecondLang">
+          <Form.Label>Second Language</Form.Label>
+          <Form.Control size="sm" type="text" placeholder="Enter Second Language" />
+        </Form.Group>
+        </Col>
+
+        <Col xs={10} md={2} >
+        <Form.Group controlId="dob">
+          <Form.Label>Date of Birth</Form.Label>
+          <Form.Control type="date" name="dob" placeholder="Date of Birth" />
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectMaritalStatus">
+          <Form.Label>Marital Status </Form.Label>
+          <Form.Control as="select" custom>
+            <option>Unmarried</option>
+            <option>Married</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+
+        <Col xs={10} md={2} >
+        <Form.Group as={Col} controlId="formGridNationality">
+          <Form.Label>Nationality</Form.Label>
+          <Form.Control size="sm" type="text" placeholder="Indian" />
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectReligion">
+          <Form.Label>Religion </Form.Label>
+          <Form.Control as="select" custom>
+            <option>Hindu</option>
+            <option>Muslim</option>
+            <option>Christian</option>
+            <option>Sikh</option>
+            <option>Others</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectCaste">
+          <Form.Label>Religion </Form.Label>
+          <Form.Control as="select" custom>
+            <option>OC</option>
+            <option>BC</option>
+            <option>SC</option>
+            <option>ST</option>
+            <option>Others</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectResidentialStatus">
+          <Form.Label>Residential Status </Form.Label>
+          <Form.Control as="select" custom>
+            <option>Urban</option>
+            <option>Rural</option>
+            <option>Tribal</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <Form.Group controlId="Form.SelectPhCategory">
+          <Form.Label>PH Category </Form.Label>
+          <Form.Control as="select" custom>
+            <option>No</option>
+            <option>Yes</option>
+          </Form.Control>
+        </Form.Group>
+        </Col>
+
+        <Col xs={12} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="qualifyingExamination"
+            label="Qualifying Examination"
+            name="qualifyingExamination"
+            autoComplete="qualifyingExamination"
+            // onChange={this.handleQualifyingExam}
+            
+          />
+        </Col>
+    </Form.Row>
+      
+
   
 
-  {/* <Form.Group controlId="formGridAddress1">
-    <Form.Label>Address</Form.Label>
-    <Form.Control size="sm" placeholder="1234 Main St" />
-  </Form.Group>
-
-  <Form.Group controlId="formGridAddress2">
-    <Form.Label>Address 2</Form.Label>
-    <Form.Control size="sm" placeholder="Apartment, studio, or floor" />
-  </Form.Group>
-
-  <Form.Row>
-    <Form.Group as={Col} controlId="formGridCity">
-      <Form.Label>City</Form.Label>
-      <Form.Control />
-    </Form.Group>
-
-    <Form.Group as={Col} controlId="formGridState">
+    <Form.Row>
+    {/* <Form.Group as={Col} controlId="formGridState">
       <Form.Label>State</Form.Label>
       <Form.Control as="select" defaultValue="Choose...">
         <option>Choose...</option>
         <option>...</option>
       </Form.Control>
-    </Form.Group>
+    </Form.Group> */}
 
-    <Form.Group as={Col} controlId="formGridZip">
+    {/* <Form.Group as={Col} controlId="formGridZip">
       <Form.Label>Zip</Form.Label>
       <Form.Control />
-    </Form.Group>
-  </Form.Row>
-
-  <Form.Group id="formGridCheckbox">
-    <Form.Check type="checkbox" label="Check me out" />
-  </Form.Group> */}
-  <Form.Row>
+    </Form.Group> */}
+      <Col xs={10} md={2} >
+      <Form.Group as={Col}id="formGridCheckbox">
+        <Form.Check type="checkbox" label="Check me out" />
+      </Form.Group>
+      </Col>
+    </Form.Row>
+  
   <Button variant="primary" type="submit">
     Submit
   </Button>
-  </Form.Row>
+  
 </Form>
-            </Container>
-            </Modal.Body>
+</Container>
+  </Modal.Body>
             <Modal.Footer>
               <Button onClick={handleClose}>Close</Button>
             </Modal.Footer>
