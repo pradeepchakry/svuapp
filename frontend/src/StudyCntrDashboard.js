@@ -15,6 +15,10 @@ import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
 import TextField from "@material-ui/core/TextField";
 
+import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Grid from "@material-ui/core/Grid";
+
 
 import BetterUser from './BetterUser'
 import ApplicationForm from './ApplicationForm';
@@ -53,6 +57,179 @@ const backdropStyle = {
   padding: 50
 };
 
+const useDateStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
+const courses = [
+  {
+    value: 'course1',
+    label: 'Course1',
+  },
+  {
+    value: 'course2',
+    label: 'course2',
+  },
+  {
+    value: 'course3',
+    label: 'course3',
+  },
+  {
+    value: 'course4',
+    label: 'course4',
+  },
+];
+
+const genders = [
+  {
+    value: 'male',
+    label: 'Male',
+  },
+  {
+    value: 'female',
+    label: 'Female',
+  }
+];
+
+const mediums = [
+  {
+    value: 'english',
+    label: 'English',
+  },
+  {
+    value: 'telugu',
+    label: 'Telugu',
+  }
+];
+
+const maritalStatuses = [
+  {
+    value: 'unmarried',
+    label: 'Unmarried',
+  },
+  {
+    value: 'married',
+    label: 'Married',
+  }
+];
+
+
+
+const religions = [
+  {
+    value: 'hindu',
+    label: 'Hindu',
+  },
+  {
+    value: 'muslim',
+    label: 'Muslim',
+  },
+  {
+    value: 'christian',
+    label: 'Christian',
+  },
+  {
+    value: 'sikh',
+    label: 'Sikh',
+  },
+  {
+    value: 'others',
+    label: 'Others'
+  }
+];
+
+const castes = [
+  {
+    value: 'oc',
+    label: 'OC',
+  },
+  {
+    value: 'bc',
+    label: 'BC',
+  },
+  {
+    value: 'sc',
+    label: 'SC',
+  },
+  {
+    value: 'st',
+    label: 'ST',
+  },
+  {
+    value: 'others',
+    label: 'Others'
+  }
+];
+
+const residentialStatuses = [
+  {
+    value: 'urban',
+    label: 'Urban',
+  },
+  {
+    value: 'rural',
+    label: 'Rural',
+  },
+  {
+    value: 'tribal',
+    label: 'Tribal',
+  }
+];
+
+const phCategories = [
+  {
+    value: 'no',
+    label: 'No',
+  },
+  {
+    value: 'yes',
+    label: 'Yes',
+  }
+];
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+},
+textField: {
+    width: 300,
+    margin: 100,
+},
+//style for font size
+resize:{
+  fontSize:50
+}
+}));
+
+// const styles = makeStyles((theme) => ({
+//   container: {
+//       display: 'flex',
+//       flexWrap: 'wrap',
+//   },
+//   textField: {
+//       width: 300,
+//       margin: 100,
+//   },
+//   //style for font size
+//   resize:{
+//     fontSize:50
+//   },
+//   })
 
 
 function StudyCntrDashboard() {
@@ -68,6 +245,53 @@ function StudyCntrDashboard() {
   const [fetchFinished, setFetchFinished] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [modalShowToggle, setModalShowToggle] = React.useState(false);
+  const classes = useStyles();
+  const dateClasses = useDateStyles();
+
+
+  const [course, setCourse] = React.useState('course');
+  const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState('studyCenterOptedCode');
+  const [name, setName] = React.useState('studyCenterOptedCode');
+  const [fatherName, setFatherName] = React.useState('name');
+  const [aadharNo, setAadharNo] = React.useState('aadharNo');
+  const [doorNo, setDoorNo] = React.useState('doorNo');
+  const [street, setStreet] = React.useState('street');
+  const [village, setVillage] = React.useState('village');
+  const [mandal, setMandal] = React.useState('mandal');
+  const [district, setDistrict] = React.useState('district');
+  const [pincode, setPincode] = React.useState('pincode');
+  const [email, setEmail] = React.useState('email');
+
+  const [gender, setGender] = React.useState('gender');
+  const [medium, setMedium] = React.useState('medium');
+  const [secondLanguageOpted, setSecondLanguageOpted] = React.useState('secondLanguageOpted');
+  const [dob, setDob] = React.useState(Date("1978-04-02T21:11:54"));
+  const [maritalStatus, setMaritalStatus] = React.useState('maritalStatus');
+  const [nationality, setNationality] = React.useState('Indian');
+  
+  const [religion, setReligion] = React.useState('religion');
+  const [caste, setCaste] = React.useState('caste');
+  const [residential, setResidential] = React.useState('residential');
+  const [phCategory, SelectPhCategory] = React.useState('phCategory');
+  const [qualifyingExamination, setQualifyingExamination] = React.useState('qualifyingExamination');
+  const [university, setUniversity] = React.useState('university');
+  const [yearAndMonthPasssing, setYearAndMonthPassing] = React.useState(Date("1978-04-02T21:11:54"));
+  const [groupSubject, setGroupSubject] = React.useState('groupSubject');
+  const [maxMarks, setMaxMarks] = React.useState('maxMarks');
+  const [marksObtained, setMarksObtained] = React.useState('marksObtained');
+  const [percentageOfMarks, setPercentageOfMarks] = React.useState('feeAmount');
+  const [feeAmount, setFeeAmount] = React.useState('feeAmount');
+  const [challanId, setChallanId] = React.useState('challanId');
+  const [challanDate, setChallanDate] = React.useState(Date("2021-01-01T21:11:54"));
+  const [bankName, setBankName] = React.useState('bankName');
+  const [declarationChecked, setDeclarationChecked] = React.useState('declarationChecked');
+
+  const handleFieldChange = (event) => {
+    console.log("selected course -> " + event.target.value);
+    setCourse(event.target.value);
+  };
+
+
   const columns = [{
     dataField: 'student_id',
     text: 'Student ID'
@@ -152,9 +376,9 @@ const ModalPopUpHandler=()=>{
     return (<Modal show={show} animation={false} onHide={handleClose} 
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            className="custom-modal"
-            dialogClassName="custom-modal"
-            bsClass="my-modal"
+            className="my-modal-lg"
+            dialogClassName="modal-full"
+            bsClass="modal-full"
             centered
             >
       <Modal.Header closeButton>
@@ -163,220 +387,503 @@ const ModalPopUpHandler=()=>{
       </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
-      <Container fluid="md">
+      <Container>
       <Form>
-        <Form.Row>
-        <Col xs={10} md={3} >
-        <Form.Group controlId="Form.SelectCourse">
-          <Form.Label>Course Applied </Form.Label>
-          <Form.Control as="select" custom>
-            <option>BA</option>
-            <option>MA</option>
-            <option>MTech</option>
-            <option>BSC</option>
-            <option>MSC</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={3}>
-        <Form.Group as={Col} controlId="formGridStdyCntrID">
-          <Form.Label>Study Center Id</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={3}>
-        <Form.Group as={Col} controlId="formGridName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={3}>
-        <Form.Group as={Col} controlId="formGridFatherName">
-          <Form.Label>Father's Name</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={3}>
-        <Form.Group as={Col} controlId="formGridAAdharNo">
-          <Form.Label>Aadhar No.</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-    </Form.Row>
-    <Form.Row>
-        <Col xs={10} md={3}>
-        <Form.Group as={Col} controlId="formGridDoorNo">
-          <Form.Label>Door No.</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2}>
-        <Form.Group as={Col} controlId="formGridStreet">
-          <Form.Label>Street</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2}>
-        <Form.Group as={Col} controlId="formGridPost">
-          <Form.Label>Village/Post</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2}>
-        <Form.Group as={Col} controlId="formGridMandal">
-          <Form.Label>Mandal/Town</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2}>
-        <Form.Group as={Col} controlId="formGridDistrict">
-          <Form.Label>District</Form.Label>
-          <Form.Control />
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2}>
-        <Form.Group as={Col} controlId="formGridPincode">
-          <Form.Label>PinCode</Form.Label>
-          <Form.Control size="sm" type="text" required />
-        </Form.Group>
-        </Col>
-    </Form.Row>
-    <Form.Row>
-        <Col xs={10} md={2} >
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control size="sm" type="email" placeholder="Enter email" />
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectGender">
-          <Form.Label>Gender </Form.Label>
-          <Form.Control as="select" custom>
-            <option>M</option>
-            <option>F</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-        </Form.Row>
-        <Form.Row>
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectMedium">
-          <Form.Label>Medium </Form.Label>
-          <Form.Control as="select" custom>
-            <option>English</option>
-            <option>Telugu</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
+        <Row>
         
-    </Form.Row>
-    <Form.Row>
-        <Col xs={10} md={2} >
-        <Form.Group as={Col} controlId="formGridSecondLang">
-          <Form.Label>Second Language</Form.Label>
-          <Form.Control size="sm" type="text" placeholder="Enter Second Language" />
-        </Form.Group>
-        </Col>
+        <Col xs={12} md={6}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="studyCenterId"
+            label="Study Center opted with Code No."
+            name="studyCenterId"
+            defaultValue="001"
+            onChange={handleFieldChange}
+            autoFocus
+          />
+          </Col>
+          </Row>
+          <Row>
+        <Col  >
+        <TextField xs={5} md={2}
+          id="standard-select-course"
+          select
+          label="Course Applied"
+          InputLabelProps={{style: {fontSize: 15}}}
+          InputProps={{style: {fontSize: 15}}}
+          className={classes.textField}
+          size="small"
+          value={course}
+          onChange={handleFieldChange}
+        >
+          {courses.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
 
-        <Col xs={10} md={2} >
-        <Form.Group controlId="dob">
-          <Form.Label>Date of Birth</Form.Label>
-          <Form.Control type="date" name="dob" placeholder="Date of Birth" />
-        </Form.Group>
-        </Col>
+        </Col >   
+        
+          
+          </Row>
+          <Row>
 
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectMaritalStatus">
-          <Form.Label>Marital Status </Form.Label>
-          <Form.Control as="select" custom>
-            <option>Unmarried</option>
-            <option>Married</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={10} md={2} >
-        <Form.Group as={Col} controlId="formGridNationality">
-          <Form.Label>Nationality</Form.Label>
-          <Form.Control size="sm" type="text" placeholder="Indian" />
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectReligion">
-          <Form.Label>Religion </Form.Label>
-          <Form.Control as="select" custom>
-            <option>Hindu</option>
-            <option>Muslim</option>
-            <option>Christian</option>
-            <option>Sikh</option>
-            <option>Others</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectCaste">
-          <Form.Label>Religion </Form.Label>
-          <Form.Control as="select" custom>
-            <option>OC</option>
-            <option>BC</option>
-            <option>SC</option>
-            <option>ST</option>
-            <option>Others</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectResidentialStatus">
-          <Form.Label>Residential Status </Form.Label>
-          <Form.Control as="select" custom>
-            <option>Urban</option>
-            <option>Rural</option>
-            <option>Tribal</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <Form.Group controlId="Form.SelectPhCategory">
-          <Form.Label>PH Category </Form.Label>
-          <Form.Control as="select" custom>
-            <option>No</option>
-            <option>Yes</option>
-          </Form.Control>
-        </Form.Group>
-        </Col>
-
-        <Col xs={12} md={3}>
+        <Col xs={10} md={3}>
         <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="qualifyingExamination"
-            label="Qualifying Examination"
-            name="qualifyingExamination"
-            autoComplete="qualifyingExamination"
-            // onChange={this.handleQualifyingExam}
+            id="name"
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            label="Name of the Applicant"
+            name="name"
+            autoComplete="name"
+            onChange={handleFieldChange}
+            autoFocus
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="fatherName"
+            label="Father's Name"
+            name="fatherName"
+            autoComplete="fatherName"
+            onChange={handleFieldChange}
             
           />
         </Col>
-    </Form.Row>
-      
 
-  
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="aadharNo"
+            label="AADHAR No."
+            name="aadharNo"
+            autoComplete=""
+            onChange={handleFieldChange}
+            
+          />
+        </Col>
+    </Row>
+    <Row>
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="doorNo"
+            label="Door No."
+            name="Door No."
+            autoComplete="doorNo"
+            onChange={handleFieldChange}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="street"
+            label="Street"
+            name="Street"
+            autoComplete="street"
+            onChange={handleFieldChange}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="village"
+            label="Village/Post"
+            name="village"
+            autoComplete="village"
+            onChange={handleFieldChange}  
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="mandal"
+            label="Mandal/Town"
+            name="mandal"
+            autoComplete="mandal"
+            onChange={handleFieldChange}
+            
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="district"
+            label="District"
+            name="district"
+            autoComplete="mandal"
+            onChange={handleFieldChange}
+        />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="pincode"
+            label="Pincode"
+            name="pincode"
+            autoComplete="pincode"
+            onChange={handleFieldChange}
+        />
+        </Col>
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            onChange={handleFieldChange}
+          />
+        </Col>  
+    </Row>
+    <Row>
+    <Grid>
+    {/* <Col xs={10} md={4} > */}
+        <TextField
+          id="standard-select-gender"
+          select
+          label="Gender"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={gender}
+          onChange={handleFieldChange}
+        >
+          {genders.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+          
+        {/* </Col>
+        
+        <Col xs={8} md={4}> */}
+        
+          <TextField
+          id="standard-select-medium"
+          select
+          label="Medium"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          // size="small"
+          value={medium}
+          onChange={handleFieldChange}
+        >
+          {mediums.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+          {/* </Col>
+          <Col xs={10} md={2} > */}
+        <TextField
+          id="standard-select-maritalstatus"
+          select
+          label="Marital Status"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={maritalStatus}
+          onChange={handleFieldChange}
+        >
+          {maritalStatuses.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+        {/* </Col> */}
+        </Grid>
+    </Row>
+    <Row>
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="secondaryLangauage"
+            label="Secondary Language Opted"
+            name="secondaryLangauage"
+            autoComplete="Secondary Language"
+            onChange={handleFieldChange}
+          />
+        </Col>
+
+        <Col xs={10} md={2} >
+        <TextField
+          id="date"
+          label="Date of Birth"
+          type="date"
+          defaultValue="1960-01-01"
+          InputLabelProps={{style: {fontSize: 13}}}
+          className={dateClasses.textField}
+          InputLabelProps={{
+          shrink: true,
+          }}
+        />
+        </Col>
+        
+      </Row>
+      <Row>
+        
+      <Col xs={10} md={2} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id="nationality"
+            label="Nationality"
+            name="nationality"
+            autoComplete="Indian"
+            disabled
+            value={nationality}    
+          />
+        </Col>
+
+        <Col xs={12} md={2} >
+        <TextField
+          id="standard-select-religion"
+          select
+          label="Religion"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={religion}
+          onChange={handleFieldChange}
+        >
+          {religions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+        </Col>
+        
+        <Col xs={12} md={2} >
+        <TextField
+          id="standard-select-caste"
+          select
+          label="Caste"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={caste}
+          onChange={handleFieldChange}
+        >
+          {castes.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <TextField
+          id="standard-select-residential"
+          select
+          label="Residential Status"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={residential}
+          onChange={handleFieldChange}
+        >
+          {residentialStatuses.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+        </Col>
+
+        <Col xs={12} md={2} >
+        <TextField
+          id="standard-select-phCategory"
+          select
+          label="Whether belongs to PH Category?"
+          InputLabelProps={{style: {fontSize: 20}}}
+          inputProps={{style: {fontSize: 20}}}
+          className={classes.textField}
+          size="small"
+          value={phCategory}
+          onChange={handleFieldChange}
+        >
+          {phCategories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="qualifyingExam"
+            label="Qualifying Examination"
+            name="qualifyingExam"
+            autoComplete="Qualifying Examination"
+            onChange={handleFieldChange}
+          />
+        </Col>
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="university"
+            label="University"
+            name="university"
+            autoComplete="University"
+            onChange={handleFieldChange}
+          />
+        </Col>
+        <Col xs={10} md={2} >
+        <TextField
+          id="date"
+          label="Year and Month Passing"
+          type="date"
+          defaultValue="1960-01-01"
+          InputLabelProps={{style: {fontSize: 13}}}
+          className={classes.textField}
+          InputLabelProps={{
+          shrink: true,
+          }}
+        />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="maxMarks"
+            label="Max Marks"
+            name="maxMarks"
+            autoComplete="Max Marks"
+            onChange={handleFieldChange}
+          />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="marksObtained"
+            label="marksObtained"
+            name="Marks Obtained"
+            autoComplete="marksObtained"
+            onChange={handleFieldChange}
+          />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="percentage"
+            label="Percentage"
+            name="percentage"
+            autoComplete="Percentage"
+            disable
+          />
+        </Col>
+    </Row>
 
     <Form.Row>
     {/* <Form.Group as={Col} controlId="formGridState">
