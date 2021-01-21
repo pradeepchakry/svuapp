@@ -1,0 +1,5 @@
+.Select-menu-outer {
+    z-index: 100 !important;
+    width: '50px';
+    /* flex: 1; */
+  }

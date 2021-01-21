@@ -41,9 +41,8 @@ import classes from './styles.css';
 import FormModal from './FormModal';   
 import ModalComponent from './ModalComponent'
 import {Table, Form} from 'react-bootstrap';
-
-
-
+import Select from "react-select";
+import './reactselect.css'
 
 
 // The gray background
@@ -55,6 +54,24 @@ const backdropStyle = {
   right: 0,
   backgroundColor: 'rgba(0,0,0,0.3)',
   padding: 50
+};
+
+const selectStyles = {
+  control: (base) => ({
+    ...base,
+    minHeight: 32,
+    minWidth: 32
+  }),
+  dropdownIndicator: (base) => ({
+    ...base,
+    paddingTop: 0,
+    paddingBottom: 0,
+  }),
+  clearIndicator: (base) => ({
+    ...base,
+    paddingTop: 0,
+    paddingBottom: 0,
+  }),
 };
 
 const useDateStyles = makeStyles((theme) => ({
@@ -72,19 +89,19 @@ const useDateStyles = makeStyles((theme) => ({
 const courses = [
   {
     value: 'course1',
-    label: 'Course1',
+    label: 'Course 1',
   },
   {
     value: 'course2',
-    label: 'course2',
+    label: 'Course 2',
   },
   {
     value: 'course3',
-    label: 'course3',
+    label: 'Course 3',
   },
   {
     value: 'course4',
-    label: 'course4',
+    label: 'Course 4',
   },
 ];
 
@@ -245,6 +262,8 @@ function StudyCntrDashboard() {
   const [fetchFinished, setFetchFinished] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [modalShowToggle, setModalShowToggle] = React.useState(false);
+
+  
   const classes = useStyles();
   const dateClasses = useDateStyles();
 
@@ -285,12 +304,17 @@ function StudyCntrDashboard() {
   const [challanDate, setChallanDate] = React.useState(Date("2021-01-01T21:11:54"));
   const [bankName, setBankName] = React.useState('bankName');
   const [declarationChecked, setDeclarationChecked] = React.useState('declarationChecked');
+  const [paymentStatus, setPaymentStatus] = React.useState('paymentStatus');
 
   const handleFieldChange = (event) => {
     console.log("selected course -> " + event.target.value);
-    setCourse(event.target.value);
+    setGender(event.target.value);
   };
 
+  const handleCourseChange = (course) => {
+    console.log("Course selected" + course.value);
+    setCourse(course.value);
+  }
 
   const columns = [{
     dataField: 'student_id',
@@ -381,9 +405,9 @@ const ModalPopUpHandler=()=>{
             bsClass="modal-full"
             centered
             >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton cssModule={{'modal-title': 'w-100 text-center'}}>
       <Modal.Title id="contained-modal-title-vcenter">
-        Using Grid in Modal
+        Application Form
       </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
@@ -409,27 +433,16 @@ const ModalPopUpHandler=()=>{
           </Col>
           </Row>
           <Row>
-        <Col  >
-        <TextField xs={5} md={2}
-          id="standard-select-course"
-          select
-          label="Course Applied"
-          InputLabelProps={{style: {fontSize: 15}}}
-          InputProps={{style: {fontSize: 15}}}
-          className={classes.textField}
-          size="small"
-          value={course}
-          onChange={handleFieldChange}
-        >
-          {courses.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-
+        <Col xs={10} md={3}>
+        <p>Course Applied</p>
+        <Select options={courses} 
+          maxWidth={50}
+          maxMenuHeight={150}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
         </Col >   
-        
+      
           
           </Row>
           <Row>
@@ -599,71 +612,25 @@ const ModalPopUpHandler=()=>{
         </Col>  
     </Row>
     <Row>
-    <Grid>
+    
     {/* <Col xs={10} md={4} > */}
-        <TextField
-          id="standard-select-gender"
-          select
-          label="Gender"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={gender}
-          onChange={handleFieldChange}
-        >
-          {genders.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-          
-        {/* </Col>
-        
-        <Col xs={8} md={4}> */}
-        
-          <TextField
-          id="standard-select-medium"
-          select
-          label="Medium"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          // size="small"
-          value={medium}
-          onChange={handleFieldChange}
-        >
-          {mediums.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-          {/* </Col>
-          <Col xs={10} md={2} > */}
-        <TextField
-          id="standard-select-maritalstatus"
-          select
-          label="Marital Status"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={maritalStatus}
-          onChange={handleFieldChange}
-        >
-          {maritalStatuses.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-        {/* </Col> */}
-        </Grid>
-    </Row>
-    <Row>
-        <Col xs={10} md={4} >
+      <Col xs={10} md={3}>
+        <p>Gender</p>
+        <Select options={genders} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={3}>
+        <p>Medium</p>
+        <Select options={mediums} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={4} >
         <TextField
             variant="outlined"
             margin="normal"
@@ -678,6 +645,34 @@ const ModalPopUpHandler=()=>{
             onChange={handleFieldChange}
           />
         </Col>
+        
+    </Row>
+    <Row>
+    <Col xs={13} md={3} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id="nationality"
+            label="Nationality"
+            name="nationality"
+            autoComplete="INDIAN"
+            disabled
+            value={nationality}    
+          />
+        </Col>
+    </Row>
+    <Row>
+    <Col xs={13} md={2}>
+        <p>Marital Status</p>
+        <Select options={maritalStatuses} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
 
         <Col xs={10} md={2} >
         <TextField
@@ -694,103 +689,85 @@ const ModalPopUpHandler=()=>{
         </Col>
         
       </Row>
+
       <Row>
-        
-      <Col xs={10} md={2} >
+    <Col xs={13} md={3} >
         <TextField
-            variant="outlined"
+            variant="standard"
             margin="normal"
             required
             fullWidth
             // onChange={this.handleDOB}
-            id="nationality"
-            label="Nationality"
-            name="nationality"
-            autoComplete="Indian"
+            id=""
+            label=""
+            name=""
+            autoComplete=""
             disabled
-            value={nationality}    
+            // value={}    
           />
         </Col>
+    </Row>
 
-        <Col xs={12} md={2} >
+    <Row>
+    <Col xs={13} md={3} >
         <TextField
-          id="standard-select-religion"
-          select
-          label="Religion"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={religion}
-          onChange={handleFieldChange}
-        >
-          {religions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
+            variant="standard"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id=""
+            label=""
+            name=""
+            autoComplete=""
+            disabled
+            hidden
+            // value={}    
+          />
         </Col>
+    </Row>
+      
+
+      <Row>
+      
+        <Col xs={10} md={3}>
+        <p>Religion</p>
+        <Select options={religions} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
         
-        <Col xs={12} md={2} >
-        <TextField
-          id="standard-select-caste"
-          select
-          label="Caste"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={caste}
-          onChange={handleFieldChange}
-        >
-          {castes.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-        </Col>
+      <Col xs={10} md={3}>
+        <p>Caste</p>
+        <Select options={castes} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={3}>
+        <p>Residential Status</p>
+        <Select options={residentialStatuses} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={2}>
+        <p>PH Category?</p>
+        <Select options={phCategories} 
+          maxWidth={50}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+  </Row>
+ 
+  <Row>
 
-        <Col xs={12} md={2} >
-        <TextField
-          id="standard-select-residential"
-          select
-          label="Residential Status"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={residential}
-          onChange={handleFieldChange}
-        >
-          {residentialStatuses.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-        </Col>
-
-        <Col xs={12} md={2} >
-        <TextField
-          id="standard-select-phCategory"
-          select
-          label="Whether belongs to PH Category?"
-          InputLabelProps={{style: {fontSize: 20}}}
-          inputProps={{style: {fontSize: 20}}}
-          className={classes.textField}
-          size="small"
-          value={phCategory}
-          onChange={handleFieldChange}
-        >
-          {phCategories.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-        </Col>
+  
 
         <Col xs={10} md={4} >
         <TextField
@@ -822,6 +799,8 @@ const ModalPopUpHandler=()=>{
             onChange={handleFieldChange}
           />
         </Col>
+      </Row>
+      <Row>
         <Col xs={10} md={2} >
         <TextField
           id="date"
@@ -829,12 +808,14 @@ const ModalPopUpHandler=()=>{
           type="date"
           defaultValue="1960-01-01"
           InputLabelProps={{style: {fontSize: 13}}}
-          className={classes.textField}
+          className={dateClasses.textField}
           InputLabelProps={{
           shrink: true,
           }}
         />
         </Col>
+      </Row>
+      <Row>
 
         <Col xs={10} md={4} >
         <TextField
@@ -861,8 +842,8 @@ const ModalPopUpHandler=()=>{
             InputLabelProps={{style: {fontSize: 13}}}
             InputProps={{style: {fontSize: 13}}}
             id="marksObtained"
-            label="marksObtained"
-            name="Marks Obtained"
+            label="Marks Obtained"
+            name="marksObtained"
             autoComplete="marksObtained"
             onChange={handleFieldChange}
           />
@@ -880,9 +861,43 @@ const ModalPopUpHandler=()=>{
             label="Percentage"
             name="percentage"
             autoComplete="Percentage"
-            disable
+            disabled
           />
         </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="feeAmount"
+            label="Fee Amount"
+            name="feeAmount"
+            autoComplete="fee amount"
+            disabled
+            
+          />
+        </Col>
+        
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="paymentStatus"
+            label="Payment Status"
+            name="paymentStatus"
+            autoComplete="Pending"
+            disabled
+          />
+        </Col>
+        
     </Row>
 
     <Form.Row>
@@ -898,11 +913,20 @@ const ModalPopUpHandler=()=>{
       <Form.Label>Zip</Form.Label>
       <Form.Control />
     </Form.Group> */}
-      <Col xs={10} md={2} >
-      <Form.Group as={Col}id="formGridCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
+      
+      <Form.Group as={Col} id="formGridCheckbox">
+        <Form.Check id="paymentStatus"
+            name="paymentStatus" 
+            type="checkbox" 
+            label="Declaration"
+            onChange={handleFieldChange} />
+        <p>I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
+            at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
+            action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
+            conditions, rules and regulations stipulated by the Directorate of distance Education and the Laws of the
+            university applicable from time to time.</p>
       </Form.Group>
-      </Col>
+      
     </Form.Row>
   
   <Button variant="primary" type="submit">
