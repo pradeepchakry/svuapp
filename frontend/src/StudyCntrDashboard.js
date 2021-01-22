@@ -212,6 +212,12 @@ const phCategories = [
   }
 ];
 
+const initialFomValues = {
+  name: "",
+  fatherName: "",
+  email: ""
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -259,6 +265,7 @@ function StudyCntrDashboard() {
   const [show, setShow] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [dataExists, setDataExists] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
   const [fetchFinished, setFetchFinished] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [modalShowToggle, setModalShowToggle] = React.useState(false);
@@ -268,10 +275,10 @@ function StudyCntrDashboard() {
   const dateClasses = useDateStyles();
 
 
-  const [course, setCourse] = React.useState('course');
-  const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState('studyCenterOptedCode');
-  const [name, setName] = React.useState('studyCenterOptedCode');
-  const [fatherName, setFatherName] = React.useState('name');
+  const [course, setCourse] = React.useState({value: 'course1', label: 'Course 1'});
+  const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState();
+  const [name, setName] = React.useState("");
+  const [fatherName, setFatherName] = React.useState("");
   const [aadharNo, setAadharNo] = React.useState('aadharNo');
   const [doorNo, setDoorNo] = React.useState('doorNo');
   const [street, setStreet] = React.useState('street');
@@ -291,7 +298,7 @@ function StudyCntrDashboard() {
   const [religion, setReligion] = React.useState('religion');
   const [caste, setCaste] = React.useState('caste');
   const [residential, setResidential] = React.useState('residential');
-  const [phCategory, SelectPhCategory] = React.useState('phCategory');
+  const [phCategory, setPhCategory] = React.useState('phCategory');
   const [qualifyingExamination, setQualifyingExamination] = React.useState('qualifyingExamination');
   const [university, setUniversity] = React.useState('university');
   const [yearAndMonthPasssing, setYearAndMonthPassing] = React.useState(Date("1978-04-02T21:11:54"));
@@ -305,15 +312,173 @@ function StudyCntrDashboard() {
   const [bankName, setBankName] = React.useState('bankName');
   const [declarationChecked, setDeclarationChecked] = React.useState('declarationChecked');
   const [paymentStatus, setPaymentStatus] = React.useState('paymentStatus');
+  const [values, setValues] = React.useState(initialFomValues);
+  // const [x, setX] = React.useState(5);
+
+  // setX(6);
+
+  // const [handleCourseChange] = useState(() => {
+  //   return () => {
+  //     setCourse(course);
+  //   };
+  // });
 
   const handleFieldChange = (event) => {
     console.log("selected course -> " + event.target.value);
     setGender(event.target.value);
   };
 
+  const calculatePercentage = () => {
+    var marksObtainedInt = parseInt(marksObtained);
+    var maxMarksInt = parseInt(maxMarks);
+    var percentile = marksObtainedInt/maxMarksInt;
+    console.log("Marks obtained Integer --> " + marksObtainedInt)
+    console.log("Max Marks Integer --> " + maxMarksInt)
+    console.log("Percentage Marks --> " + percentile)
+    setPercentageOfMarks(percentile);
+  }
+
+  const handleStudyCenterOptedCode = (event) => {
+    // console.log(event.target.value)
+    // let val = event.target.value;
+    
+    // event.preventDefault();
+    console.log(event.target.value)
+    // console.log(value);
+    setStudyCenterOptedCode(event.target.value)
+  }
+
   const handleCourseChange = (course) => {
     console.log("Course selected" + course.value);
     setCourse(course.value);
+  }
+
+  const handleNameChange = (event) => {
+    console.log(event.target.value)
+    const {name, value} = event.target;
+    setValues({
+      ...values,
+      [name]: value
+    })
+    console.log(values.name)
+  }
+
+  const handleFatherName = (fatherName) => {
+    setFatherName(fatherName);
+  }
+
+  const handleAadharNo = (aadharNo) => {
+    setAadharNo(aadharNo);
+  }
+
+  const handleDoorNo = (doorNo) => {
+    setDoorNo(doorNo);
+  }
+
+  const handleStreet = (street) => {
+    setStreet(street);
+  }
+
+  const handleVillage = (village) => {
+    setVillage(village);
+  }
+
+  const handleMandal = (mandal) => {
+    setMandal(mandal);
+  }
+
+  const handleDistrict = (district) => {
+    setDistrict(district);
+  }
+
+  const handlePincode = (pincode) => {
+    setPincode(pincode);
+  }
+
+  const handleEmail = (email) => {
+    setEmail(email);
+  }
+
+  const handleGenderChange = (gender) => {
+    console.log("Gender selected" + gender.value);
+    setGender(gender.value);
+  }
+
+  const handleMedium = (medium) => {
+    setMedium(medium);
+  }
+
+  const handleSecondLanguageOpted = event => setSecondLanguageOpted(event.target.value)
+  
+
+  const handleDOB = (dob) => {
+    setDob(dob);
+  }
+
+  const handleMaritalStatus = (maritalStatus) => {
+    console.log("maritalStatus selected" + maritalStatus.value);
+    setMaritalStatus(maritalStatus.value);
+  }
+
+  const handleNationality = (nationality) => {
+    setNationality(nationality);
+  }
+
+  const handleReligion = (religion) => {
+    console.log("Religion selected" + religion.value);
+    setResidential(religion.value);
+  }
+
+  const handleCaste = (caste) => {
+    console.log("caste selected" + caste.value);
+    setCaste(caste.value);
+  }
+
+  const handleResidentialStatus = (residential) => {
+    console.log("Residential selected" + residential.value);
+    setResidential(residential.value);
+  }
+
+  const handlePhCategory = (phCategory) => {
+    console.log("phCategory selected" + phCategory.value);
+    setPhCategory(phCategory.value);
+  }
+
+  const handleQualifyingExam = (qualifyingExamination) => {
+    setQualifyingExamination(qualifyingExamination);
+  }
+
+  const handleUniversity = (university) => {
+    setUniversity(university);
+  }
+
+  const handleYearAndMonth= (yearAndMonthPassing) => {
+    setYearAndMonthPassing(yearAndMonthPassing)
+  }
+
+  const handleGroupSubject = (groupSubject) => {
+    setGroupSubject(groupSubject)
+  }
+
+  const handleMaxMarks = (maxMarks) => {
+    setMaxMarks(maxMarks)
+  }
+
+  const handleMarksObtained = (marksObtained) => {
+    setMarksObtained(marksObtained)
+    calculatePercentage();
+  }
+
+  const handlePercentageOfMarks = (percentageOfMarks) => {
+    setPercentageOfMarks(percentageOfMarks)
+  }
+
+  const handleFeeAmount = (feeAmount) => {
+    setFeeAmount(feeAmount)
+  }
+
+  const handleDeclarationChecked = (declarationChecked) => {
+    this.setDeclarationChecked(declarationChecked)
   }
 
   const columns = [{
@@ -364,7 +529,7 @@ const ModalPopUpHandler=()=>{
 
   useEffect(() => {
     console.log("Hi! from StudyCntrDashboard useEffect()")
-    readCookie();
+    // readCookie();
     loadData();
     //getData()
   }, [])
@@ -392,556 +557,18 @@ const ModalPopUpHandler=()=>{
           })));
           setDataExists(true);
         });
+    
+    setLoaded(true);
         
   }
   const ModalWithGrid = () => {
     // return (<Modal show={show} animation={false}>Form</Modal>)
 
-    return (<Modal show={show} animation={false} onHide={handleClose} 
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            className="my-modal-lg"
-            dialogClassName="modal-full"
-            bsClass="modal-full"
-            centered
-            >
-      <Modal.Header closeButton cssModule={{'modal-title': 'w-100 text-center'}}>
-      <Modal.Title id="contained-modal-title-vcenter">
-        Application Form
-      </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="show-grid">
-      <Container>
-      <Form>
-        <Row>
-        
-        <Col xs={12} md={6}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="studyCenterId"
-            label="Study Center opted with Code No."
-            name="studyCenterId"
-            defaultValue="001"
-            onChange={handleFieldChange}
-            autoFocus
-          />
-          </Col>
-          </Row>
-          <Row>
-        <Col xs={10} md={3}>
-        <p>Course Applied</p>
-        <Select options={courses} 
-          maxWidth={50}
-          maxMenuHeight={150}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-        </Col >   
-      
-          
-          </Row>
-          <Row>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            label="Name of the Applicant"
-            name="name"
-            autoComplete="name"
-            onChange={handleFieldChange}
-            autoFocus
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="fatherName"
-            label="Father's Name"
-            name="fatherName"
-            autoComplete="fatherName"
-            onChange={handleFieldChange}
-            
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="aadharNo"
-            label="AADHAR No."
-            name="aadharNo"
-            autoComplete=""
-            onChange={handleFieldChange}
-            
-          />
-        </Col>
-    </Row>
-    <Row>
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="doorNo"
-            label="Door No."
-            name="Door No."
-            autoComplete="doorNo"
-            onChange={handleFieldChange}
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="street"
-            label="Street"
-            name="Street"
-            autoComplete="street"
-            onChange={handleFieldChange}
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="village"
-            label="Village/Post"
-            name="village"
-            autoComplete="village"
-            onChange={handleFieldChange}  
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="mandal"
-            label="Mandal/Town"
-            name="mandal"
-            autoComplete="mandal"
-            onChange={handleFieldChange}
-            
-          />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="district"
-            label="District"
-            name="district"
-            autoComplete="mandal"
-            onChange={handleFieldChange}
-        />
-        </Col>
-
-        <Col xs={10} md={3}>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="pincode"
-            label="Pincode"
-            name="pincode"
-            autoComplete="pincode"
-            onChange={handleFieldChange}
-        />
-        </Col>
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            onChange={handleFieldChange}
-          />
-        </Col>  
-    </Row>
-    <Row>
-    
-    {/* <Col xs={10} md={4} > */}
-      <Col xs={10} md={3}>
-        <p>Gender</p>
-        <Select options={genders} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-      <Col xs={10} md={3}>
-        <p>Medium</p>
-        <Select options={mediums} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-      <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="secondaryLangauage"
-            label="Secondary Language Opted"
-            name="secondaryLangauage"
-            autoComplete="Secondary Language"
-            onChange={handleFieldChange}
-          />
-        </Col>
-        
-    </Row>
-    <Row>
-    <Col xs={13} md={3} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            // onChange={this.handleDOB}
-            id="nationality"
-            label="Nationality"
-            name="nationality"
-            autoComplete="INDIAN"
-            disabled
-            value={nationality}    
-          />
-        </Col>
-    </Row>
-    <Row>
-    <Col xs={13} md={2}>
-        <p>Marital Status</p>
-        <Select options={maritalStatuses} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-
-        <Col xs={10} md={2} >
-        <TextField
-          id="date"
-          label="Date of Birth"
-          type="date"
-          defaultValue="1960-01-01"
-          InputLabelProps={{style: {fontSize: 13}}}
-          className={dateClasses.textField}
-          InputLabelProps={{
-          shrink: true,
-          }}
-        />
-        </Col>
-        
-      </Row>
-
-      <Row>
-    <Col xs={13} md={3} >
-        <TextField
-            variant="standard"
-            margin="normal"
-            required
-            fullWidth
-            // onChange={this.handleDOB}
-            id=""
-            label=""
-            name=""
-            autoComplete=""
-            disabled
-            // value={}    
-          />
-        </Col>
-    </Row>
-
-    <Row>
-    <Col xs={13} md={3} >
-        <TextField
-            variant="standard"
-            margin="normal"
-            required
-            fullWidth
-            // onChange={this.handleDOB}
-            id=""
-            label=""
-            name=""
-            autoComplete=""
-            disabled
-            hidden
-            // value={}    
-          />
-        </Col>
-    </Row>
-      
-
-      <Row>
-      
-        <Col xs={10} md={3}>
-        <p>Religion</p>
-        <Select options={religions} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-        
-      <Col xs={10} md={3}>
-        <p>Caste</p>
-        <Select options={castes} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-      <Col xs={10} md={3}>
-        <p>Residential Status</p>
-        <Select options={residentialStatuses} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-      <Col xs={10} md={2}>
-        <p>PH Category?</p>
-        <Select options={phCategories} 
-          maxWidth={50}
-          onChange={handleCourseChange}
-          className="Select-menu-outer"
-        />
-      </Col>
-  </Row>
- 
-  <Row>
-
-  
-
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="qualifyingExam"
-            label="Qualifying Examination"
-            name="qualifyingExam"
-            autoComplete="Qualifying Examination"
-            onChange={handleFieldChange}
-          />
-        </Col>
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="university"
-            label="University"
-            name="university"
-            autoComplete="University"
-            onChange={handleFieldChange}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={10} md={2} >
-        <TextField
-          id="date"
-          label="Year and Month Passing"
-          type="date"
-          defaultValue="1960-01-01"
-          InputLabelProps={{style: {fontSize: 13}}}
-          className={dateClasses.textField}
-          InputLabelProps={{
-          shrink: true,
-          }}
-        />
-        </Col>
-      </Row>
-      <Row>
-
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="maxMarks"
-            label="Max Marks"
-            name="maxMarks"
-            autoComplete="Max Marks"
-            onChange={handleFieldChange}
-          />
-        </Col>
-
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="marksObtained"
-            label="Marks Obtained"
-            name="marksObtained"
-            autoComplete="marksObtained"
-            onChange={handleFieldChange}
-          />
-        </Col>
-
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="percentage"
-            label="Percentage"
-            name="percentage"
-            autoComplete="Percentage"
-            disabled
-          />
-        </Col>
-
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="feeAmount"
-            label="Fee Amount"
-            name="feeAmount"
-            autoComplete="fee amount"
-            disabled
-            
-          />
-        </Col>
-        
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="paymentStatus"
-            label="Payment Status"
-            name="paymentStatus"
-            autoComplete="Pending"
-            disabled
-          />
-        </Col>
-        
-    </Row>
-
-    <Form.Row>
-    {/* <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>State</Form.Label>
-      <Form.Control as="select" defaultValue="Choose...">
-        <option>Choose...</option>
-        <option>...</option>
-      </Form.Control>
-    </Form.Group> */}
-
-    {/* <Form.Group as={Col} controlId="formGridZip">
-      <Form.Label>Zip</Form.Label>
-      <Form.Control />
-    </Form.Group> */}
-      
-      <Form.Group as={Col} id="formGridCheckbox">
-        <Form.Check id="paymentStatus"
-            name="paymentStatus" 
-            type="checkbox" 
-            label="Declaration"
-            onChange={handleFieldChange} />
-        <p>I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
-            at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
-            action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
-            conditions, rules and regulations stipulated by the Directorate of distance Education and the Laws of the
-            university applicable from time to time.</p>
-      </Form.Group>
-      
-    </Form.Row>
-  
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
-  
-</Form>
-</Container>
-  </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={handleClose}>Close</Button>
-            </Modal.Footer>
-          </Modal>
+    return (<div></div>
       
   )
+  // alert("Baang...!")
+  // return(<Modal show={show} onHide={handleClose} animation={false}>Form</Modal>)
 }
 
   const renderStudents = (student, index) => {
@@ -974,7 +601,8 @@ const ModalPopUpHandler=()=>{
     console.log("Form Data --> " + formData)
   }
   
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
     console.log("Form Data --> " + formData)
   }
 
@@ -1037,25 +665,26 @@ const ModalPopUpHandler=()=>{
     }
 
 
-    if( !dataExists ) {
+    if( !loaded ) {
         return(
             <div>loading...</div>
         )
     } else {
-        let tableSize = 0;
-        var key, count = 0;
-        for( key in studentData) {
-            if(studentData.hasOwnProperty(key)) {
-                count++;
-            }
-        }
+      //   let tableSize = 0;
+      //   var key, count = 0;
+      //   for( key in studentData) {
+      //       if(studentData.hasOwnProperty(key)) {
+      //           count++;
+      //       }
+      //   }
     
-        console.log(count)
-        tableSize = count; 
+      //   console.log(count)
+      //   tableSize = count; 
 
-      console.log("student data --> " + studentData);
+      // console.log("student data --> " + studentData);
       
       return(
+        <>
         <div>
           <div style={{float: 'right'}}>
             <button onClick={handleOnClick}>Logout</button>
@@ -1094,14 +723,556 @@ const ModalPopUpHandler=()=>{
                 </div>
                 : <h1>No Student records for this Study Center</h1>}
                 </div>
-          <>
+          
           <button onClick={() =>{setShow(true)}}>New Application</button>
           {/* <ModalComponent show={modalShowToggle}></ModalComponent> */}
           {/* <FormModal showModal={showModal} hideModalHandler={hideModalHandler}></FormModal> */}
-          <ModalWithGrid show={show} onHide={() => {setShow(false)}}/>
+          {/* <ModalWithGrid show={show} onHide={() => {setShow(false)}}/> */}
+          <Modal show={show} animation={false} onHide={handleClose} 
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            className="my-modal-lg"
+            dialogClassName="modal-full"
+            bsClass="modal-full"
+            centered
+            >
+      <Modal.Header closeButton cssModule={{'modal-title': 'w-100 text-center'}}>
+      <Modal.Title id="contained-modal-title-vcenter">
+        Application Form
+      </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Container>
+      <Form id="myForm" onSubmit={handleFormSubmit}>
+        <Row>
+        
+        <Col xs={12} md={6}>
+          {/* <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="studyCenterId"
+            label="Study Center opted with Code No."
+            name="studyCenterId"
+            // defaultValue="001"
+            value={studyCenterOptedCode}
+            onChange={handleStudyCenterOptedCode} 
+          /> */}
+
+          {/* <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="studyCenterId"
+            label="Study Center opted with Code No."
+            name="studyCenterId"
+            value={studyCenterOptedCode}
+            onChange={handleStudyCenterOptedCode}
+            
+          /> */}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="studyCenterOptedCode"
+            label="Study Center opted with Code No."
+            name="studyCenterOptedCode"
+            value={studyCenterOptedCode}
+            onChange={(event, value) => handleStudyCenterOptedCode(event)}
+            // autoFocus
+          />
           
+          </Col>
+          </Row>
+          <Row>
+        <Col xs={10} md={3}>
+        <p>Course Applied</p>
+        <Select options={courses} 
+          maxWidth={50}
+          maxMenuHeight={150}
+          placeholder="Select a Course"
+          searchable={false}
+          value={course}
+          onChange={handleCourseChange}
+          className="Select-menu-outer"
+        />
+        </Col >   
+      
+          
+          </Row>
+          <Row>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            // id="name"
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            label="Name of the Applicant"
+            name="name"
+            value={values.name}
+            onChange={handleNameChange}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="fatherName"
+            label="Father's Name"
+            name="fatherName"
+            onChange={handleFatherName}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="aadharNo"
+            label="Aadhar No."
+            name="aadharNo"
+            onChange={handleAadharNo}
+          />
+        </Col>
+    </Row>
+    <Row>
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="doorNo"
+            label="Door No."
+            name="Door No."
+            onChange={handleDoorNo}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="street"
+            label="Street"
+            name="Street"
+            onChange={handleStreet}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="village"
+            label="Village/Post"
+            name="village"
+            onChange={handleVillage}  
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="mandal"
+            label="Mandal/Town"
+            name="mandal"
+            onChange={handleMandal}
+            
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="district"
+            label="District"
+            name="district"
+            onChange={handleDistrict}
+        />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="pincode"
+            label="Pincode"
+            name="pincode"
+            onChange={handlePincode}
+        />
+        </Col>
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="email"
+            label="Email Address"
+            name="email"
+            type="email"
+            onChange={handleEmail}
+          />
+        </Col>  
+    </Row>
+    <Row>
+    
+    
+      <Col xs={10} md={3}>
+        <p>Gender</p>
+        <Select options={genders} 
+          maxWidth={50}
+          onChange={handleGenderChange}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={3}>
+        <p>Medium</p>
+        <Select options={mediums} 
+          maxWidth={50}
+          onChange={handleMedium}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="secondaryLangauage"
+            label="Secondary Language Opted"
+            name="secondaryLangauage"
+            onChange={handleSecondLanguageOpted}
+          />
+        </Col>
+        
+    </Row>
+    <Row>
+    <Col xs={13} md={3} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id="nationality"
+            label="Nationality"
+            name="nationality"
+            autoComplete="INDIAN"
+            disabled
+            value={nationality}   
+          />
+        </Col>
+    </Row> 
+    <Row>
+    <Col xs={13} md={2}>
+        <p>Marital Status</p>
+        <Select options={maritalStatuses} 
+          maxWidth={50}
+          onChange={handleMaritalStatus}
+          className="Select-menu-outer"
+        />
+      </Col>
+
+        <Col xs={10} md={2} >
+        <TextField
+          id="date"
+          label="Date of Birth"
+          type="date"
+          defaultValue="1960-01-01"
+          InputLabelProps={{style: {fontSize: 13}}}
+          className={dateClasses.textField}
+          InputLabelProps={{
+          shrink: true,
+          }}
+          onChange={setDob}
+        />
+        </Col>
+        
+      </Row>
+
+      <Row>
+    <Col xs={13} md={3} >
+        <TextField
+            variant="standard"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id=""
+            label=""
+            name=""
+            disabled
+            // value={}    
+          />
+        </Col>
+    </Row>
+
+    <Row>
+    <Col xs={13} md={3} >
+        <TextField
+            variant="standard"
+            margin="normal"
+            required
+            fullWidth
+            // onChange={this.handleDOB}
+            id=""
+            label=""
+            name=""
+            disabled
+            hidden
+            // value={}    
+          />
+        </Col>
+    </Row>
+      
+
+      <Row>
+      
+        <Col xs={10} md={3}>
+        <p>Religion</p>
+        <Select options={religions} 
+          maxWidth={50}
+          onChange={handleReligion}
+          className="Select-menu-outer"
+        />
+      </Col>
+        
+      <Col xs={10} md={3}>
+        <p>Caste</p>
+        <Select options={castes} 
+          maxWidth={50}
+          onChange={handleCaste}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={3}>
+        <p>Residential Status</p>
+        <Select options={residentialStatuses} 
+          maxWidth={50}
+          onChange={handleResidentialStatus}
+          className="Select-menu-outer"
+        />
+      </Col>
+      <Col xs={10} md={2}>
+        <p>PH Category?</p>
+        <Select options={phCategories} 
+          maxWidth={50}
+          onChange={handlePhCategory}
+          className="Select-menu-outer"
+        />
+      </Col>
+  </Row>
+ 
+  <Row>
+
+  
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="qualifyingExam"
+            label="Qualifying Examination"
+            name="qualifyingExam"
+            onChange={setQualifyingExamination}
+          />
+        </Col>
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="university"
+            label="University"
+            name="university"
+            onChange={setUniversity}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={10} md={2} >
+        <TextField
+          id="date"
+          label="Year and Month Passing"
+          type="date"
+          defaultValue="1960-01-01"
+          InputLabelProps={{style: {fontSize: 13}}}
+          className={dateClasses.textField}
+          InputLabelProps={{
+          shrink: true,
+          }}
+          onChange={setYearAndMonthPassing}
+        />
+        </Col>
+      </Row>
+      <Row>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="maxMarks"
+            label="Max Marks"
+            name="maxMarks"
+            onChange={setMaxMarks}
+          />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="marksObtained"
+            label="Marks Obtained"
+            name="marksObtained"
+            onChange={setMarksObtained}
+          />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="percentage"
+            label="Percentage"
+            name="percentage"
+            value={percentageOfMarks}
+            disabled
+          />
+        </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="feeAmount"
+            label="Fee Amount"
+            name="feeAmount"
+            disabled
+            
+          />
+        </Col>
+        
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="paymentStatus"
+            label="Payment Status"
+            name="paymentStatus"
+            disabled
+          />
+        </Col>
+        
+    </Row>
+
+    <Form.Row>
+      <Form.Group as={Col} id="formGridCheckbox">
+        <Form.Check id="declarataion"
+            name="declaration" 
+            type="checkbox" 
+            label="Declaration"
+            onChange={handleDeclarationChecked} />
+        <p>I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
+            at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
+            action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
+            conditions, rules and regulations stipulated by the Directorate of distance Education and the Laws of the
+            university applicable from time to time.</p>
+      </Form.Group>
+      
+    </Form.Row>
+  
+  
+  
+</Form>
+</Container>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button form="myForm" key="submit" htmlType="submit" variant="primary" type="submit">
+      Submit
+    </Button>
+    <Button onClick={handleClose}>Close</Button>
+  </Modal.Footer>
+  </Modal>
+          </div>  
     </>
-        </div>
+        
       )
   }
 

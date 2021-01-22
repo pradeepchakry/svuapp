@@ -6,13 +6,15 @@ import {
   Redirect,
   Link
 } from 'react-router-dom';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { AppBar, Toolbar, Grid, Tabs, Tab, makeStyles, InputBase, IconButton } from '@material-ui/core';
 import AuthApi from "./AuthApi";
 import Cookies, { set } from 'js-cookie';
 import OtpInput from 'react-otp-input';
 import {Button, Modal} from 'react-bootstrap'
 import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+
 
 
 import BetterUser from './BetterUser'
@@ -35,6 +37,22 @@ const backdropStyle = {
   backgroundColor: 'rgba(0,0,0,0.3)',
   padding: 50
 };
+
+const useStyles = makeStyles({
+  appMain: {
+    padeingLeft: '320px',
+    width: '100%'
+  },
+  root: {
+    backgroundColor: "GREY",
+  },
+  btnRoot: {
+    backgroundColor: "black",
+  },
+  btnLabel: {
+    backgroundColor: "white",
+  }
+})
 
 
 
@@ -82,6 +100,7 @@ const NodalLogin = () => {
   const [show, setShow] = React.useState(false);
   const [otpSentSessionId, setOtpSentSessionId] = React.useState("");
   const [studentId, setStudentId] = React.useState("");
+  const classes = useStyles();
 
   async function handleSendOTP() {
     console.log("sending otp to " + phone);
@@ -195,7 +214,7 @@ const NodalLogin = () => {
   }
 
   return (
-    <div>
+    <div classes={classes.appMain}>
       <label>
         Phone
         <input
@@ -211,7 +230,7 @@ const NodalLogin = () => {
       </button>
 
       <Modal size="sm" show={show} onHide={handleClose} 
-          aria-labelledby="example-modal-sizes-title-sm">
+          aria-labelledby="example-modal-sizes-title-sm" animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Verify OTP</Modal.Title>
         </Modal.Header>
@@ -585,6 +604,7 @@ const HomeComponent= () => {
       )
 }
 
+
 const Routes = () => {
   const Auth = React.useContext(AuthApi);
   const [value, setValue] = React.useState(0);
@@ -595,6 +615,7 @@ const Routes = () => {
 
     
   }
+  const classes = useStyles();
   var displayHome = true;
   var nodalUserVal = Cookies.get("nodalUser");
   var displayNodal = false;
@@ -616,8 +637,11 @@ const Routes = () => {
 
   return(
     <div>
-    <AppBar position="static" >
-      {displayNodal && <Tabs value={value} onChange={handleTabs} >
+    <AppBar position="static" className={classes.root}>
+      <Toolbar>
+        <Grid container>
+          <Grid item>
+          {displayNodal && <Tabs value={value} onChange={handleTabs} >
         <Tab label="Home"  component={Link} to="/"/>
         <Tab label="Dashboard" component={Link} to="/nodalDashboard" />
       </Tabs>}
@@ -633,6 +657,32 @@ const Routes = () => {
         <Tab label="Study Center" component={Link} to="/studyCntrLogin"/>
         <Tab label="Nodal" component={Link} to="/nodalLogin"/>
       </Tabs>}
+          </Grid>
+          <Grid item sm>
+          </Grid>
+          <Grid item>
+            <IconButton>
+              <PowerSettingsNewIcon fontSize="large" classes={{root:classes.btnLabel, label:classes.btnLabel}} /> 
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Toolbar>
+      {/* {displayNodal && <Tabs value={value} onChange={handleTabs} >
+        <Tab label="Home"  component={Link} to="/"/>
+        <Tab label="Dashboard" component={Link} to="/nodalDashboard" />
+      </Tabs>}
+
+      {displayStudyCntr && <Tabs value={value} onChange={handleTabs} >
+        <Tab label="Home"  component={Link} to="/"/>
+        <Tab label="Dashboard" component={Link} to="/studyCntrDashboard" />
+      </Tabs>}
+
+      {displayHome && 
+        <Tabs value={value} onChange={handleTabs} >
+        <Tab label="Home"  component={Link} to="/"/>
+        <Tab label="Study Center" component={Link} to="/studyCntrLogin"/>
+        <Tab label="Nodal" component={Link} to="/nodalLogin"/>
+      </Tabs>} */}
 
     </AppBar>
     <switch>
