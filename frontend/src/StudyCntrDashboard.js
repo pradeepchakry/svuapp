@@ -105,6 +105,8 @@ const courses = [
   },
 ];
 
+const coursesFromDB = [];
+
 const genders = [
   {
     value: 'male',
@@ -239,6 +241,8 @@ resize:{
 }
 }));
 
+const feeFromDB = [];
+
 // const styles = makeStyles((theme) => ({
 //   container: {
 //       display: 'flex',
@@ -259,6 +263,8 @@ function StudyCntrDashboard() {
   const [auth, setAuth] = React.useState(false);
   const Auth = React.useContext(AuthApi);
   const [studentData, setStudentData] = React.useState([]);
+  const [courseData, setCourseData] = React.useState([]);
+  const [courseFetched, setCourseFetched] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({});
@@ -303,9 +309,9 @@ function StudyCntrDashboard() {
   const [university, setUniversity] = React.useState('university');
   const [yearAndMonthPasssing, setYearAndMonthPassing] = React.useState(Date("1978-04-02T21:11:54"));
   const [groupSubject, setGroupSubject] = React.useState('groupSubject');
-  const [maxMarks, setMaxMarks] = React.useState('maxMarks');
-  const [marksObtained, setMarksObtained] = React.useState('marksObtained');
-  const [percentageOfMarks, setPercentageOfMarks] = React.useState('feeAmount');
+  const [maxMarks, setMaxMarks] = React.useState('');
+  const [marksObtained, setMarksObtained] = React.useState('');
+  const [percentageOfMarks, setPercentageOfMarks] = React.useState('');
   const [feeAmount, setFeeAmount] = React.useState('feeAmount');
   const [challanId, setChallanId] = React.useState('challanId');
   const [challanDate, setChallanDate] = React.useState(Date("2021-01-01T21:11:54"));
@@ -329,9 +335,11 @@ function StudyCntrDashboard() {
   };
 
   const calculatePercentage = () => {
-    var marksObtainedInt = parseInt(marksObtained);
-    var maxMarksInt = parseInt(maxMarks);
-    var percentile = marksObtainedInt/maxMarksInt;
+    var marksObtainedInt = Number(marksObtained);
+    var maxMarksInt = Number(maxMarks);
+    var percentile = ((marksObtainedInt / maxMarksInt) * 1000);
+    
+    percentile = ( percentile.toString() + '%');
     console.log("Marks obtained Integer --> " + marksObtainedInt)
     console.log("Max Marks Integer --> " + maxMarksInt)
     console.log("Percentage Marks --> " + percentile)
@@ -351,6 +359,15 @@ function StudyCntrDashboard() {
   const handleCourseChange = (course) => {
     console.log("Course selected" + course.value);
     setCourse(course.value);
+    var courseId = course.value;
+    for(var i = 0; i < feeFromDB.length; i++) {
+      var obj = feeFromDB[i];
+      if(obj.value === courseId) {
+        console.log("Fee for Course " + courseId  + " is " + obj.label);
+        setFeeAmount(obj.label);
+      }
+  }
+    // setFeeAmount()
   }
 
   const handleNameChange = (event) => {
@@ -460,13 +477,14 @@ function StudyCntrDashboard() {
     setGroupSubject(groupSubject)
   }
 
-  const handleMaxMarks = (maxMarks) => {
-    setMaxMarks(maxMarks)
+  const handleMaxMarks = (event) => {
+    console.log(event.target.value)
+    setMaxMarks(event.target.value)
   }
 
-  const handleMarksObtained = (marksObtained) => {
-    setMarksObtained(marksObtained)
-    calculatePercentage();
+  const handleMarksObtained = (event) => {
+    setMarksObtained(event.target.value)
+    calculatePercentage(event.target.value);
   }
 
   const handlePercentageOfMarks = (percentageOfMarks) => {
@@ -593,6 +611,58 @@ const ModalPopUpHandler=()=>{
   }
   const handleShow = () => {
     console.log("Rendering Form modal")
+
+    // Fetch courses
+    let endPoint = "http://localhost:8080/api/v1/courses";
+    let result = false;
+    fetch(endPoint).then(resp => resp.json())
+        .then(receivedData => {
+          // console.log("received Course structures --> " + JSON.stringify(receivedData));
+          setCourseData(receivedData.map(coursesData => ({
+            courseID: coursesData.courseID,
+            courseSubject: coursesData.courseSubject,
+            firstYearFee: coursesData.firstYearFee,
+          })));
+          // console.log(JSON.stringify(courseData));
+          setCourseFetched(true);
+        });
+    console.log(courseFetched);
+    if(courseFetched) {
+      var data = '{ "courses": '+ JSON.stringify(courseData) + '}';
+      console.log(data);
+      var coursesArr = JSON.parse(data);
+      // console.log("course data --> " + coursesArr.courses[0] + "course length --> " + coursesArr.courses.length);
+      var list = coursesArr.courses.length;
+      var courseJson = {};
+      var feeJson = {}
+      for (var i = 0; i < list; i++) {
+        var counter = coursesArr.courses[i];
+        var id=counter.courseID;
+        var name = counter.courseSubject;
+        var fee = counter.firstYearFee;
+        //
+        courseJson["value"] = id;
+        courseJson["label"] = name;
+       
+        console.log(courseJson);
+        coursesFromDB.push(courseJson)
+        courseJson = {};
+
+        //Fee details
+        feeJson["value"] = id;
+        feeJson["label"] = fee;
+       
+        console.log(feeJson);
+        feeFromDB.push(feeJson)
+        feeJson = {};
+      }
+      
+        var a = JSON.stringify(feeFromDB);
+        console.log("Fee data in a --> " + a);
+        a = JSON.stringify(coursesFromDB);
+        console.log("Courses data in a --> " + a);
+    
+    }
     setShow(true);
   }
 
@@ -724,7 +794,7 @@ const ModalPopUpHandler=()=>{
                 : <h1>No Student records for this Study Center</h1>}
                 </div>
           
-          <button onClick={() =>{setShow(true)}}>New Application</button>
+          <button onClick={handleShow}>New Application</button>
           {/* <ModalComponent show={modalShowToggle}></ModalComponent> */}
           {/* <FormModal showModal={showModal} hideModalHandler={hideModalHandler}></FormModal> */}
           {/* <ModalWithGrid show={show} onHide={() => {setShow(false)}}/> */}
@@ -746,34 +816,7 @@ const ModalPopUpHandler=()=>{
       <Form id="myForm" onSubmit={handleFormSubmit}>
         <Row>
         
-        <Col xs={12} md={6}>
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            // fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="studyCenterId"
-            label="Study Center opted with Code No."
-            name="studyCenterId"
-            // defaultValue="001"
-            value={studyCenterOptedCode}
-            onChange={handleStudyCenterOptedCode} 
-          /> */}
-
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="studyCenterId"
-            label="Study Center opted with Code No."
-            name="studyCenterId"
-            value={studyCenterOptedCode}
-            onChange={handleStudyCenterOptedCode}
-            
-          /> */}
+        <Col xs={5} md={6}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -783,6 +826,7 @@ const ModalPopUpHandler=()=>{
             label="Study Center opted with Code No."
             name="studyCenterOptedCode"
             value={studyCenterOptedCode}
+            defaultValue="001"
             onChange={(event, value) => handleStudyCenterOptedCode(event)}
             // autoFocus
           />
@@ -792,7 +836,7 @@ const ModalPopUpHandler=()=>{
           <Row>
         <Col xs={10} md={3}>
         <p>Course Applied</p>
-        <Select options={courses} 
+        <Select options={coursesFromDB} 
           maxWidth={50}
           maxMenuHeight={150}
           placeholder="Select a Course"
@@ -1127,7 +1171,7 @@ const ModalPopUpHandler=()=>{
             id="qualifyingExam"
             label="Qualifying Examination"
             name="qualifyingExam"
-            onChange={setQualifyingExamination}
+            onChange={handleQualifyingExam}
           />
         </Col>
         <Col xs={10} md={4} >
@@ -1141,7 +1185,7 @@ const ModalPopUpHandler=()=>{
             id="university"
             label="University"
             name="university"
-            onChange={setUniversity}
+            onChange={handleUniversity}
           />
         </Col>
       </Row>
@@ -1157,7 +1201,7 @@ const ModalPopUpHandler=()=>{
           InputLabelProps={{
           shrink: true,
           }}
-          onChange={setYearAndMonthPassing}
+          onChange={handleYearAndMonth}
         />
         </Col>
       </Row>
@@ -1171,10 +1215,11 @@ const ModalPopUpHandler=()=>{
             fullWidth
             InputLabelProps={{style: {fontSize: 13}}}
             InputProps={{style: {fontSize: 13}}}
-            id="maxMarks"
+            // id="maxMarks"
             label="Max Marks"
             name="maxMarks"
-            onChange={setMaxMarks}
+            value={maxMarks}
+            onChange={(event, value) => handleMaxMarks(event)}
           />
         </Col>
 
@@ -1189,7 +1234,8 @@ const ModalPopUpHandler=()=>{
             id="marksObtained"
             label="Marks Obtained"
             name="marksObtained"
-            onChange={setMarksObtained}
+            value={marksObtained}
+            onChange={(event) => handleMarksObtained(event)}
           />
         </Col>
 
@@ -1220,6 +1266,7 @@ const ModalPopUpHandler=()=>{
             id="feeAmount"
             label="Fee Amount"
             name="feeAmount"
+            value={feeAmount}
             disabled
             
           />
