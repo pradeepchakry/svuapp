@@ -133,6 +133,138 @@ const backdropStyle = {
     text: 'Course Name'
   }];
 
+  const courses = [
+    {
+      value: 'course1',
+      label: 'Course 1',
+    },
+    {
+      value: 'course2',
+      label: 'Course 2',
+    },
+    {
+      value: 'course3',
+      label: 'Course 3',
+    },
+    {
+      value: 'course4',
+      label: 'Course 4',
+    },
+  ];
+  
+  const coursesFromDB = [];
+  
+  const genders = [
+    {
+      value: 'male',
+      label: 'Male',
+    },
+    {
+      value: 'female',
+      label: 'Female',
+    }
+  ];
+  
+  const mediums = [
+    {
+      value: 'english',
+      label: 'English',
+    },
+    {
+      value: 'telugu',
+      label: 'Telugu',
+    }
+  ];
+  
+  const maritalStatuses = [
+    {
+      value: 'unmarried',
+      label: 'Unmarried',
+    },
+    {
+      value: 'married',
+      label: 'Married',
+    }
+  ];
+  
+  
+  
+  const religions = [
+    {
+      value: 'hindu',
+      label: 'Hindu',
+    },
+    {
+      value: 'muslim',
+      label: 'Muslim',
+    },
+    {
+      value: 'christian',
+      label: 'Christian',
+    },
+    {
+      value: 'sikh',
+      label: 'Sikh',
+    },
+    {
+      value: 'others',
+      label: 'Others'
+    }
+  ];
+  
+  const castes = [
+    {
+      value: 'oc',
+      label: 'OC',
+    },
+    {
+      value: 'bc',
+      label: 'BC',
+    },
+    {
+      value: 'sc',
+      label: 'SC',
+    },
+    {
+      value: 'st',
+      label: 'ST',
+    },
+    {
+      value: 'others',
+      label: 'Others'
+    }
+  ];
+  
+  const residentialStatuses = [
+    {
+      value: 'urban',
+      label: 'Urban',
+    },
+    {
+      value: 'rural',
+      label: 'Rural',
+    },
+    {
+      value: 'tribal',
+      label: 'Tribal',
+    }
+  ];
+  
+  const phCategories = [
+    {
+      value: 'no',
+      label: 'No',
+    },
+    {
+      value: 'yes',
+      label: 'Yes',
+    }
+  ];
+
+  const feeFromDB = [];
+
+  var formData = {};
+
 function NodalDashboard() {
   const [auth, setAuth] = React.useState(false);
   const Auth = React.useContext(AuthApi);
@@ -219,7 +351,6 @@ function NodalDashboard() {
         .then(receivedData => {
           console.log("received data --> " + JSON.stringify(receivedData));
           setStudentData(receivedData);
-          setDataExists(true);
         });
     } else {
         console.log("studentID is undefined");
@@ -233,7 +364,58 @@ function NodalDashboard() {
   }
     const handleShow = () => {
       console.log("Rendering Form modal")
-      setShow(true);
+      // Fetch courses
+    let endPoint = "http://localhost:8080/api/v1/courses";
+    let result = false;
+    fetch(endPoint).then(resp => resp.json())
+        .then(receivedData => {
+          // console.log("received Course structures --> " + JSON.stringify(receivedData));
+          setCourseData(receivedData.map(coursesData => ({
+            courseID: coursesData.courseID,
+            courseSubject: coursesData.courseSubject,
+            firstYearFee: coursesData.firstYearFee,
+          })));
+          // console.log(JSON.stringify(courseData));
+          setCourseFetched(true);
+        });
+    console.log(courseFetched);
+    if(courseFetched) {
+      var data = '{ "courses": '+ JSON.stringify(courseData) + '}';
+      console.log(data);
+      var coursesArr = JSON.parse(data);
+      // console.log("course data --> " + coursesArr.courses[0] + "course length --> " + coursesArr.courses.length);
+      var list = coursesArr.courses.length;
+      var courseJson = {};
+      var feeJson = {}
+      for (var i = 0; i < list; i++) {
+        var counter = coursesArr.courses[i];
+        var id=counter.courseID;
+        var name = counter.courseSubject;
+        var fee = counter.firstYearFee;
+        //
+        courseJson["value"] = id;
+        courseJson["label"] = name;
+       
+        console.log(courseJson);
+        coursesFromDB.push(courseJson)
+        courseJson = {};
+
+        //Fee details
+        feeJson["value"] = id;
+        feeJson["label"] = fee;
+       
+        console.log(feeJson);
+        feeFromDB.push(feeJson)
+        feeJson = {};
+      }
+      
+        var a = JSON.stringify(feeFromDB);
+        console.log("Fee data in a --> " + a);
+        a = JSON.stringify(coursesFromDB);
+        console.log("Courses data in a --> " + a);
+    
+    }
+    setShow(true);
     }
     const handleOnClick = () => {
       Auth.setAuth(false);
@@ -247,11 +429,293 @@ function NodalDashboard() {
     }
   
     
-    var found = false;
-    if(Cookies.get("studentFound") === "true") {
-      console.log("Student found!" );
-      found = true;
-    }
+
+    const calculatePercentage = () => {
+        var marksObtainedInt = Number(marksObtained);
+        var maxMarksInt = Number(maxMarks);
+        var percentile = ((marksObtainedInt / maxMarksInt) * 1000);
+        
+        percentile = ( percentile.toString());
+        console.log("Marks obtained Integer --> " + marksObtainedInt)
+        console.log("Max Marks Integer --> " + maxMarksInt)
+        console.log("Percentage Marks --> " + percentile)
+        setPercentageOfMarks(percentile);
+      }
+    
+      const handleStudyCenterOptedCode = (event) => {
+        // console.log(event.target.value)
+        // let val = event.target.value;
+        
+        // event.preventDefault();
+        console.log(event.target.value)
+        // console.log(value);
+        setStudyCenterOptedCode(event.target.value)
+      }
+    
+      const handleCourseChange = (course) => {
+        console.log("Course Id selected" + course.value);
+        console.log("Course Name --> " + course.label);
+        setCourseID(course.value);
+        setCourse(course.label);
+        var courseId = course.value;
+        for(var i = 0; i < feeFromDB.length; i++) {
+          var obj = feeFromDB[i];
+          if(obj.value === courseId) {
+            console.log("Fee for Course " + courseId  + " is " + obj.label);
+            setFeeAmount(obj.label);
+          }
+      }
+        // setFeeAmount()
+      }
+    
+      const handleNameChange = (event) => {
+        console.log(event.target.value)
+        setName(event.target.value)
+      }
+    
+      const handleFatherName = (event) => {
+        console.log(event.target.value)
+        setFatherName(event.target.value)
+      }
+    
+      const handleAadharNo = (event) => {
+        console.log(event.target.value)
+        setAadharNo(event.target.value)
+      }
+    
+      const handleDoorNo = (event) => {
+        console.log(event.target.value)
+        setDoorNo(event.target.value)
+      }
+    
+      const handleStreet = (event) => {
+        console.log(event.target.value)
+        setStreet(event.target.value)
+      }
+    
+      const handleVillage = (event) => {
+        console.log(event.target.value)
+        setVillage(event.target.value)
+      }
+    
+      const handleMandal = (event) => {
+        console.log(event.target.value)
+        setMandal(event.target.value)
+      }
+    
+      const handleDistrict = (event) => {
+        console.log(event.target.value)
+        setDistrict(event.target.value)
+      }
+    
+      const handleDistrictState = (event) => {
+        console.log(event.target.value)
+        setDistrictState(event.target.value)
+      }
+    
+      const handlePincode = (event) => {
+        console.log(event.target.value)
+        setPincode(event.target.value)
+      }
+    
+      const handlePhone = (event) => {
+        console.log(event.target.value)
+        setPhone(event.target.value)
+      }
+    
+      const handleEmail = (event) => {
+        console.log(event.target.value)
+        setEmail(event.target.value)
+      }
+    
+      const handleGenderChange = (gender) => {
+        console.log("Gender selected" + gender.value);
+        setGender(gender.value)
+      }
+    
+      const handleMedium = (medium) => {
+        console.log(medium.value)
+        setMedium(medium.value)
+      }
+    
+      const handleSecondLanguageOpted = (event) => {
+        console.log(event.target.value)
+        setSecondLanguageOpted(event.target.value)
+      }
+      
+    
+      const handleDOB = (event) => {
+        console.log(event.target.value)
+        setDob(event.target.value)
+      }
+    
+      const handleMaritalStatus = (maritalStatus) => {
+        console.log("maritalStatus selected" + maritalStatus.value);
+        setMaritalStatus(maritalStatus.value);
+      }
+    
+      const handleNationality = (event) => {
+        setNationality(nationality);
+      }
+    
+      const handleReligion = (religion) => {
+        console.log("Religion selected" + religion.value);
+        setReligion(religion.value);
+      }
+    
+      const handleCaste = (caste) => {
+        console.log("caste selected" + caste.value);
+        setCaste(caste.value);
+      }
+    
+      const handleResidentialStatus = (residential) => {
+        console.log("Residential selected" + residential.value);
+        setResidential(residential.value);
+      }
+    
+      const handlePhCategory = (phCategory) => {
+        console.log("phCategory selected" + phCategory.value);
+        setPhCategory(phCategory.value);
+      }
+    
+      const handleQualifyingExam = (event) => {
+        console.log(event.target.value)
+        setQualifyingExamination(event.target.value)
+      }
+    
+      const handleUniversity = (event) => {
+        console.log(event.target.value)
+        setUniversity(event.target.value)
+      }
+    
+      const handleYearAndMonth= (event) => {
+        console.log(event.target.value)
+        setYearAndMonthPassing(event.target.value)
+      }
+    
+      const handleGroupSubjects = (event) => {
+        console.log(event.target.value)
+        setGroupSubjects(event.target.value)
+      }
+    
+      const handleMaxMarks = (event) => {
+        console.log(event.target.value)
+        setMaxMarks(event.target.value)
+      }
+    
+      const handleMarksObtained = (event) => {
+        setMarksObtained(event.target.value)
+        calculatePercentage(event.target.value);
+      }
+    
+      const handlePercentageOfMarks = (percentageOfMarks) => {
+        setPercentageOfMarks(percentageOfMarks)
+      }
+    
+      const handleEligibilityMarks = (event) => {
+        console.log(event.target.value)
+        setEligibilityMarks(event.target.value)
+      }
+    
+      const handleFeeAmount = (feeAmount) => {
+        setFeeAmount(feeAmount)
+      }
+    
+      const handleDeclarationChecked = (event) => {
+        console.log(event.target.value)
+        setDeclarationChecked(event.target.value)
+      }
+    
+      const handleImage = (event) => {
+        console.log(event.target.value)
+        setImage(event.target.value)
+      }
+    
+      const handleSignature = (event) => {
+        console.log(event.target.value)
+        setSignature(event.target.value)
+      }
+
+      const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log("course id --> " + courseData.courseID)
+        var formDataJson = {};
+        formDataJson["appSerialNo"] = "120"; //- missing in form
+        formDataJson["applicationNo"] = "120"; //- missing in form
+        formDataJson["baGroupId"] = ""; //- missing in form
+        formDataJson["monthYear"] = yearAndMonthPasssing;
+        formDataJson["fees"] = feeAmount;
+        formDataJson["caste"] = caste;
+        formDataJson["courseId"] = courseID; //- missing - should go in json
+        formDataJson["medium"] = medium; //- missing
+        formDataJson["courseName"] = course;
+        formDataJson["degree"] = ""; //- not required
+        formDataJson["districtState"] = districtState;
+        formDataJson["dob"] = dob;
+        formDataJson["doorNo"] = doorNo;
+        formDataJson["eligibilityMarks"] = eligibilityMarks;
+        formDataJson["emailID"] = email;
+        formDataJson["enrolmentNo"] = "abcxyz123"; //- missing - not in form
+        formDataJson["fatherName"] = fatherName;
+        formDataJson["gender"] = gender;
+        formDataJson["groupSubjects"] = groupSubjects;
+        formDataJson["hallTicketNo"] = "zyxabc120"; //- missing - not in form
+        formDataJson["image"] = "";
+        formDataJson["location"] = "";
+        formDataJson["mandal"] = mandal;
+        formDataJson["marksObtained"] = marksObtained;
+        formDataJson["maritalStatus"] = maritalStatus;
+        formDataJson["maxMarks"] = maxMarks;
+        formDataJson["name"] = name;
+        formDataJson["nationality"] = nationality;
+        formDataJson["ousEducation"] = ""; //- missing - unknown
+        formDataJson["percentageMarks"] = percentageOfMarks;
+        formDataJson["phone"] = phone;
+        formDataJson["pincode"] = pincode;
+        formDataJson["printCount"] = "";
+        formDataJson["qualifyingExam"] = qualifyingExamination;
+        formDataJson["registrationNo"] = //- missing - need to generate
+        formDataJson["religion"] = religion;
+        formDataJson["residentialArea"] = residential;
+        formDataJson["secondLanguage"] = secondLanguageOpted;
+        formDataJson["signature"] = "";
+        formDataJson["street"] = street;
+        formDataJson["university"] = university;
+        formDataJson["village"] = village;
+        formDataJson["active"] = true; //- missing - should go in json
+        formDataJson["approve"] = false; //- missing - should go in json
+        // formDataJson["codeNo"] = studyCenterOptedCode; // - studycenter code 
+        formDataJson["mobileNo"] = phone;
+        formDataJson["aadhar_no"] = aadharNo;
+        formDataJson["phCategory"] = phCategory;
+      console.log("Form Data JSON --> " + JSON.stringify(formDataJson))
+      formData = formDataJson;
+      console.log("Form Data --> " + JSON.stringify(formData));
+    
+      //http://localhost:8080/api/v1/createStudentByStudyCenter/1
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      };
+      let result = "";
+      let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
+      const response = await fetch(endPoint, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          result = JSON.stringify(data);
+          Cookies.set("studentFound", "true");
+          Cookies.set("studentId", data.student_id);
+          setSaveSuccess(true);
+          console.log("Form successfully saved :), closing form window...!");
+          console.log("student id --> " + data.student_id);
+          handleClose();
+        })    
+        .catch(error => console.log("Error detected: " + error));
+        //console.log("got response --> " + result);
+    
+      }
   
     if( !loaded ) {
         loadData();
@@ -259,6 +723,12 @@ function NodalDashboard() {
             <div>loading...</div>
         )
     } else {
+      var found = false;
+      console.log("Student found --> " + Cookies.get("studentFound") );
+      if(Cookies.get("studentFound") === "true") {
+        console.log("Student found!" );
+        found = true;
+      }
     return(
     //   <div style={{}}>
     //     <div style={{float: 'right'}}>
@@ -328,13 +798,13 @@ function NodalDashboard() {
 Application Form
 </Modal.Title>
 </Modal.Header>
-{/* <Modal.Body>
+<Modal.Body>
 <Container>
 <ValidatorForm id="myForm" onSubmit={handleFormSubmit}
 onError={errors => console.log(errors)}>
 <Row>
 
-<Col xs={5} md={6}>
+{/* <Col xs={5} md={6}>
   <TextField
     variant="outlined"
     margin="normal"
@@ -351,7 +821,7 @@ onError={errors => console.log(errors)}>
     // autoFocus
   />
   
-  </Col>
+  </Col> */}
   </Row>
   <Row>
 <Col xs={10} md={3}>
@@ -873,7 +1343,7 @@ onError={errors => console.log(errors)}>
 
 </ValidatorForm>
 </Container>
-</Modal.Body> */}
+</Modal.Body>
 <Modal.Footer>
 <Button form="myForm" key="submit" htmlType="submit" variant="primary" type="submit">
 Submit
