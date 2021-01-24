@@ -710,6 +710,8 @@ function NodalDashboard() {
           setSaveSuccess(true);
           console.log("Form successfully saved :), closing form window...!");
           console.log("student id --> " + data.student_id);
+          alert("Payment Gateway");
+          alert("Payment success..!");
           handleClose();
         })    
         .catch(error => console.log("Error detected: " + error));
@@ -769,7 +771,7 @@ function NodalDashboard() {
                 <td>{studentData.aadhar_no}</td>
                 <td>{studentData.mobileNo}</td>
                 <td>{studentData.registrationNo}</td>
-                <td>{studentData.courseName}</td>
+                <td>{studentData.course}</td>
                 </tr>
             </tbody>
           </Table>

@@ -791,7 +791,9 @@ const ModalPopUpHandler=()=>{
       console.log(data);
       result = data;
       setSaveSuccess(true);
-      console.log("Form successfully saved :), closing form window...!")
+      console.log("Form successfully saved :), closing form window...!");
+      alert("Payment Gateway");
+      alert("Payment success..!");
       handleClose();
     })    
     .catch(error => console.log("Error detected: " + error));
