@@ -43,6 +43,7 @@ import ModalComponent from './ModalComponent'
 import {Table, Form} from 'react-bootstrap';
 import Select from "react-select";
 import './reactselect.css'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 
 // The gray background
@@ -241,6 +242,34 @@ resize:{
 }
 }));
 
+const columns = [{
+  dataField: 'student_id',
+  text: 'Student ID'
+}, {
+  dataField: 'name',
+  text: 'Student Name'
+}, {
+  dataField: 'gender',
+  text: 'Gender'
+},
+{
+  dataField: 'aadhar_no',
+  text: 'Aadhar No.'
+},
+{
+  dataField: 'mobileNo',
+  text: 'Mobile No.'
+},
+{
+  dataField: 'registrationNo',
+  text: 'Registration No'
+},
+{
+  dataField: 'courseName',
+  text: 'Course Name'
+}];
+
+
 const feeFromDB = [];
 
 // const styles = makeStyles((theme) => ({
@@ -258,6 +287,7 @@ const feeFromDB = [];
 //   },
 //   })
 
+var formData = {};
 
 function StudyCntrDashboard() {
   const [auth, setAuth] = React.useState(false);
@@ -267,7 +297,7 @@ function StudyCntrDashboard() {
   const [courseFetched, setCourseFetched] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-  const [formData, setFormData] = React.useState({});
+  
   const [show, setShow] = React.useState(false);
   const [modal, setModal] = React.useState(false);
   const [dataExists, setDataExists] = React.useState(false);
@@ -281,44 +311,54 @@ function StudyCntrDashboard() {
   const dateClasses = useDateStyles();
 
 
-  const [course, setCourse] = React.useState({value: 'course1', label: 'Course 1'});
+  const [course, setCourse] = React.useState({value: 'course1', label: 'Course'});
   const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState();
   const [name, setName] = React.useState("");
   const [fatherName, setFatherName] = React.useState("");
-  const [aadharNo, setAadharNo] = React.useState('aadharNo');
-  const [doorNo, setDoorNo] = React.useState('doorNo');
-  const [street, setStreet] = React.useState('street');
-  const [village, setVillage] = React.useState('village');
-  const [mandal, setMandal] = React.useState('mandal');
-  const [district, setDistrict] = React.useState('district');
-  const [pincode, setPincode] = React.useState('pincode');
-  const [email, setEmail] = React.useState('email');
+  const [aadharNo, setAadharNo] = React.useState('');
+  const [doorNo, setDoorNo] = React.useState('');
+  const [street, setStreet] = React.useState('');
+  const [village, setVillage] = React.useState('');
+  const [mandal, setMandal] = React.useState('');
+  const [district, setDistrict] = React.useState('');
+  const [pincode, setPincode] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [courseID, setCourseID] = React.useState('');
 
-  const [gender, setGender] = React.useState('gender');
-  const [medium, setMedium] = React.useState('medium');
-  const [secondLanguageOpted, setSecondLanguageOpted] = React.useState('secondLanguageOpted');
+  const [gender, setGender] = React.useState('');
+  const [medium, setMedium] = React.useState('');
+  const [secondLanguageOpted, setSecondLanguageOpted] = React.useState('');
   const [dob, setDob] = React.useState(Date("1978-04-02T21:11:54"));
-  const [maritalStatus, setMaritalStatus] = React.useState('maritalStatus');
+  const [maritalStatus, setMaritalStatus] = React.useState('');
   const [nationality, setNationality] = React.useState('Indian');
   
-  const [religion, setReligion] = React.useState('religion');
-  const [caste, setCaste] = React.useState('caste');
-  const [residential, setResidential] = React.useState('residential');
-  const [phCategory, setPhCategory] = React.useState('phCategory');
-  const [qualifyingExamination, setQualifyingExamination] = React.useState('qualifyingExamination');
-  const [university, setUniversity] = React.useState('university');
+  const [religion, setReligion] = React.useState('');
+  const [caste, setCaste] = React.useState('');
+  const [residential, setResidential] = React.useState('');
+  const [phCategory, setPhCategory] = React.useState('');
+  const [qualifyingExamination, setQualifyingExamination] = React.useState('');
+  const [university, setUniversity] = React.useState('');
   const [yearAndMonthPasssing, setYearAndMonthPassing] = React.useState(Date("1978-04-02T21:11:54"));
-  const [groupSubject, setGroupSubject] = React.useState('groupSubject');
+  const [groupSubjects, setGroupSubjects] = React.useState('');
   const [maxMarks, setMaxMarks] = React.useState('');
   const [marksObtained, setMarksObtained] = React.useState('');
   const [percentageOfMarks, setPercentageOfMarks] = React.useState('');
-  const [feeAmount, setFeeAmount] = React.useState('feeAmount');
+  const [feeAmount, setFeeAmount] = React.useState('');
   const [challanId, setChallanId] = React.useState('challanId');
   const [challanDate, setChallanDate] = React.useState(Date("2021-01-01T21:11:54"));
   const [bankName, setBankName] = React.useState('bankName');
-  const [declarationChecked, setDeclarationChecked] = React.useState('declarationChecked');
+  const [declarationChecked, setDeclarationChecked] = React.useState('');
   const [paymentStatus, setPaymentStatus] = React.useState('paymentStatus');
   const [values, setValues] = React.useState(initialFomValues);
+  const [districtState, setDistrictState] = React.useState("");
+  const [eligibilityMarks, setEligibilityMarks] = React.useState("");
+  const [image, setImage] = React.useState("");
+  const [signature, setSignature] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+
+  const[saveSuccess, setSaveSuccess] = React.useState(false);
+  
+
   // const [x, setX] = React.useState(5);
 
   // setX(6);
@@ -339,7 +379,7 @@ function StudyCntrDashboard() {
     var maxMarksInt = Number(maxMarks);
     var percentile = ((marksObtainedInt / maxMarksInt) * 1000);
     
-    percentile = ( percentile.toString() + '%');
+    percentile = ( percentile.toString());
     console.log("Marks obtained Integer --> " + marksObtainedInt)
     console.log("Max Marks Integer --> " + maxMarksInt)
     console.log("Percentage Marks --> " + percentile)
@@ -357,8 +397,10 @@ function StudyCntrDashboard() {
   }
 
   const handleCourseChange = (course) => {
-    console.log("Course selected" + course.value);
-    setCourse(course.value);
+    console.log("Course Id selected" + course.value);
+    console.log("Course Name --> " + course.label);
+    setCourseID(course.value);
+    setCourse(course.label);
     var courseId = course.value;
     for(var i = 0; i < feeFromDB.length; i++) {
       var obj = feeFromDB[i];
@@ -372,64 +414,83 @@ function StudyCntrDashboard() {
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
-    const {name, value} = event.target;
-    setValues({
-      ...values,
-      [name]: value
-    })
-    console.log(values.name)
+    setName(event.target.value)
   }
 
-  const handleFatherName = (fatherName) => {
-    setFatherName(fatherName);
+  const handleFatherName = (event) => {
+    console.log(event.target.value)
+    setFatherName(event.target.value)
   }
 
-  const handleAadharNo = (aadharNo) => {
-    setAadharNo(aadharNo);
+  const handleAadharNo = (event) => {
+    console.log(event.target.value)
+    setAadharNo(event.target.value)
   }
 
-  const handleDoorNo = (doorNo) => {
-    setDoorNo(doorNo);
+  const handleDoorNo = (event) => {
+    console.log(event.target.value)
+    setDoorNo(event.target.value)
   }
 
-  const handleStreet = (street) => {
-    setStreet(street);
+  const handleStreet = (event) => {
+    console.log(event.target.value)
+    setStreet(event.target.value)
   }
 
-  const handleVillage = (village) => {
-    setVillage(village);
+  const handleVillage = (event) => {
+    console.log(event.target.value)
+    setVillage(event.target.value)
   }
 
-  const handleMandal = (mandal) => {
-    setMandal(mandal);
+  const handleMandal = (event) => {
+    console.log(event.target.value)
+    setMandal(event.target.value)
   }
 
-  const handleDistrict = (district) => {
-    setDistrict(district);
+  const handleDistrict = (event) => {
+    console.log(event.target.value)
+    setDistrict(event.target.value)
   }
 
-  const handlePincode = (pincode) => {
-    setPincode(pincode);
+  const handleDistrictState = (event) => {
+    console.log(event.target.value)
+    setDistrictState(event.target.value)
   }
 
-  const handleEmail = (email) => {
-    setEmail(email);
+  const handlePincode = (event) => {
+    console.log(event.target.value)
+    setPincode(event.target.value)
+  }
+
+  const handlePhone = (event) => {
+    console.log(event.target.value)
+    setPhone(event.target.value)
+  }
+
+  const handleEmail = (event) => {
+    console.log(event.target.value)
+    setEmail(event.target.value)
   }
 
   const handleGenderChange = (gender) => {
     console.log("Gender selected" + gender.value);
-    setGender(gender.value);
+    setGender(gender.value)
   }
 
   const handleMedium = (medium) => {
-    setMedium(medium);
+    console.log(medium.value)
+    setMedium(medium.value)
   }
 
-  const handleSecondLanguageOpted = event => setSecondLanguageOpted(event.target.value)
+  const handleSecondLanguageOpted = (event) => {
+    console.log(event.target.value)
+    setSecondLanguageOpted(event.target.value)
+  }
   
 
-  const handleDOB = (dob) => {
-    setDob(dob);
+  const handleDOB = (event) => {
+    console.log(event.target.value)
+    setDob(event.target.value)
   }
 
   const handleMaritalStatus = (maritalStatus) => {
@@ -437,13 +498,13 @@ function StudyCntrDashboard() {
     setMaritalStatus(maritalStatus.value);
   }
 
-  const handleNationality = (nationality) => {
+  const handleNationality = (event) => {
     setNationality(nationality);
   }
 
   const handleReligion = (religion) => {
     console.log("Religion selected" + religion.value);
-    setResidential(religion.value);
+    setReligion(religion.value);
   }
 
   const handleCaste = (caste) => {
@@ -461,20 +522,24 @@ function StudyCntrDashboard() {
     setPhCategory(phCategory.value);
   }
 
-  const handleQualifyingExam = (qualifyingExamination) => {
-    setQualifyingExamination(qualifyingExamination);
+  const handleQualifyingExam = (event) => {
+    console.log(event.target.value)
+    setQualifyingExamination(event.target.value)
   }
 
-  const handleUniversity = (university) => {
-    setUniversity(university);
+  const handleUniversity = (event) => {
+    console.log(event.target.value)
+    setUniversity(event.target.value)
   }
 
-  const handleYearAndMonth= (yearAndMonthPassing) => {
-    setYearAndMonthPassing(yearAndMonthPassing)
+  const handleYearAndMonth= (event) => {
+    console.log(event.target.value)
+    setYearAndMonthPassing(event.target.value)
   }
 
-  const handleGroupSubject = (groupSubject) => {
-    setGroupSubject(groupSubject)
+  const handleGroupSubjects = (event) => {
+    console.log(event.target.value)
+    setGroupSubjects(event.target.value)
   }
 
   const handleMaxMarks = (event) => {
@@ -491,40 +556,29 @@ function StudyCntrDashboard() {
     setPercentageOfMarks(percentageOfMarks)
   }
 
+  const handleEligibilityMarks = (event) => {
+    console.log(event.target.value)
+    setEligibilityMarks(event.target.value)
+  }
+
   const handleFeeAmount = (feeAmount) => {
     setFeeAmount(feeAmount)
   }
 
-  const handleDeclarationChecked = (declarationChecked) => {
-    this.setDeclarationChecked(declarationChecked)
+  const handleDeclarationChecked = (event) => {
+    console.log(event.target.value)
+    setDeclarationChecked(event.target.value)
   }
 
-  const columns = [{
-    dataField: 'student_id',
-    text: 'Student ID'
-  }, {
-    dataField: 'name',
-    text: 'Student Name'
-  }, {
-    dataField: 'gender',
-    text: 'Gender'
-  },
-  {
-    dataField: 'aadhar_no',
-    text: 'Aadhar No.'
-  },
-  {
-    dataField: 'mobileNo',
-    text: 'Mobile No.'
-  },
-  {
-    dataField: 'registrationNo',
-    text: 'Registration No'
-  },
-  {
-    dataField: 'courseName',
-    text: 'Course Name'
-  }];
+  const handleImage = (event) => {
+    console.log(event.target.value)
+    setImage(event.target.value)
+  }
+
+  const handleSignature = (event) => {
+    console.log(event.target.value)
+    setSignature(event.target.value)
+  }
 
   const readCookie = () => {
     const user = Cookies.get("user");
@@ -665,15 +719,83 @@ const ModalPopUpHandler=()=>{
     }
     setShow(true);
   }
-
-  const handleChange = formData => {
-    setFormData(formData);
-    console.log("Form Data --> " + formData)
-  }
   
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form Data --> " + formData)
+    console.log("course id --> " + courseData.courseID)
+    var formDataJson = {};
+    formDataJson["appSerialNo"] = "120"; //- missing in form
+    formDataJson["applicationNo"] = "120"; //- missing in form
+    formDataJson["baGroupId"] = ""; //- missing in form
+    formDataJson["monthYear"] = yearAndMonthPasssing;
+    formDataJson["fees"] = feeAmount;
+    formDataJson["caste"] = caste;
+    formDataJson["courseId"] = courseID; //- missing - should go in json
+    formDataJson["medium"] = medium; //- missing
+    formDataJson["courseName"] = course;
+    formDataJson["degree"] = ""; //- not required
+    formDataJson["districtState"] = districtState;
+    formDataJson["dob"] = dob;
+    formDataJson["doorNo"] = doorNo;
+    formDataJson["eligibilityMarks"] = eligibilityMarks;
+    formDataJson["emailID"] = email;
+    formDataJson["enrolmentNo"] = "abcxyz123"; //- missing - not in form
+    formDataJson["fatherName"] = fatherName;
+    formDataJson["gender"] = gender;
+    formDataJson["groupSubjects"] = groupSubjects;
+    formDataJson["hallTicketNo"] = "zyxabc120"; //- missing - not in form
+    formDataJson["image"] = "";
+    formDataJson["location"] = "";
+    formDataJson["mandal"] = mandal;
+    formDataJson["marksObtained"] = marksObtained;
+    formDataJson["maritalStatus"] = maritalStatus;
+    formDataJson["maxMarks"] = maxMarks;
+    formDataJson["name"] = name;
+    formDataJson["nationality"] = nationality;
+    formDataJson["ousEducation"] = ""; //- missing - unknown
+    formDataJson["percentageMarks"] = percentageOfMarks;
+    formDataJson["phone"] = phone;
+    formDataJson["pincode"] = pincode;
+    formDataJson["printCount"] = "";
+    formDataJson["qualifyingExam"] = qualifyingExamination;
+    formDataJson["registrationNo"] = //- missing - need to generate
+    formDataJson["religion"] = religion;
+    formDataJson["residentialArea"] = residential;
+    formDataJson["secondLanguage"] = secondLanguageOpted;
+    formDataJson["signature"] = "";
+    formDataJson["street"] = street;
+    formDataJson["university"] = university;
+    formDataJson["village"] = village;
+    formDataJson["active"] = true; //- missing - should go in json
+    formDataJson["approve"] = false; //- missing - should go in json
+    // formDataJson["codeNo"] = studyCenterOptedCode; // - studycenter code 
+    formDataJson["mobileNo"] = phone;
+    formDataJson["aadhar_no"] = aadharNo;
+    formDataJson["phCategory"] = phCategory;
+  console.log("Form Data JSON --> " + JSON.stringify(formDataJson))
+  formData = formDataJson;
+  console.log("Form Data --> " + JSON.stringify(formData));
+
+  //http://localhost:8080/api/v1/createStudentByStudyCenter/1
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({formData})
+  };
+  let result = "";
+  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;
+  const response = await fetch(endPoint, requestOptions)
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      result = data;
+      setSaveSuccess(true);
+      console.log("Form successfully saved :), closing form window...!")
+      handleClose();
+    })    
+    .catch(error => console.log("Error detected: " + error));
+  console.log("got response --> " + result);
+
   }
 
   const toggle = () => {
@@ -688,44 +810,8 @@ const ModalPopUpHandler=()=>{
     Cookies.remove("user");
     Cookies.remove("studyCntrUser");
     Cookies.remove("username");
-    // window.nodalLoggedIn = false;
-    // window.studyCntrLoggedIn = false;
-    // window.homePage = true;
   } 
    
-//   var promise = new Promise( async (resolve, reject) => {
-//     let userID = Cookies.get("username");
-//     let len = userID.length;
-//     let lastChar = userID.charAt(len - 1);
-//     console.log("lastChar -> " + lastChar);
-//     console.log("userID while fetching studing data--> " + lastChar)
-//     let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
-//     let result = false;
-//     let response = await fetch(endPoint).then(resp => resp.json());
-//     result = await response.then(data => {
-//       setDataExists(true);
-        
-//       console.log("data fetched --> " + data);
-      
-//     }).catch(error => console.log("Error detected: " + error));
-//     if (dataExists) {
-//        resolve("Promise resolved successfully");
-//     }
-//     else {
-//        reject(Error("Promise rejected"));
-//     }
-//  });
-
-
-//     promise.then( result => {
-//       console.log("Promise resolved, setting student data!");
-//       setStudentData(result);
-//       setFetchFinished(true);
-//       userFetched = true;
-//     }, function(error) {
-//       console.log(error);
-//     });
-
     const showModalHandler = (event) =>{
       setShowModal(true);
     }
@@ -740,19 +826,6 @@ const ModalPopUpHandler=()=>{
             <div>loading...</div>
         )
     } else {
-      //   let tableSize = 0;
-      //   var key, count = 0;
-      //   for( key in studentData) {
-      //       if(studentData.hasOwnProperty(key)) {
-      //           count++;
-      //       }
-      //   }
-    
-      //   console.log(count)
-      //   tableSize = count; 
-
-      // console.log("student data --> " + studentData);
-      
       return(
         <>
         <div>
@@ -813,7 +886,8 @@ const ModalPopUpHandler=()=>{
       </Modal.Header>
       <Modal.Body>
       <Container>
-      <Form id="myForm" onSubmit={handleFormSubmit}>
+      <ValidatorForm id="myForm" onSubmit={handleFormSubmit}
+        onError={errors => console.log(errors)}>
         <Row>
         
         <Col xs={5} md={6}>
@@ -822,6 +896,8 @@ const ModalPopUpHandler=()=>{
             margin="normal"
             required
             fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
             id="studyCenterOptedCode"
             label="Study Center opted with Code No."
             name="studyCenterOptedCode"
@@ -838,32 +914,27 @@ const ModalPopUpHandler=()=>{
         <p>Course Applied</p>
         <Select options={coursesFromDB} 
           maxWidth={50}
-          maxMenuHeight={150}
-          placeholder="Select a Course"
-          searchable={false}
-          value={course}
+          // value={course}
           onChange={handleCourseChange}
           className="Select-menu-outer"
         />
-        </Col >   
-      
-          
-          </Row>
-          <Row>
-
+        </Col >
+      </Row>
+      <Row>
         <Col xs={10} md={3}>
         <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            // id="name"
+            id="name"
+            label="Name"
+            name="name"
             InputLabelProps={{style: {fontSize: 13}}}
             InputProps={{style: {fontSize: 13}}}
-            label="Name of the Applicant"
-            name="name"
-            value={values.name}
-            onChange={handleNameChange}
+            value={name}
+            placeholder="First Name"
+            onChange={(event, value) => handleNameChange(event)}
           />
         </Col>
 
@@ -878,7 +949,7 @@ const ModalPopUpHandler=()=>{
             id="fatherName"
             label="Father's Name"
             name="fatherName"
-            onChange={handleFatherName}
+            onChange={(event, value) => handleFatherName(event)}
           />
         </Col>
 
@@ -893,7 +964,7 @@ const ModalPopUpHandler=()=>{
             id="aadharNo"
             label="Aadhar No."
             name="aadharNo"
-            onChange={handleAadharNo}
+            onChange={(event, value) => handleAadharNo(event)}
           />
         </Col>
     </Row>
@@ -909,7 +980,7 @@ const ModalPopUpHandler=()=>{
             id="doorNo"
             label="Door No."
             name="Door No."
-            onChange={handleDoorNo}
+            onChange={(event, value) => handleDoorNo(event)}
           />
         </Col>
 
@@ -924,7 +995,7 @@ const ModalPopUpHandler=()=>{
             id="street"
             label="Street"
             name="Street"
-            onChange={handleStreet}
+            onChange={(event, value) => handleStreet(event)}
           />
         </Col>
 
@@ -939,7 +1010,7 @@ const ModalPopUpHandler=()=>{
             id="village"
             label="Village/Post"
             name="village"
-            onChange={handleVillage}  
+            onChange={(event, value) => handleVillage(event)}  
           />
         </Col>
 
@@ -954,7 +1025,7 @@ const ModalPopUpHandler=()=>{
             id="mandal"
             label="Mandal/Town"
             name="mandal"
-            onChange={handleMandal}
+            onChange={(event, value) => handleMandal(event)}
             
           />
         </Col>
@@ -970,9 +1041,25 @@ const ModalPopUpHandler=()=>{
             id="district"
             label="District"
             name="district"
-            onChange={handleDistrict}
+            onChange={(event, value) => handleDistrict(event)}
         />
         </Col>
+
+        <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="districtState"
+            label="State"
+            name="districtState"
+            type="districtState"
+            onChange={(event, value) => handleDistrictState(event)}
+          />
+        </Col> 
 
         <Col xs={10} md={3}>
         <TextField
@@ -985,9 +1072,10 @@ const ModalPopUpHandler=()=>{
             id="pincode"
             label="Pincode"
             name="pincode"
-            onChange={handlePincode}
+            onChange={(event, value) => handlePincode(event)}
         />
         </Col>
+
         <Col xs={10} md={4} >
         <TextField
             variant="outlined"
@@ -996,17 +1084,34 @@ const ModalPopUpHandler=()=>{
             fullWidth
             InputLabelProps={{style: {fontSize: 13}}}
             InputProps={{style: {fontSize: 13}}}
-            id="email"
+            id="phone"
+            label="Mobile Number"
+            name="phone"
+            type="phone"
+            onChange={(event, value) => handlePhone(event)}
+          />
+        </Col> 
+
+        <Col xs={10} md={4} >
+        <TextValidator
+            variant="outlined"
+            margin="normal"
+            // required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            // id="email"
             label="Email Address"
             name="email"
-            type="email"
-            onChange={handleEmail}
+            // type="email"
+            value={email}
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
+            onChange={(event, value) => handleEmail(event)}
           />
         </Col>  
     </Row>
     <Row>
-    
-    
       <Col xs={10} md={3}>
         <p>Gender</p>
         <Select options={genders} 
@@ -1034,7 +1139,7 @@ const ModalPopUpHandler=()=>{
             id="secondaryLangauage"
             label="Secondary Language Opted"
             name="secondaryLangauage"
-            onChange={handleSecondLanguageOpted}
+            onChange={(event, value) => handleSecondLanguageOpted(event)}
           />
         </Col>
         
@@ -1077,7 +1182,7 @@ const ModalPopUpHandler=()=>{
           InputLabelProps={{
           shrink: true,
           }}
-          onChange={setDob}
+          onChange={(event, value) => handleDOB(event)}
         />
         </Col>
         
@@ -1171,7 +1276,7 @@ const ModalPopUpHandler=()=>{
             id="qualifyingExam"
             label="Qualifying Examination"
             name="qualifyingExam"
-            onChange={handleQualifyingExam}
+            onChange={(event, value) => handleQualifyingExam(event)}
           />
         </Col>
         <Col xs={10} md={4} >
@@ -1185,7 +1290,7 @@ const ModalPopUpHandler=()=>{
             id="university"
             label="University"
             name="university"
-            onChange={handleUniversity}
+            onChange={(event, value) => handleUniversity(event)}
           />
         </Col>
       </Row>
@@ -1201,11 +1306,26 @@ const ModalPopUpHandler=()=>{
           InputLabelProps={{
           shrink: true,
           }}
-          onChange={handleYearAndMonth}
+          onChange={(event, value) => handleYearAndMonth(event)}
         />
         </Col>
       </Row>
       <Row>
+      <Col xs={10} md={4} >
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            label="Group Subjects"
+            name="groupSubjects"
+            placeholder="subject1, subject2,..."
+            value={groupSubjects}
+            onChange={(event, value) => handleGroupSubjects(event)}
+          />
+        </Col>
 
         <Col xs={10} md={4} >
         <TextField
@@ -1295,7 +1415,7 @@ const ModalPopUpHandler=()=>{
             name="declaration" 
             type="checkbox" 
             label="Declaration"
-            onChange={handleDeclarationChecked} />
+            onChange={(event) => handleDeclarationChecked(event)} />
         <p>I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
             at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
             action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
@@ -1307,7 +1427,7 @@ const ModalPopUpHandler=()=>{
   
   
   
-</Form>
+</ValidatorForm>
 </Container>
   </Modal.Body>
   <Modal.Footer>
