@@ -42,7 +42,10 @@ const backdropStyle = {
 const useStyles = makeStyles({
   appMain: {
     padeingLeft: '320px',
-    width: '100%'
+    width: '100%',
+    textAlign: 'center',
+    display: 'flex', 
+    justifyContent: 'center'
   },
   root: {
     backgroundColor: "GREY",

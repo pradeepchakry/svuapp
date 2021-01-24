@@ -1393,21 +1393,6 @@ const ModalPopUpHandler=()=>{
           />
         </Col>
         
-        <Col xs={10} md={4} >
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            InputLabelProps={{style: {fontSize: 13}}}
-            InputProps={{style: {fontSize: 13}}}
-            id="paymentStatus"
-            label="Payment Status"
-            name="paymentStatus"
-            disabled
-          />
-        </Col>
-        
     </Row>
 
     <Form.Row>
