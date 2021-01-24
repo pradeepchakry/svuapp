@@ -106,10 +106,37 @@ const backdropStyle = {
     },
   }));
 
+  const columns = [{
+    dataField: 'student_id',
+    text: 'Student ID'
+  }, {
+    dataField: 'name',
+    text: 'Student Name'
+  }, {
+    dataField: 'gender',
+    text: 'Gender'
+  },
+  {
+    dataField: 'aadhar_no',
+    text: 'Aadhar No.'
+  },
+  {
+    dataField: 'mobileNo',
+    text: 'Mobile No.'
+  },
+  {
+    dataField: 'registrationNo',
+    text: 'Registration No'
+  },
+  {
+    dataField: 'courseName',
+    text: 'Course Name'
+  }];
+
 function NodalDashboard() {
   const [auth, setAuth] = React.useState(false);
   const Auth = React.useContext(AuthApi);
-  const [studentData, setStudentData] = React.useState([]);
+  const [studentData, setStudentData] = React.useState({});
   const [courseData, setCourseData] = React.useState([]);
   const [courseFetched, setCourseFetched] = React.useState(false);
   const [value, setValue] = React.useState(0);
@@ -176,38 +203,28 @@ function NodalDashboard() {
   const[saveSuccess, setSaveSuccess] = React.useState(false);
 
   useEffect(() => {
-    console.log("Hi! from StudyCntrDashboard useEffect()")
+    console.log("Hi! from NodalDashboard useEffect()")
     // readCookie();
     loadData();
     //getData()
   }, [])
 
   const loadData = () => {
-    let userID = Cookies.get("username");
-    Cookies.set("username", userID);
-    let len = userID.length;
-    let lastChar = userID.charAt(len - 1);
-    console.log("lastChar -> " + lastChar);
-    console.log("userID while fetching studing data--> " + lastChar)
-    let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
+    let studentID = Cookies.get("studentId");
+    if(studentID !== undefined) {
+    console.log("fetching studing data for --> " + studentID)
+    let endPoint = "http://localhost:8080/api/v1/" + studentID;
     let result = false;
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
           console.log("received data --> " + JSON.stringify(receivedData));
-          setStudentData(receivedData.map(studentData => ({
-            name: studentData.name,
-            id: studentData.student_id,
-            gender: studentData.gender,
-            aadhar_no: studentData.aadhar_no,
-            mobileNo: studentData.mobileNo,
-            registrationNo: studentData.registrationNo,
-            courseName: studentData.courseName,
-          })));
+          setStudentData(receivedData);
           setDataExists(true);
         });
-    
+    } else {
+        console.log("studentID is undefined");
+    }
     setLoaded(true);
-        
   }
 
   const handleClose = () => {
@@ -236,18 +253,638 @@ function NodalDashboard() {
       found = true;
     }
   
+    if( !loaded ) {
+        loadData();
+        return(
+            <div>loading...</div>
+        )
+    } else {
     return(
-      <div style={{}}>
-        <div style={{float: 'right'}}>
-          <button onClick={handleOnClick}>Logout</button>
-        </div>
-        {found? <div style={{clear: 'both'}}>
-            <h1>{Cookies.get("studentId")}</h1></div>:
-          <ApplicationForm />}
+    //   <div style={{}}>
+    //     <div style={{float: 'right'}}>
+    //       <button onClick={handleOnClick}>Logout</button>
+    //     </div>
+    //     {found? <div style={{clear: 'both'}}>
+    //         <h1>{Cookies.get("studentId")}</h1></div>:
+    //       <ApplicationForm />}
   
         
-      </div>
+    //   </div>
+
+        <>
+        <div>
+        <div style={{float: 'right'}}>
+            <button onClick={handleOnClick}>Logout</button>
+        </div>
+        <div>
+            { found ? <div>
+            <h1>Welcome {studentData.name}</h1>
+                <h3>Application Details</h3>
+          <Table className="mt-4" striped bordered hover>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>AAdhar No.</th>
+                <th>Mobile No.</th>
+                <th>Registration No.</th>
+                <th>Course Applied</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>{studentData.student_id}</td>
+                <td>{studentData.gender}</td>
+                <td>{studentData.aadhar_no}</td>
+                <td>{studentData.mobileNo}</td>
+                <td>{studentData.registrationNo}</td>
+                <td>{studentData.courseName}</td>
+                </tr>
+            </tbody>
+          </Table>
+          {/* <BootstrapTable keyField="name" data={studentData} columns={columns} /> */}
+        </div>
+        : <div>
+            <h1>Click below to apply online for Admission</h1>
+            <button onClick={handleShow}>New Application</button>
+          </div>
+        }
+        </div>
+
+  {/* <ModalComponent show={modalShowToggle}></ModalComponent> */}
+  {/* <FormModal showModal={showModal} hideModalHandler={hideModalHandler}></FormModal> */}
+  {/* <ModalWithGrid show={show} onHide={() => {setShow(false)}}/> */}
+  <Modal show={show} animation={false} onHide={handleClose} 
+    size="lg"
+    aria-labelledby="contained-modal-title-vcenter"
+    className="my-modal-lg"
+    dialogClassName="modal-full"
+    bsClass="modal-full"
+    centered
+    >
+<Modal.Header closeButton cssModule={{'modal-title': 'w-100 text-center'}}>
+<Modal.Title id="contained-modal-title-vcenter">
+Application Form
+</Modal.Title>
+</Modal.Header>
+{/* <Modal.Body>
+<Container>
+<ValidatorForm id="myForm" onSubmit={handleFormSubmit}
+onError={errors => console.log(errors)}>
+<Row>
+
+<Col xs={5} md={6}>
+  <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="studyCenterOptedCode"
+    label="Study Center opted with Code No."
+    name="studyCenterOptedCode"
+    value={studyCenterOptedCode}
+    defaultValue="001"
+    onChange={(event, value) => handleStudyCenterOptedCode(event)}
+    // autoFocus
+  />
+  
+  </Col>
+  </Row>
+  <Row>
+<Col xs={10} md={3}>
+<p>Course Applied</p>
+<Select options={coursesFromDB} 
+  maxWidth={50}
+  // value={course}
+  onChange={handleCourseChange}
+  className="Select-menu-outer"
+/>
+</Col >
+</Row>
+<Row>
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    id="name"
+    label="Name"
+    name="name"
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    value={name}
+    placeholder="First Name"
+    onChange={(event, value) => handleNameChange(event)}
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="fatherName"
+    label="Father's Name"
+    name="fatherName"
+    onChange={(event, value) => handleFatherName(event)}
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="aadharNo"
+    label="Aadhar No."
+    name="aadharNo"
+    onChange={(event, value) => handleAadharNo(event)}
+  />
+</Col>
+</Row>
+<Row>
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="doorNo"
+    label="Door No."
+    name="Door No."
+    onChange={(event, value) => handleDoorNo(event)}
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="street"
+    label="Street"
+    name="Street"
+    onChange={(event, value) => handleStreet(event)}
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="village"
+    label="Village/Post"
+    name="village"
+    onChange={(event, value) => handleVillage(event)}  
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="mandal"
+    label="Mandal/Town"
+    name="mandal"
+    onChange={(event, value) => handleMandal(event)}
+    
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="district"
+    label="District"
+    name="district"
+    onChange={(event, value) => handleDistrict(event)}
+/>
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="districtState"
+    label="State"
+    name="districtState"
+    type="districtState"
+    onChange={(event, value) => handleDistrictState(event)}
+  />
+</Col> 
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="pincode"
+    label="Pincode"
+    name="pincode"
+    onChange={(event, value) => handlePincode(event)}
+/>
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="phone"
+    label="Mobile Number"
+    name="phone"
+    type="phone"
+    onChange={(event, value) => handlePhone(event)}
+  />
+</Col> 
+
+<Col xs={10} md={4} >
+<TextValidator
+    variant="outlined"
+    margin="normal"
+    // required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    // id="email"
+    label="Email Address"
+    name="email"
+    // type="email"
+    value={email}
+    validators={['required', 'isEmail']}
+    errorMessages={['this field is required', 'email is not valid']}
+    onChange={(event, value) => handleEmail(event)}
+  />
+</Col>  
+</Row>
+<Row>
+<Col xs={10} md={3}>
+<p>Gender</p>
+<Select options={genders} 
+  maxWidth={50}
+  onChange={handleGenderChange}
+  className="Select-menu-outer"
+/>
+</Col>
+<Col xs={10} md={3}>
+<p>Medium</p>
+<Select options={mediums} 
+  maxWidth={50}
+  onChange={handleMedium}
+  className="Select-menu-outer"
+/>
+</Col>
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="secondaryLangauage"
+    label="Secondary Language Opted"
+    name="secondaryLangauage"
+    onChange={(event, value) => handleSecondLanguageOpted(event)}
+  />
+</Col>
+
+</Row>
+<Row>
+<Col xs={13} md={3} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    // onChange={this.handleDOB}
+    id="nationality"
+    label="Nationality"
+    name="nationality"
+    autoComplete="INDIAN"
+    disabled
+    value={nationality}   
+  />
+</Col>
+</Row> 
+<Row>
+<Col xs={13} md={2}>
+<p>Marital Status</p>
+<Select options={maritalStatuses} 
+  maxWidth={50}
+  onChange={handleMaritalStatus}
+  className="Select-menu-outer"
+/>
+</Col>
+
+<Col xs={10} md={2} >
+<TextField
+  id="date"
+  label="Date of Birth"
+  type="date"
+  defaultValue="1960-01-01"
+  InputLabelProps={{style: {fontSize: 13}}}
+  className={dateClasses.textField}
+  InputLabelProps={{
+  shrink: true,
+  }}
+  onChange={(event, value) => handleDOB(event)}
+/>
+</Col>
+
+</Row>
+
+<Row>
+<Col xs={13} md={3} >
+<TextField
+    variant="standard"
+    margin="normal"
+    required
+    fullWidth
+    // onChange={this.handleDOB}
+    id=""
+    label=""
+    name=""
+    disabled
+    // value={}    
+  />
+</Col>
+</Row>
+
+<Row>
+<Col xs={13} md={3} >
+<TextField
+    variant="standard"
+    margin="normal"
+    required
+    fullWidth
+    // onChange={this.handleDOB}
+    id=""
+    label=""
+    name=""
+    disabled
+    hidden
+    // value={}    
+  />
+</Col>
+</Row>
+
+
+<Row>
+
+<Col xs={10} md={3}>
+<p>Religion</p>
+<Select options={religions} 
+  maxWidth={50}
+  onChange={handleReligion}
+  className="Select-menu-outer"
+/>
+</Col>
+
+<Col xs={10} md={3}>
+<p>Caste</p>
+<Select options={castes} 
+  maxWidth={50}
+  onChange={handleCaste}
+  className="Select-menu-outer"
+/>
+</Col>
+<Col xs={10} md={3}>
+<p>Residential Status</p>
+<Select options={residentialStatuses} 
+  maxWidth={50}
+  onChange={handleResidentialStatus}
+  className="Select-menu-outer"
+/>
+</Col>
+<Col xs={10} md={2}>
+<p>PH Category?</p>
+<Select options={phCategories} 
+  maxWidth={50}
+  onChange={handlePhCategory}
+  className="Select-menu-outer"
+/>
+</Col>
+</Row>
+
+<Row>
+
+
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="qualifyingExam"
+    label="Qualifying Examination"
+    name="qualifyingExam"
+    onChange={(event, value) => handleQualifyingExam(event)}
+  />
+</Col>
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="university"
+    label="University"
+    name="university"
+    onChange={(event, value) => handleUniversity(event)}
+  />
+</Col>
+</Row>
+<Row>
+<Col xs={10} md={2} >
+<TextField
+  id="date"
+  label="Year and Month Passing"
+  type="date"
+  defaultValue="1960-01-01"
+  InputLabelProps={{style: {fontSize: 13}}}
+  className={dateClasses.textField}
+  InputLabelProps={{
+  shrink: true,
+  }}
+  onChange={(event, value) => handleYearAndMonth(event)}
+/>
+</Col>
+</Row>
+<Row>
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    label="Group Subjects"
+    name="groupSubjects"
+    placeholder="subject1, subject2,..."
+    value={groupSubjects}
+    onChange={(event, value) => handleGroupSubjects(event)}
+  />
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    // id="maxMarks"
+    label="Max Marks"
+    name="maxMarks"
+    value={maxMarks}
+    onChange={(event, value) => handleMaxMarks(event)}
+  />
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="marksObtained"
+    label="Marks Obtained"
+    name="marksObtained"
+    value={marksObtained}
+    onChange={(event) => handleMarksObtained(event)}
+  />
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="percentage"
+    label="Percentage"
+    name="percentage"
+    value={percentageOfMarks}
+    disabled
+  />
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="feeAmount"
+    label="Fee Amount"
+    name="feeAmount"
+    value={feeAmount}
+    disabled
+    
+  />
+</Col>
+
+<Col xs={10} md={4} >
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="paymentStatus"
+    label="Payment Status"
+    name="paymentStatus"
+    disabled
+  />
+</Col>
+
+</Row>
+
+<Form.Row>
+<Form.Group as={Col} id="formGridCheckbox">
+<Form.Check id="declarataion"
+    name="declaration" 
+    type="checkbox" 
+    label="Declaration"
+    onChange={(event) => handleDeclarationChecked(event)} />
+<p>I hereby declare that the particulars given above are correct. In case if they are found to be incorrect
+    at a later date, I submit myself for any action including removal from the rolls and such other disciplinary
+    action under the ACT, the Statues and Ordinances rule of the University, I also agree to abide by the
+    conditions, rules and regulations stipulated by the Directorate of distance Education and the Laws of the
+    university applicable from time to time.</p>
+</Form.Group>
+
+</Form.Row>
+
+
+
+</ValidatorForm>
+</Container>
+</Modal.Body> */}
+<Modal.Footer>
+<Button form="myForm" key="submit" htmlType="submit" variant="primary" type="submit">
+Submit
+</Button>
+<Button onClick={handleClose}>Close</Button>
+</Modal.Footer>
+</Modal>
+  </div>  
+</>
     )
   }
+}
 
 export default NodalDashboard;

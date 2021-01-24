@@ -25,7 +25,7 @@ import usePromise from "react-promise";
 import './custom-modal.css';
 import { getDefaultLocale } from 'react-datepicker';
 import StudyCntrDashboard from './StudyCntrDashboard';
-// import NodalDashboard from './NodalDashboard';
+import NodalDashboard from './NodalDashboard';
 import "bootstrap/dist/css/bootstrap-theme.css";
 
 // The gray background
@@ -130,6 +130,8 @@ const NodalLogin = () => {
             Auth.setAuth(true);
             console.log("No Student found with the number " + input 
                 + " redirecting to new application!");
+            Cookies.set("user", "loginTrue");
+            Cookies.set("nodalUser", "loginTrue");
           } else {
             result = true;
             console.log("Found an existing record with the number " + input
@@ -397,47 +399,47 @@ const StudyCntrLogin = () => {
   )
 }
 
-const NodalDashboard = () => {
-  const Auth = React.useContext(AuthApi);
-  const [show, setShow] = React.useState(true);
-  const handleClose = () => {
-    setShow(false);
-  }
-  const handleShow = () => {
-    console.log("Rendering Form modal")
-    setShow(true);
-  }
-  const handleOnClick = () => {
-    Auth.setAuth(false);
-    Cookies.remove("user");
-    Cookies.remove("nodalUser");
-    Cookies.remove("studentFound");
-    Cookies.remove("studentId");
-    window.studyCntrLoggedIn = false;
-    window.nodalLoggedIn = false;
-    window.homePage = true;
-  }
+// const NodalDashboard = () => {
+//   const Auth = React.useContext(AuthApi);
+//   const [show, setShow] = React.useState(true);
+//   const handleClose = () => {
+//     setShow(false);
+//   }
+//   const handleShow = () => {
+//     console.log("Rendering Form modal")
+//     setShow(true);
+//   }
+//   const handleOnClick = () => {
+//     Auth.setAuth(false);
+//     Cookies.remove("user");
+//     Cookies.remove("nodalUser");
+//     Cookies.remove("studentFound");
+//     Cookies.remove("studentId");
+//     window.studyCntrLoggedIn = false;
+//     window.nodalLoggedIn = false;
+//     window.homePage = true;
+//   }
 
   
-  var found = false;
-  if(Cookies.get("studentFound") === "true") {
-    console.log("Student found!" );
-    found = true;
-  }
+//   var found = false;
+//   if(Cookies.get("studentFound") === "true") {
+//     console.log("Student found!" );
+//     found = true;
+//   }
 
-  return(
-    <div style={{}}>
-      <div style={{float: 'right'}}>
-        <button onClick={handleOnClick}>Logout</button>
-      </div>
-      {found? <div style={{clear: 'both'}}>
-          <h1>{Cookies.get("studentId")}</h1></div>:
-        <ApplicationForm />}
+//   return(
+//     <div style={{}}>
+//       <div style={{float: 'right'}}>
+//         <button onClick={handleOnClick}>Logout</button>
+//       </div>
+//       {found? <div style={{clear: 'both'}}>
+//           <h1>{Cookies.get("studentId")}</h1></div>:
+//         <ApplicationForm />}
 
       
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
 
 // const StudyCntrDashboard = async () => {
