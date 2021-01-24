@@ -662,6 +662,7 @@ const ModalPopUpHandler=()=>{
 
   const handleClose = () => {
     setShow(false);
+    loadData();
   }
   const handleShow = () => {
     console.log("Rendering Form modal")
@@ -780,7 +781,7 @@ const ModalPopUpHandler=()=>{
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({formData})
+    body: JSON.stringify(formData)
   };
   let result = "";
   let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;

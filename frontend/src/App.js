@@ -25,6 +25,7 @@ import usePromise from "react-promise";
 import './custom-modal.css';
 import { getDefaultLocale } from 'react-datepicker';
 import StudyCntrDashboard from './StudyCntrDashboard';
+// import NodalDashboard from './NodalDashboard';
 import "bootstrap/dist/css/bootstrap-theme.css";
 
 // The gray background
