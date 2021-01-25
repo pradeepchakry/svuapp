@@ -279,6 +279,7 @@ const StudyCntrLogin = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      mode: "cors",
       body: JSON.stringify({ userID: userID, password: password })
     };
 
@@ -604,8 +605,11 @@ const StudyCntrLogin = () => {
 
 const HomeComponent= () => {
       return(
-          <div>
-            <p>SVUDDE Online Application</p>
+          <div style={{
+        position: 'absolute', left: '50%', top: '50%',
+        transform: 'translate(-50%, -50%)'
+       }}>
+            <h1>SORRY. SITE UNDER MAINTENANCE, KINDLY VISIT LATER!</h1>
           </div>  
       )
 }
@@ -697,10 +701,22 @@ const Routes = () => {
       <ProtectedNodalLogin path="/nodalLogin" component={NodalLogin} auth={Auth.auth} />
       <ProtectedNodalRoute path="/nodalDashboard" auth={Auth.auth} component={NodalDashboard} />
       <ProtectedStudyCntrRoute path="/studyCntrDashboard" auth={Auth.auth} component={StudyCntrDashboard} />
+      <ProtectedStudyCntrRoute path="/error" auth={Auth.auth} component={ErrorContent} />
     </switch>
     </div>
   )
 }
+
+const ErrorContent = () => {
+  return (
+    <>
+    <div>
+      <h1>Site under maintenance! Kindly visit later.</h1>
+    </div>
+    </>
+  )
+}
+
 
 const ProtectedStudyCntrRoute = ({auth, component: Component, ...rest}) => {
   return(

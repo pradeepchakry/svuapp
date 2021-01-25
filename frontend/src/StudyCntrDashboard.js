@@ -629,6 +629,21 @@ const ModalPopUpHandler=()=>{
           })));
           setDataExists(true);
         });
+    // Fetch courses
+    endPoint = "http://localhost:8080/api/v1/courses";
+    
+    fetch(endPoint).then(resp => resp.json())
+        .then(receivedData => {
+          // console.log("received Course structures --> " + JSON.stringify(receivedData));
+          setCourseData(receivedData.map(coursesData => ({
+            courseID: coursesData.courseID,
+            courseSubject: coursesData.courseSubject,
+            firstYearFee: coursesData.firstYearFee,
+          })));
+          // console.log(JSON.stringify(courseData));
+          setCourseFetched(true);
+        });
+    console.log(courseFetched);
     
     setLoaded(true);
         
@@ -666,22 +681,6 @@ const ModalPopUpHandler=()=>{
   }
   const handleShow = () => {
     console.log("Rendering Form modal")
-
-    // Fetch courses
-    let endPoint = "http://localhost:8080/api/v1/courses";
-    let result = false;
-    fetch(endPoint).then(resp => resp.json())
-        .then(receivedData => {
-          // console.log("received Course structures --> " + JSON.stringify(receivedData));
-          setCourseData(receivedData.map(coursesData => ({
-            courseID: coursesData.courseID,
-            courseSubject: coursesData.courseSubject,
-            firstYearFee: coursesData.firstYearFee,
-          })));
-          // console.log(JSON.stringify(courseData));
-          setCourseFetched(true);
-        });
-    console.log(courseFetched);
     if(courseFetched) {
       var data = '{ "courses": '+ JSON.stringify(courseData) + '}';
       console.log(data);
@@ -777,9 +776,10 @@ const ModalPopUpHandler=()=>{
   formData = formDataJson;
   console.log("Form Data --> " + JSON.stringify(formData));
 
-  //http://localhost:8080/api/v1/createStudentByStudyCenter/1
+  //http://159.203.148.240:8080/api/v1/createStudentByStudyCenter/1
   const requestOptions = {
     method: 'POST',
+    mode: "cors",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
   };
