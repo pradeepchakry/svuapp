@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,6 +6,7 @@ import {
   Redirect,
   Link
 } from 'react-router-dom';
+import TextField from "@material-ui/core/TextField";
 import { AppBar, Toolbar, Grid, Tabs, Tab, makeStyles, InputBase, IconButton } from '@material-ui/core';
 import AuthApi from "./AuthApi";
 import Cookies, { set } from 'js-cookie';
@@ -14,7 +15,7 @@ import {Button, Modal} from 'react-bootstrap'
 import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-
+import validator from 'validator' 
 
 
 import BetterUser from './BetterUser'
@@ -178,11 +179,18 @@ const NodalLogin = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    console.log("In handleOnClick...");
-    console.log("sending otp");
-    //handleSendOTP();
-    console.log("Otp sent successfully");
-    setShow(true);
+    console.log("about to call validate method to "+phone)
+    if(validatePhoneNumber(phone)) {
+      console.log("In handleOnClick...");
+      console.log("sending otp");
+      //handleSendOTP()
+      console.log("Otp sent successfully");
+      setShow(true);
+    } else {
+      alert("Please enter a valid mobile number!")
+      setPhone("");
+      //document.getElementById("login-form").reset();
+    }
   }
 
   
@@ -215,26 +223,49 @@ const NodalLogin = () => {
       }
   }
 
+  const validatePhoneNumber = (number) => {
+    var pattern = new RegExp(/^[0-9\b]+$/);
+    let isValid = true;
+        if (!pattern.test(number)) {
+          isValid = false;
+        }else if(number.length != 10){
+          isValid = false;
+        }
+    return isValid;
+  }
+
   const handlePhone = (e) => {
     setPhone(e.target.value)
   }
 
   return (
     <div classes={classes.appMain}>
-      <label>
+      {/* <label>
         Phone
         <input
         type="tel"
         name="phone"
         onChange={handlePhone}
-      />
-      </label>
-      <div className="form-group">
-      <>
+      /> */}
+      <TextField
+      variant="outlined"
+      margin="normal"
+      required
+      fullWidth
+      InputLabelProps={{style: {fontSize: 13}}}
+      InputProps={{style: {fontSize: 13}}}
+      id="phone"
+      label="Mobile Number"
+      name="phone"
+      type="phone"
+      onChange={(event, value) => handlePhone(event)}
+    />
+      {/* </label> */}
       <button variant="primary" onClick={handleShow}>
         Login
       </button>
-
+      <div className="form-group">
+      <>
       <Modal size="sm" show={show} onHide={handleClose} 
           aria-labelledby="example-modal-sizes-title-sm" animation={false}>
         <Modal.Header closeButton>
