@@ -166,6 +166,7 @@ const NodalLogin = () => {
             Cookies.set("nodalUser", "loginTrue");
           } else {
             result = true;
+            //changed
             console.log("Found an existing record with the number " + input
                 + " enrolled, fethcing record!");
   

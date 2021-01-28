@@ -15,9 +15,10 @@ import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
 import TextField from "@material-ui/core/TextField";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { formatMs, makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from "@material-ui/core/Grid";
+import ImageUploader from 'react-images-upload';
 
 
 import BetterUser from './BetterUser'
@@ -289,6 +290,8 @@ const feeFromDB = [];
 
 var formData = {};
 
+var multipartData = [];
+
 function StudyCntrDashboard() {
   const [auth, setAuth] = React.useState(false);
   const Auth = React.useContext(AuthApi);
@@ -352,11 +355,14 @@ function StudyCntrDashboard() {
   const [values, setValues] = React.useState(initialFomValues);
   const [districtState, setDistrictState] = React.useState("");
   const [eligibilityMarks, setEligibilityMarks] = React.useState("");
-  const [image, setImage] = React.useState("");
-  const [signature, setSignature] = React.useState("");
+  const [studentImage, setStudentImage] = React.useState("");
+  const [studentSignature, setStudentSignature] = React.useState("");
   const [phone, setPhone] = React.useState("");
 
   const[saveSuccess, setSaveSuccess] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState("");
+  const [resetSuccess, setResetSuccess] = React.useState(false);
+  const [motherName, setMotherName] = React.useState("");
   
 
   // const [x, setX] = React.useState(5);
@@ -396,6 +402,33 @@ function StudyCntrDashboard() {
     setStudyCenterOptedCode(event.target.value)
   }
 
+  const handleResetPassword = async () => {
+    let passwordEntered = prompt("Enter new Password");
+    let userID = Cookies.get("username");
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userID: userID, password: passwordEntered })
+    };
+
+    console.log("Resetting password " + passwordEntered);
+    let result = "";
+    let endPoint = "http://localhost:8080/api/v1/studyCentres/resetPassword";
+    const response = await fetch(endPoint, requestOptions)
+      .then(response => response.text())
+      .then(data => {
+        console.log(data);
+        result = data;
+        alert("Password Successfully changed!")
+      })    
+      .catch(error => console.log("Error detected: " + error));
+    console.log("got response --> " + result);
+    return result;
+    
+  }
+
+
   const handleCourseChange = (course) => {
     console.log("Course Id selected" + course.value);
     console.log("Course Name --> " + course.label);
@@ -420,6 +453,11 @@ function StudyCntrDashboard() {
   const handleFatherName = (event) => {
     console.log(event.target.value)
     setFatherName(event.target.value)
+  }
+
+  const handleMotherName = (event) => {
+    console.log(event.target.value)
+    setMotherName(event.target.value)
   }
 
   const handleAadharNo = (event) => {
@@ -570,14 +608,12 @@ function StudyCntrDashboard() {
     setDeclarationChecked(event.target.value)
   }
 
-  const handleImage = (event) => {
-    console.log(event.target.value)
-    setImage(event.target.value)
+  const handleImage = (image) => {
+    setStudentImage(image);
   }
 
-  const handleSignature = (event) => {
-    console.log(event.target.value)
-    setSignature(event.target.value)
+  const handleSignature = (signature) => {
+    setStudentSignature(signature);
   }
 
   const readCookie = () => {
@@ -744,7 +780,6 @@ const ModalPopUpHandler=()=>{
     formDataJson["gender"] = gender;
     formDataJson["groupSubjects"] = groupSubjects;
     formDataJson["hallTicketNo"] = "zyxabc120"; //- missing - not in form
-    formDataJson["image"] = "";
     formDataJson["location"] = "";
     formDataJson["mandal"] = mandal;
     formDataJson["marksObtained"] = marksObtained;
@@ -762,7 +797,6 @@ const ModalPopUpHandler=()=>{
     formDataJson["religion"] = religion;
     formDataJson["residentialArea"] = residential;
     formDataJson["secondLanguage"] = secondLanguageOpted;
-    formDataJson["signature"] = "";
     formDataJson["street"] = street;
     formDataJson["university"] = university;
     formDataJson["village"] = village;
@@ -772,32 +806,86 @@ const ModalPopUpHandler=()=>{
     formDataJson["mobileNo"] = phone;
     formDataJson["aadhar_no"] = aadharNo;
     formDataJson["phCategory"] = phCategory;
+    formDataJson["motherName"] = motherName;
   console.log("Form Data JSON --> " + JSON.stringify(formDataJson))
   formData = formDataJson;
   console.log("Form Data --> " + JSON.stringify(formData));
 
-  //http://159.203.148.240:8080/api/v1/createStudentByStudyCenter/1
-  const requestOptions = {
-    method: 'POST',
-    mode: "cors",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-  };
+  // image upload version
+  multipartData.push(studentImage);
+  multipartData.push(studentSignature);
+  multipartData.push(formData);
+
+  
+  const formDataObj  = new FormData();
+
+  for(const name in multipartData) {
+    console.log(name);
+    if (name === "0") {
+      console.log("name --> " + name);
+      console.log("data --> " + multipartData[name]);
+      formDataObj.append("image", new Blob(multipartData[name]));
+      // formDataObj.append("image", multipartData[name]);
+    } else if (name === "1") {
+      console.log("name --> " + name);
+      console.log("data --> " + multipartData[name]);
+      //changed
+      formDataObj.append("signature", new Blob(multipartData[name]));
+    } else if (name === "2") {
+      console.log("name --> " + name);
+      console.log("data --> " + JSON.stringify(multipartData[name]));
+      formDataObj.append("student", JSON.stringify(multipartData[name]));
+    }
+  }
+
   let result = "";
   let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;
-  const response = await fetch(endPoint, requestOptions)
-    .then(response => response.text())
-    .then(data => {
-      console.log(data);
-      result = data;
-      setSaveSuccess(true);
-      console.log("Form successfully saved :), closing form window...!");
-      alert("Payment Gateway");
-      alert("Payment success..!");
-      handleClose();
-    })    
-    .catch(error => console.log("Error detected: " + error));
-  console.log("got response --> " + result);
+  const response = await fetch(endPoint, {
+  method: 'POST',
+  body: formDataObj
+}).then(response => response.text())
+  .then(data => {
+    console.log(data);
+    result = data;
+    setSaveSuccess(true);
+    console.log("Form successfully saved :), closing form window...!");
+    alert("Payment Gateway");
+    alert("Payment success..!");
+    handleClose();
+  })    
+  .catch(error => console.log("Error detected: " + error));
+console.log("got response --> " + result);
+
+  // const response = await fetch(url, {
+  //   method: 'POST',
+  //   body: formData
+  // });
+
+
+  // image upload version
+
+  //http://localhost:8080/api/v1/createStudentByStudyCenter/1
+  // const requestOptions = {
+  //   method: 'POST',
+  //   mode: "cors",
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(formData)
+  // };
+  // let result = "";
+  // let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;
+  // const response = await fetch(endPoint, requestOptions)
+  //   .then(response => response.text())
+  //   .then(data => {
+  //     console.log(data);
+  //     result = data;
+  //     setSaveSuccess(true);
+  //     console.log("Form successfully saved :), closing form window...!");
+  //     alert("Payment Gateway");
+  //     alert("Payment success..!");
+  //     handleClose();
+  //   })    
+  //   .catch(error => console.log("Error detected: " + error));
+  // console.log("got response --> " + result);
 
   }
 
@@ -834,6 +922,7 @@ const ModalPopUpHandler=()=>{
         <div>
           <div style={{float: 'right'}}>
             <button onClick={handleOnClick}>Logout</button>
+            <button onClick={handleResetPassword}>Reset Password</button>
           </div>
           <div>
             { dataExists ? <div>
@@ -911,6 +1000,28 @@ const ModalPopUpHandler=()=>{
           />
           
           </Col>
+
+          <Col xs={5} md={6}>
+          <ImageUploader
+                withIcon={true}
+                buttonText='Choose image'
+                onChange={handleImage}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={1000000}
+            />
+          
+          </Col>
+
+          <Col xs={5} md={6}>
+          <ImageUploader
+                withIcon={true}
+                buttonText='Choose signature'
+                onChange={handleSignature}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={1000000}
+            />
+          
+          </Col>
           </Row>
           <Row>
         <Col xs={10} md={3}>
@@ -953,6 +1064,21 @@ const ModalPopUpHandler=()=>{
             label="Father's Name"
             name="fatherName"
             onChange={(event, value) => handleFatherName(event)}
+          />
+        </Col>
+
+        <Col xs={10} md={3}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            // fullWidth
+            InputLabelProps={{style: {fontSize: 13}}}
+            InputProps={{style: {fontSize: 13}}}
+            id="motherName"
+            label="Mother's Name"
+            name="motherName"
+            onChange={(event, value) => handleMotherName(event)}
           />
         </Col>
 

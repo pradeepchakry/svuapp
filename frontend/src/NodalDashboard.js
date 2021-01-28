@@ -483,6 +483,7 @@ function NodalDashboard() {
         console.log(event.target.value)
         setMotherName(event.target.value)
       }
+      //changed
     
       const handleAadharNo = (event) => {
         console.log(event.target.value)
