@@ -346,7 +346,7 @@ function NodalDashboard() {
     let studentID = Cookies.get("studentId");
     if(studentID !== undefined) {
     console.log("fetching studing data for --> " + studentID)
-    let endPoint = "http://159.203.148.240:8080/api/v1/" + studentID;
+    let endPoint = "http://localhost:8080/api/v1/" + studentID;
     let result = false;
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
@@ -366,7 +366,7 @@ function NodalDashboard() {
     const handleShow = () => {
       console.log("Rendering Form modal")
       // Fetch courses
-    let endPoint = "http://159.203.148.240:8080/api/v1/courses";
+    let endPoint = "http://localhost:8080/api/v1/courses";
     let result = false;
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
@@ -698,7 +698,7 @@ function NodalDashboard() {
       formData = formDataJson;
       console.log("Form Data --> " + JSON.stringify(formData));
     
-      //http://159.203.148.240:8080/api/v1/createStudentByStudyCenter/1
+      //http://localhost:8080/api/v1/createStudentByStudyCenter/1
       const requestOptions = {
         method: 'POST',
         mode: "cors",
@@ -706,7 +706,7 @@ function NodalDashboard() {
         body: JSON.stringify(formData)
       };
       let result = "";
-      let endPoint = "http://159.203.148.240:8080/api/v1/createStudentByStudyCenter/1";
+      let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
       const response = await fetch(endPoint, requestOptions)
         .then(response => response.json())
         .then(data => {
