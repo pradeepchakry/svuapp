@@ -357,6 +357,7 @@ function NodalDashboard() {
         .then(receivedData => {
           console.log("received data --> " + JSON.stringify(receivedData));
           setStudentData(receivedData);
+          setDataExists(true);
         });
     } else {
         console.log("studentID is undefined");
@@ -783,7 +784,7 @@ console.log("got response --> " + result);
       }
   
     if( !loaded ) {
-        loadData();
+        // loadData();
         return(
             <div>loading...</div>
         )
@@ -812,7 +813,7 @@ console.log("got response --> " + result);
             <button onClick={handleOnClick}>Logout</button>
         </div>
         <div>
-            { found ? <div>
+            { dataExists ? <div>
             <h1>Welcome {studentData.name}</h1>
                 <h3>Application Details</h3>
           <Table className="mt-4" striped bordered hover>
