@@ -291,6 +291,7 @@ function NodalDashboard() {
   const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState();
   const [name, setName] = React.useState("");
   const [fatherName, setFatherName] = React.useState("");
+  const [motherName, setMotherName] = React.useState("");
   const [aadharNo, setAadharNo] = React.useState('');
   const [doorNo, setDoorNo] = React.useState('');
   const [street, setStreet] = React.useState('');
@@ -476,6 +477,11 @@ function NodalDashboard() {
       const handleFatherName = (event) => {
         console.log(event.target.value)
         setFatherName(event.target.value)
+      }
+
+      const handleMotherName = (event) => {
+        console.log(event.target.value)
+        setMotherName(event.target.value)
       }
     
       const handleAadharNo = (event) => {
@@ -867,6 +873,21 @@ onError={errors => console.log(errors)}>
     label="Father's Name"
     name="fatherName"
     onChange={(event, value) => handleFatherName(event)}
+  />
+</Col>
+
+<Col xs={10} md={3}>
+<TextField
+    variant="outlined"
+    margin="normal"
+    required
+    // fullWidth
+    InputLabelProps={{style: {fontSize: 13}}}
+    InputProps={{style: {fontSize: 13}}}
+    id="motherName"
+    label="Mother's Name"
+    name="motherName"
+    onChange={(event, value) => handleMotherName(event)}
   />
 </Col>
 

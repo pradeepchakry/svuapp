@@ -401,6 +401,8 @@ const StudyCntrLogin = () => {
   const Auth = React.useContext(AuthApi);
   const [input, setInput] = React.useState({});
   const [errors, setErrors] = React.useState({});
+  const classes = useStyles();
+
 
   async function authenticateUser(input) {
     let userID = input["username"];
@@ -410,7 +412,6 @@ const StudyCntrLogin = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      mode: "cors",
       body: JSON.stringify({ userID: userID, password: password })
     };
 
@@ -429,6 +430,7 @@ const StudyCntrLogin = () => {
     return result;
   }
 
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     if(validate()){
@@ -501,8 +503,17 @@ const StudyCntrLogin = () => {
     return isValid;
   }
   return (
-    <div className="backdrop" style={{backdropStyle}}>
-      <form onSubmit={handleSubmit}>
+    <Container component="main" maxWidth="xs">
+        <form id="myForm" onSubmit={handleSubmit}>
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <GroupIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Student Sign In
+                </Typography>
+      
           <div class="form-group">
             <label for="username">Username </label>
             <input 
@@ -525,12 +536,13 @@ const StudyCntrLogin = () => {
               class="form-control" 
               placeholder="Enter password" 
               id="password" />
-          <div className="text-danger">{errors.username}</div>
         </div>
         <div className="text-danger">{errors.password}</div>
         <input type="submit" value="Submit" class="btn btn-success" />
+        </div>
       </form>
-    </div>
+      
+    </Container>
   )
 }
 
@@ -802,9 +814,7 @@ const Routes = () => {
           <Grid item sm>
           </Grid>
           <Grid item>
-            <IconButton>
-              <PowerSettingsNewIcon fontSize="large" classes={{root:classes.btnLabel, label:classes.btnLabel}} /> 
-            </IconButton>
+            
           </Grid>
         </Grid>
       </Toolbar>
