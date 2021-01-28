@@ -361,18 +361,8 @@ function NodalDashboard() {
     } else {
         console.log("studentID is undefined");
     }
-    setLoaded(true);
-  }
-
-  const handleClose = () => {
-    setShow(false);
-    loadData();
-  }
-    const handleShow = () => {
-      console.log("Rendering Form modal")
-      // Fetch courses
     let endPoint = "http://localhost:8080/api/v1/courses";
-    let result = false;
+    
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
           // console.log("received Course structures --> " + JSON.stringify(receivedData));
@@ -385,6 +375,17 @@ function NodalDashboard() {
           setCourseFetched(true);
         });
     console.log(courseFetched);
+    setLoaded(true);
+  }
+
+  const handleClose = () => {
+    setShow(false);
+    loadData();
+  }
+    const handleShow = () => {
+      console.log("Rendering Form modal")
+      // Fetch courses
+      
     if(courseFetched) {
       var data = '{ "courses": '+ JSON.stringify(courseData) + '}';
       console.log(data);
@@ -733,7 +734,7 @@ function NodalDashboard() {
   }
 
   let result = "";
-  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;
+  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
   const response = await fetch(endPoint, {
   method: 'POST',
   body: formDataObj
