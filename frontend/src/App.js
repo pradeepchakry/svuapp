@@ -421,10 +421,11 @@ const StudyCntrLogin = () => {
     let result = "";
     let endPoint = "http://localhost:8080/api/v1/studyCentres/validateUser";
     const response = await fetch(endPoint, requestOptions)
-      .then(response => response.text())
+      .then(response => response.json())
       .then(data => {
         console.log(data);
         result = data;
+        Cookies.set("userID", data);
       })    
       .catch(error => console.log("Error detected: " + error));
     console.log("got response --> " + result);

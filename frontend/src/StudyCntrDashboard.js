@@ -643,13 +643,14 @@ const ModalPopUpHandler=()=>{
   }, [])
 
   const loadData = () => {
-    let userID = Cookies.get("username");
-    Cookies.set("username", userID);
-    let len = userID.length;
-    let lastChar = userID.charAt(len - 1);
-    console.log("lastChar -> " + lastChar);
-    console.log("userID while fetching studing data--> " + lastChar)
-    let endPoint = "http://localhost:8080/api/v1/Students/" + lastChar;
+    let userID = Cookies.get("userId");
+    console.log("Id in study center table --> " + userID);
+    // Cookies.set("username", userID);
+    // let len = userID.length;
+    // let lastChar = userID.charAt(len - 1);
+    // console.log("lastChar -> " + lastChar);
+    // console.log("userID while fetching studing data--> " + lastChar)
+    let endPoint = "http://localhost:8080/api/v1/Students/" + userID;
     let result = false;
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
@@ -740,6 +741,8 @@ const ModalPopUpHandler=()=>{
 
         //Fee details
         feeJson["value"] = id;
+        let feeInt = parseInt(fee);
+        console.log("fee int " + feeInt);
         feeJson["label"] = fee;
        
         console.log(feeJson);
