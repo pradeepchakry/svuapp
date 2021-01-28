@@ -6,8 +6,10 @@ import {
   Redirect,
   Link
 } from 'react-router-dom';
-import TextField from "@material-ui/core/TextField";
-import { AppBar, Toolbar, Grid, Tabs, Tab, makeStyles, InputBase, IconButton } from '@material-ui/core';
+// import TextField from "@material-ui/core/TextField";
+import { AppBar, Toolbar, Tabs, Tab, makeStyles, InputBase, IconButton } from '@material-ui/core';
+import { Avatar, Container, CssBaseline, Grid, TextField, Typography } from "@material-ui/core";
+import GroupIcon from "@material-ui/icons/Group";
 import AuthApi from "./AuthApi";
 import Cookies, { set } from 'js-cookie';
 import OtpInput from 'react-otp-input';
@@ -40,7 +42,7 @@ const backdropStyle = {
   padding: 50
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   appMain: {
     padeingLeft: '320px',
     width: '100%',
@@ -56,8 +58,34 @@ const useStyles = makeStyles({
   },
   btnLabel: {
     backgroundColor: "white",
+  },
+  nodalLogin: {
+    float: 'none',
+    justifyContent: 'center'
+  },
+  paper: {
+    marginTop: theme.spacing(7),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", 
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "100%"
   }
-})
+}))
 
 
 
@@ -168,6 +196,7 @@ const NodalLogin = () => {
           console.log("otp verification >> " + res.staus);
           if(!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
+                validMobile = false;
             } else {
                 console.log("Status: OK");
                 validMobile = true;
@@ -183,7 +212,7 @@ const NodalLogin = () => {
     if(validatePhoneNumber(phone)) {
       console.log("In handleOnClick...");
       console.log("sending otp");
-      //handleSendOTP()
+      handleSendOTP()
       console.log("Otp sent successfully");
       setShow(true);
     } else {
@@ -206,15 +235,20 @@ const NodalLogin = () => {
   const handleOTPSubmit = () => {
       console.log("verify otp" + otp);
       
-      // verifyOTP(otp).then(bool => {
-      //   console.log("otp valid " + bool)
-      //   Cookies.set("user", "loginTrue");
-      //   Cookies.set("nodalUser", "loginTrue");
-      //   Auth.setAuth(true);
-      //   window.nodalLoggedIn = true;
-      //   window.studyCntrLoggedIn = false;
-      //   window.homePage = false;
-      // });
+      verifyOTP(otp).then(bool => {
+        if(bool) {
+          console.log("otp valid " + bool)
+          Cookies.set("user", "loginTrue");
+          Cookies.set("nodalUser", "loginTrue");
+          Auth.setAuth(true);
+          window.nodalLoggedIn = true;
+          window.studyCntrLoggedIn = false;
+          window.homePage = false;
+        } else {
+          handleClose();
+          alert("OTP verification failed!");
+        }
+      });
 
       Cookies.set("user", "loginTrue");
       console.log(Cookies.get("user"));
@@ -239,43 +273,55 @@ const NodalLogin = () => {
   }
 
   return (
-    <div classes={classes.appMain}>
-      {/* <label>
-        Phone
-        <input
-        type="tel"
-        name="phone"
-        onChange={handlePhone}
-      /> */}
-      <TextField
-      variant="outlined"
-      margin="normal"
-      required
-      fullWidth
-      InputLabelProps={{style: {fontSize: 13}}}
-      InputProps={{style: {fontSize: 13}}}
-      id="phone"
-      label="Mobile Number"
-      name="phone"
-      type="phone"
-      onChange={(event, value) => handlePhone(event)}
-    />
-      {/* </label> */}
-      <button variant="primary" onClick={handleShow}>
-        Login
-      </button>
-      <div className="form-group">
-      <>
-      <Modal size="sm" show={show} onHide={handleClose} 
-          aria-labelledby="example-modal-sizes-title-sm" animation={false}>
+
+    <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <GroupIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Student Sign In
+                </Typography>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          InputLabelProps={{style: {fontSize: 13}}}
+                          InputProps={{style: {fontSize: 13},
+                            }}
+                          id="phone"
+                          label="Mobile Number"
+                          name="phone"
+                          type="phone"
+                          onChange={(event, value) => handlePhone(event)}/>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        preventDefault
+                        className={classes.submit}
+                        onClick={handleShow}
+                    >
+                        Login
+                    </Button>
+                
+                <Typography style={{ margin: 7 }} variant="body1">
+                    {/* status: {message} */}
+                </Typography>
+                <div className="form-group">
+       <>
+       <Modal size="" show={show} onHide={handleClose} 
+         animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Verify OTP</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body size="lg">
           <OtpInput
             value={otp}
             onChange={handleChange}
             numInputs={6}
+            size="lg"
             separator={<span>-</span>}
           />
         </Modal.Body>
@@ -290,8 +336,62 @@ const NodalLogin = () => {
       </Modal>
     </>
       </div>
+            </div>
+        </Container>
+
+    // <div classes={classes.paper}>
+    //   {/* <label>
+    //     Phone
+    //     <input
+    //     type="tel"
+    //     name="phone"
+    //     onChange={handlePhone}
+    //   /> */}
+    //   <TextField
+    //   variant="outlined"
+    //   margin="normal"
+    //   required
+    //   InputLabelProps={{style: {fontSize: 13}}}
+    //   InputProps={{style: {fontSize: 13},
+    //                 }}
+    //   id="phone"
+    //   label="Mobile Number"
+    //   name="phone"
+    //   type="phone"
+    //   onChange={(event, value) => handlePhone(event)}
+    // />
+    //   {/* </label> */}
+    //   <button variant="primary" onClick={handleShow}>
+    //     Login
+    //   </button>
+    //   <div className="form-group">
+    //   <>
+    //   <Modal size="sm" show={show} onHide={handleClose} 
+    //       aria-labelledby="example-modal-sizes-title-sm" animation={false}>
+    //     <Modal.Header closeButton>
+    //       <Modal.Title>Verify OTP</Modal.Title>
+    //     </Modal.Header>
+    //     <Modal.Body>
+    //       <OtpInput
+    //         value={otp}
+    //         onChange={handleChange}
+    //         numInputs={6}
+    //         separator={<span>-</span>}
+    //       />
+    //     </Modal.Body>
+    //     <Modal.Footer>
+    //       <button variant="secondary" onClick={handleClose}>
+    //         Change Number
+    //       </button>
+    //       <button variant="primary" onClick={handleOTPSubmit}>
+    //         Submit
+    //       </button>
+    //     </Modal.Footer>
+    //   </Modal>
+    // </>
+    //   </div>
       
-    </div>
+    // </div>
 
     
   )
@@ -640,7 +740,7 @@ const HomeComponent= () => {
         position: 'absolute', left: '50%', top: '50%',
         transform: 'translate(-50%, -50%)'
        }}>
-            <h1>SORRY. SITE UNDER MAINTENANCE, KINDLY VISIT LATER!</h1>
+            {/* <h1>SORRY. SITE UNDER MAINTENANCE, KINDLY VISIT LATER!</h1> */}
           </div>  
       )
 }
