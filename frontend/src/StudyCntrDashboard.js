@@ -667,7 +667,7 @@ const ModalPopUpHandler=()=>{
           setDataExists(true);
         });
     // Fetch courses
-    endPoint = "http://localhost:8080/api/v1/courses";
+    endPoint = "http://localhost:8080/api/v1/getAllcoursesForStudyCentre";
     
     fetch(endPoint).then(resp => resp.json())
         .then(receivedData => {
@@ -698,7 +698,7 @@ const ModalPopUpHandler=()=>{
   const renderStudents = (student, index) => {
       return(
           <tr key={index}>
-              <td>{student.student_id}</td>
+              {/* <td>{student.student_id}</td> */}
               <td>{student.name}</td>
               <td>{student.gender}</td>
               <td>{student.aadhar_no}</td>

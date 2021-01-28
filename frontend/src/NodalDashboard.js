@@ -14,6 +14,7 @@ import {Button, Modal} from 'react-bootstrap'
 import RespModal from 'react-responsive-modal';
 import { useState, useEffect } from 'react';
 import TextField from "@material-ui/core/TextField";
+import ImageUploader from 'react-images-upload';
 
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -65,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize:50
   }
   }));
+
+  var multipartData = [];
 
 const backdropStyle = {
     position: 'fixed',
@@ -332,6 +335,8 @@ function NodalDashboard() {
   const [image, setImage] = React.useState("");
   const [signature, setSignature] = React.useState("");
   const [phone, setPhone] = React.useState("");
+  const [studentImage, setStudentImage] = React.useState("");
+  const [studentSignature, setStudentSignature] = React.useState("");
 
   const[saveSuccess, setSaveSuccess] = React.useState(false);
 
@@ -494,6 +499,14 @@ function NodalDashboard() {
         console.log(event.target.value)
         setDoorNo(event.target.value)
       }
+
+      const handleImage = (image) => {
+        setStudentImage(image);
+      }
+    
+      const handleSignature = (signature) => {
+        setStudentSignature(signature);
+      }
     
       const handleStreet = (event) => {
         console.log(event.target.value)
@@ -632,16 +645,6 @@ function NodalDashboard() {
         console.log(event.target.value)
         setDeclarationChecked(event.target.value)
       }
-    
-      const handleImage = (event) => {
-        console.log(event.target.value)
-        setImage(event.target.value)
-      }
-    
-      const handleSignature = (event) => {
-        console.log(event.target.value)
-        setSignature(event.target.value)
-      }
 
       const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -699,30 +702,81 @@ function NodalDashboard() {
       formData = formDataJson;
       console.log("Form Data --> " + JSON.stringify(formData));
     
+
+      // image upload changes
+
+      // image upload version
+  multipartData.push(studentImage);
+  multipartData.push(studentSignature);
+  multipartData.push(formData);
+
+  
+  const formDataObj  = new FormData();
+
+  for(const name in multipartData) {
+    console.log(name);
+    if (name === "0") {
+      console.log("name --> " + name);
+      console.log("data --> " + multipartData[name]);
+      formDataObj.append("image", new Blob(multipartData[name]));
+      // formDataObj.append("image", multipartData[name]);
+    } else if (name === "1") {
+      console.log("name --> " + name);
+      console.log("data --> " + multipartData[name]);
+      //changed
+      formDataObj.append("signature", new Blob(multipartData[name]));
+    } else if (name === "2") {
+      console.log("name --> " + name);
+      console.log("data --> " + JSON.stringify(multipartData[name]));
+      formDataObj.append("student", JSON.stringify(multipartData[name]));
+    }
+  }
+
+  let result = "";
+  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/" + studyCenterOptedCode;
+  const response = await fetch(endPoint, {
+  method: 'POST',
+  body: formDataObj
+}).then(response => response.text())
+  .then(data => {
+    console.log(data);
+    result = data;
+    setSaveSuccess(true);
+    console.log("Form successfully saved :), closing form window...!");
+    alert("Payment Gateway");
+    alert("Payment success..!");
+    handleClose();
+  })    
+  .catch(error => console.log("Error detected: " + error));
+console.log("got response --> " + result);
+
+      // image upload changes
+
+
       //http://localhost:8080/api/v1/createStudentByStudyCenter/1
-      const requestOptions = {
-        method: 'POST',
-        mode: "cors",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      };
-      let result = "";
-      let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
-      const response = await fetch(endPoint, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          result = JSON.stringify(data);
-          Cookies.set("studentFound", "true");
-          Cookies.set("studentId", data.student_id);
-          setSaveSuccess(true);
-          console.log("Form successfully saved :), closing form window...!");
-          console.log("student id --> " + data.student_id);
-          alert("Payment Gateway");
-          alert("Payment success..!");
-          handleClose();
-        })    
-        .catch(error => console.log("Error detected: " + error));
+      // const requestOptions = {
+      //   method: 'POST',
+      //   mode: "cors",
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData)
+      // };
+      // let result = "";
+      // let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
+      // const response = await fetch(endPoint, requestOptions)
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log(data);
+      //     result = JSON.stringify(data);
+      //     Cookies.set("studentFound", "true");
+      //     Cookies.set("studentId", data.student_id);
+      //     setSaveSuccess(true);
+      //     console.log("Form successfully saved :), closing form window...!");
+      //     console.log("student id --> " + data.student_id);
+      //     alert("Payment Gateway");
+      //     alert("Payment success..!");
+      //     handleClose();
+      //   })    
+      //   .catch(error => console.log("Error detected: " + error));
         //console.log("got response --> " + result);
     
       }
@@ -845,6 +899,29 @@ onError={errors => console.log(errors)}>
 </Col >
 </Row>
 <Row>
+
+<Col xs={5} md={6}>
+          <ImageUploader
+                withIcon={true}
+                buttonText='Choose image'
+                onChange={handleImage}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={1000000}
+            />
+          
+          </Col>
+
+          <Col xs={5} md={6}>
+          <ImageUploader
+                withIcon={true}
+                buttonText='Choose signature'
+                onChange={handleSignature}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={1000000}
+            />
+          
+          </Col>
+
 <Col xs={10} md={3}>
 <TextField
     variant="outlined"
