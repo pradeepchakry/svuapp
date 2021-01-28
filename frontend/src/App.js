@@ -423,9 +423,9 @@ const StudyCntrLogin = () => {
     const response = await fetch(endPoint, requestOptions)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        result = "true";
+        console.log("Got response from authentication --> " + data);
         Cookies.set("userID", data);
+        result = "true";
       })    
       .catch(error => console.log("Error detected: " + error));
     console.log("got response --> " + result);

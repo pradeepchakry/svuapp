@@ -643,7 +643,7 @@ const ModalPopUpHandler=()=>{
   }, [])
 
   const loadData = () => {
-    let userID = Cookies.get("userId");
+    let userID = Cookies.get("userID");
     console.log("Id in study center table --> " + userID);
     // Cookies.set("username", userID);
     // let len = userID.length;
