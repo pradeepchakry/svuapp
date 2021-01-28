@@ -312,21 +312,23 @@ const NodalLogin = () => {
                 </Typography>
                 <div className="form-group">
        <>
-       <Modal size="" show={show} onHide={handleClose} 
+       <Modal size="lg" show={show} onHide={handleClose} 
          animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Verify OTP</Modal.Title>
         </Modal.Header>
-        <Modal.Body size="lg">
-          <OtpInput
+        
+          
+        
+        <Modal.Footer>
+        <OtpInput
             value={otp}
+            className={classes.TextField}
             onChange={handleChange}
             numInputs={6}
             size="lg"
             separator={<span>-</span>}
           />
-        </Modal.Body>
-        <Modal.Footer>
           <button variant="secondary" onClick={handleClose}>
             Change Number
           </button>

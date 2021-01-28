@@ -784,7 +784,7 @@ console.log("got response --> " + result);
       }
   
     if( !loaded ) {
-        // loadData();
+        loadData();
         return(
             <div>loading...</div>
         )
@@ -813,7 +813,7 @@ console.log("got response --> " + result);
             <button onClick={handleOnClick}>Logout</button>
         </div>
         <div>
-            { dataExists ? <div>
+            { found ? <div>
             <h1>Welcome {studentData.name}</h1>
                 <h3>Application Details</h3>
           <Table className="mt-4" striped bordered hover>
@@ -1106,6 +1106,7 @@ onError={errors => console.log(errors)}>
     label="Mobile Number"
     name="phone"
     type="phone"
+    disabled
     onChange={(event, value) => handlePhone(event)}
   />
 </Col> 
