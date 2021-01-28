@@ -23,7 +23,7 @@ public class SvuddeApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("POST, GET, PUT");
+				registry.addMapping("/**").allowedMethods("POST", "GET", "PUT");
 			}
 		};
 	}
