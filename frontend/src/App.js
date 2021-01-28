@@ -424,7 +424,7 @@ const StudyCntrLogin = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        result = data;
+        result = "true";
         Cookies.set("userID", data);
       })    
       .catch(error => console.log("Error detected: " + error));
