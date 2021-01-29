@@ -290,7 +290,7 @@ function NodalDashboard() {
   const dateClasses = useDateStyles();
 
 
-  const [course, setCourse] = React.useState({value: 'course1', label: 'Course'});
+  const [course, setCourse] = React.useState({value: 'course', label: 'Course'});
   const [studyCenterOptedCode, setStudyCenterOptedCode] = React.useState();
   const [name, setName] = React.useState("");
   const [fatherName, setFatherName] = React.useState("");
@@ -574,7 +574,7 @@ function NodalDashboard() {
       const handleNationality = (event) => {
         setNationality(nationality);
       }
-    
+
       const handleReligion = (religion) => {
         console.log("Religion selected" + religion.value);
         setReligion(religion.value);
@@ -730,7 +730,7 @@ function NodalDashboard() {
   }
 
   let result = "";
-  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/2";
+  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/4";
   const response = await fetch(endPoint, {
   method: 'POST',
   body: formDataObj
@@ -822,7 +822,6 @@ console.log("got response --> " + result);
                 <th>Gender</th>
                 <th>AAdhar No.</th>
                 <th>Mobile No.</th>
-                <th>Registration No.</th>
                 <th>Course Applied</th>
               </tr>
             </thead>
@@ -833,8 +832,7 @@ console.log("got response --> " + result);
                 <td>{studentData.gender}</td>
                 <td>{studentData.aadhar_no}</td>
                 <td>{studentData.mobileNo}</td>
-                <td>{studentData.registrationNo}</td>
-                <td>{studentData.course}</td>
+                <td>{studentData.courseName}</td>
                 </tr>
             </tbody>
           </Table>
