@@ -831,6 +831,7 @@ console.log("got response --> " + result);
             <tbody>
                 <tr>
                 <td>{studentData.student_id}</td>
+                <td>{studentData.name}</td>
                 <td>{studentData.gender}</td>
                 <td>{studentData.aadhar_no}</td>
                 <td>{studentData.mobileNo}</td>
