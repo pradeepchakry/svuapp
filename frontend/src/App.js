@@ -137,6 +137,7 @@ const NodalLogin = () => {
 
   async function handleSendOTP() {
     console.log("sending otp to " + phone);
+    Cookies.set("phone", phone);
     let endPoint = "https://2factor.in/API/V1/4db73c1e-4cfa-11eb-8153-0200cd936042/SMS/"
         + phone + "/AUTOGEN";
     await fetch(endPoint)
@@ -312,15 +313,12 @@ const NodalLogin = () => {
                 </Typography>
                 <div className="form-group">
        <>
-       <Modal size="lg" show={show} onHide={handleClose} 
+       <Modal size="modal-sm modal-otp" show={show} onHide={handleClose} 
          animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Verify OTP</Modal.Title>
+          <Modal.Title>Enter the 6-digit code sent to your Mobile Number</Modal.Title>
         </Modal.Header>
-        
-          
-        
-        <Modal.Footer>
+        <Modal.Body>
         <OtpInput
             value={otp}
             className={classes.TextField}
@@ -329,6 +327,9 @@ const NodalLogin = () => {
             size="lg"
             separator={<span>-</span>}
           />
+        </Modal.Body>
+        <Modal.Footer>
+          <div><h3>{otp}</h3></div>
           <button variant="secondary" onClick={handleClose}>
             Change Number
           </button>

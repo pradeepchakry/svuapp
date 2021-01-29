@@ -334,7 +334,7 @@ function NodalDashboard() {
   const [eligibilityMarks, setEligibilityMarks] = React.useState("");
   const [image, setImage] = React.useState("");
   const [signature, setSignature] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+  const phone = Cookies.get("phone");
   const [studentImage, setStudentImage] = React.useState("");
   const [studentSignature, setStudentSignature] = React.useState("");
 
@@ -540,11 +540,6 @@ function NodalDashboard() {
         setPincode(event.target.value)
       }
     
-      const handlePhone = (event) => {
-        console.log(event.target.value)
-        setPhone(event.target.value)
-      }
-    
       const handleEmail = (event) => {
         console.log(event.target.value)
         setEmail(event.target.value)
@@ -735,16 +730,19 @@ function NodalDashboard() {
   }
 
   let result = "";
-  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/1";
+  let endPoint = "http://localhost:8080/api/v1/createStudentByStudyCenter/2";
   const response = await fetch(endPoint, {
   method: 'POST',
   body: formDataObj
-}).then(response => response.text())
+}).then(response => response.json())
   .then(data => {
     console.log(data);
-    result = data;
+    result = JSON.stringify(data);
+    Cookies.set("studentFound", "true");
+    Cookies.set("studentId", data.student_id);
     setSaveSuccess(true);
     console.log("Form successfully saved :), closing form window...!");
+    console.log("student id --> " + data.student_id);
     alert("Payment Gateway");
     alert("Payment success..!");
     handleClose();
@@ -1107,8 +1105,8 @@ onError={errors => console.log(errors)}>
     label="Mobile Number"
     name="phone"
     type="phone"
+    value={phone}
     disabled
-    onChange={(event, value) => handlePhone(event)}
   />
 </Col> 
 
