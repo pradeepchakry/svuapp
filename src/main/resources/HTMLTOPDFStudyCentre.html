@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<HTML>
+
+<HEAD>
+
+    <TITLE>SVUDDE</TITLE>
+    <style>
+       <!--* {
+  box-sizing: border-box;
+}-->
+table {
+ <!--border-spacing: 100px 0;-->
+<!-- border: 1px solid black;-->
+ border-collapse: collapse;
+}
+body, html {
+    width: 100%;
+}
+td {
+  font-size: 12px;<!--
+  text-align:center;
+}
+
+
+    </style>
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+<table align="center" width="90%" style="border: 1px solid black;">
+    <tr>
+        <td>
+            <table align="center">
+                <tr>
+                    <td>
+                        <div style="float:left;"><img
+                                src="data:image/jpeg;base64,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"
+                                alt="" border=3 height=100 width=100></div>
+                    </td>
+                    <td>
+                        <div align="center" style="font-size:large"><b>SRI VENKATESWARA UNIVERSITY <br>
+                            DIRECTORATE OF DISTANCE EDUCATION</b>
+                        </div>
+                        <table width="110%" style="border: 1px solid black;">
+                            <tr>
+                                <td><div><b>ONLINE ADMISSION APPLICATION FOR THE ACADEMIC YEAR 2021-22</b></div></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td><b><hr></b></td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td><b>Online ID</b></td>
+                                <td>:</td>
+                                <td>${Online ID}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Study Center</b></td>
+                                <td>:</td>
+                                <td>${Study Center}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Course Name</b></td>
+                                <td>:</td>
+                                <td>${Course Name}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Applicant's Name</b></td>
+                                <td>:</td>
+                                <td>${Applicant's Name}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Father Name:</b></td>
+                                <td>:</td>
+                                <td>${Father Name}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Date of Birth</b></td>
+                                <td>:</td>
+                                <td> ${Date of Birth}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Gender</b></td>
+                                <td>:</td>
+                                <td>${Gender}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Address</b></td>
+                                <td>:</td>
+                                <td>${Address}</td>
+                            </tr>
+                            <tr>
+                                <td><b>District/Pincode</b></td>
+                                <td>:</td>
+                                <td>${District/Pincode}</td>
+                            </tr>
+                            <tr>
+                                <td><b>State</b></td>
+                                <td>:</td>
+                                <td>${State}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Mobile No</b></td>
+                                <td>:</td>
+                                <td>${Mobile No}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Email Id</b></td>
+                                <td>:</td>
+                                <td>${Email Id}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Category</b></td>
+                                <td>:</td>
+                                <td>${Category}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Religion</b></td>
+                                <td>:</td>
+                                <td>${Religion}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Martial Status</b></td>
+                                <td>:</td>
+                                <td>${Martial Status}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Second Language</b></td>
+                                <td>:</td>
+                                <td>${Second Language}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Residential Area</b></td>
+                                <td>:</td>
+                                <td>${Residential Area}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="vertical-align: text-top;">
+                        <div><img src="${photo}" alt="" border=3 height=150 width=150></div>
+                        <div><img src="${signature}" alt="" border=3 height=30 width=150></div>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" align="center" style="border: 1px solid black;">
+                <tr>
+                <td> <b>Particulars of Qualifying Examination Passed:</b>
+                </td>
+                </tr>
+            </table>
+            <table width="100%" align="center" border="1"  style="border: 1px solid black;border-collapse: collapse;">
+                <tr>
+                    <td>Qualifying
+                        Examination
+                    </td>
+                    <td>University /
+                        Board
+                    </td>
+                    <td>Year & Month of
+                        Passing
+                    </td>
+                    <td>Register No.</td>
+                    <td>Group / Subjects</td>
+                    <td>Max. Marks</td>
+                    <td>Obt. Marks</td>
+                    <td>% of Marks</td>
+
+                </tr>
+                <tr>
+                    <td>${QualifyingExamination}</td>
+                    <td>${UniversityBoard}</td>
+                    <td>${YearMonthofPassing}</td>
+                    <td>${RegisterNo}</td>
+                    <td>${GroupSubjects}</td>
+                    <td>${MaxMarks}</td>
+                    <td>${ObtMarks}</td>
+                    <td>${PercentageMarks}</td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" align="center" style="border: 1px solid black;">
+                <tr>
+                    <td> <b>Fee Particulars:</b>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" align="center" style="border: 1px solid black;border-collapse: collapse;">
+
+                <tr>
+                    <td>
+                        <table border="1" width="100%" style="border: 1px solid black;border-collapse: collapse;">
+                            <tr>
+                                <td>Amount&nbsp;&nbsp;</td>
+                                <td>TransactionID</td>
+                                <td>Transaction Date</td>
+                            </tr>
+                            <tr>
+                                <td>${Amount}</td>
+                                <td>${TransactionID}</td>
+                                <td>${Transaction Date}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="left">
+            Declaration :
+            I hereby declare that the particulars given above are correct. In case they are found to be incorrect at a
+            later
+            date, I
+            submit myself for any disciplinary action including removal from the rolls, and such other disciplinary
+            action
+            under the
+            ACT,The Statues and Ordinances and the rules of the university.
+            I also agree to abide by the conditions,rules and regulations stipulated by the Directorate of Distance
+            Education and
+            the Laws of the University applicable from time to time.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="1" width="100%" align="center"  style="border: 1px solid black;border-collapse: collapse;">
+                <tr>
+                    <td>
+                        Place :${Place} <br>
+                        Date :${Date}
+                    </td>
+                    <td>
+                        <br>
+                        <br>
+                        Signature of the Candidate
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" align="center"  style="border: 1px solid black;border-collapse: collapse;">
+                <tr>
+                    <td>
+                        <br>
+                        <br>
+                        <div>Signature & Seal of the Study Center Co-ordinator</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="1" align="center" style="border: 1px solid black;border-collapse: collapse;">
+                <tr>
+                    <td> @2021. All Copyrights Reserved by SRI VENKATESWARA UNIVERSITY, TIRUPATI.</td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</BODY>
+
+</HTML>

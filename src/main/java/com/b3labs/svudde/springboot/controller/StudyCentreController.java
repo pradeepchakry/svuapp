@@ -87,12 +87,13 @@ public class StudyCentreController {
     @PostMapping("/validateUser")
     public ResponseEntity validateUser(@RequestBody LoginDetails loginDetails) {
 
-       boolean result = studyCentreDAO.validateUser(loginDetails.getUserID(), loginDetails.getPassword());
-        if (!result) {
-            return ResponseEntity.ok(result);
-        }
-
-        return ResponseEntity.ok(result);
+       StudyCentre centre = studyCentreDAO.validateUser(loginDetails.getUserID(), loginDetails.getPassword());
+       if(centre!=null) {
+           return ResponseEntity.ok().body(centre.getId());
+       }
+       else {
+           return ResponseEntity.ok().body("false");
+       }
     }
     @PostMapping("/resetPassword")
     public ResponseEntity resetPassword(@RequestBody LoginDetails loginDetails) {

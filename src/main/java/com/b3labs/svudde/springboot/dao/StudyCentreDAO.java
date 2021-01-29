@@ -17,7 +17,7 @@ public interface StudyCentreDAO {
 
     List<StudyCentre> getAll() ;
 
-    boolean validateUser(String userID,String password);
+    StudyCentre validateUser(String userID,String password);
 
     boolean resetPassword(String userID,String password);
 

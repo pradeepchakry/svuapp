@@ -127,8 +127,21 @@ public class Student {
     @Column(name = "updated_on")
     private Date updatedOn;
 
+    @Lob
     @Column(name = "image")
-    private String image;
+    private byte[] image;
+
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    @Column(name = "mother_name")
+    private String motherName;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1)", name = "is_approve")
     private boolean isApprove;
@@ -136,8 +149,9 @@ public class Student {
     @Column(name = "print_count")
     private Integer printCount;
 
+    @Lob
     @Column(name = "signature")
-    private String signature;
+    private byte[] signature;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -224,11 +238,11 @@ public class Student {
         this.groupSubjects = groupSubjects;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -328,11 +342,11 @@ public class Student {
         this.secondLanguage = secondLanguage;
     }
 
-    public String getSignature() {
+    public byte[] getSignature() {
         return signature;
     }
 
-    public void setSignature(String signature) {
+    public void setSignature(byte[] signature) {
         this.signature = signature;
     }
 

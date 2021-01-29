@@ -67,13 +67,16 @@ public class StudyCentreDAOImpl implements com.b3labs.svudde.springboot.dao.Stud
 
 
     @Override
-    public boolean validateUser(String userID,String password) {
+    public StudyCentre validateUser(String userID,String password) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<StudyCentre> query = currentSession.createQuery("from StudyCentre a where a.userID = :userID AND a.password = :password ",StudyCentre.class);
         query.setParameter("userID",userID);
         query.setParameter("password",password);
         List<StudyCentre> list= query.getResultList();
-        return !list.isEmpty();
+        if(!list.isEmpty()) {
+            return list.get(0);
+        }
+        return null;
     }
 
     @Override
